@@ -1,0 +1,100 @@
+# Session v1.0 — 2026-06-27
+
+## Project
+Portfolio Case Studies — Figwrite & Huana
+
+## Session Goal
+Reconstruct project history (no chat logs tracked from the start) and write
+two standalone, informational case studies for a knowledge-sharing portfolio
+site — not primarily a recruitment pitch.
+
+## Completed
+- Built and ran a bash script (extract_history.sh) to pull real git history
+  from both repos: commit timelines, author splits, biggest commits, stack
+  files, file structure
+- Wrote full case study draft for Huana (spark, build, AI weak points, real
+  user feedback, what's next, lessons learned)
+- Wrote full case study draft for Fig-write (spark, 2-year dormancy gap, v2
+  rebuild, formal AI-code review process, v2.2.0 bug fixes + migration path,
+  lessons learned)
+- Identified and confirmed a real throughline across both projects: the
+  specialized-agent review practice (esp. accessibility) started on Huana,
+  then carried into fig-write — not the reverse
+- Added {recommend image of...} placement markers throughout both case
+  studies, each tied to a specific source (Figma, live app, git history, or
+  "build new" for original diagrams)
+- Added a "Numbers" section to each case study for future site callout/stats
+  blocks
+- Finalized both as plain text files
+
+## Decisions Made
+- No fabricated metrics — message/prompt counts omitted and explicitly noted
+  as "not tracked," rather than estimated, to preserve credibility
+- Case studies framed as "process documentation for others to learn from,"
+  not portfolio bragging — informational first, recruitment-adjacent second
+- Fig-write's "is AI safe to scale this" tension framed honestly as
+  "somewhere in between" (a working-so-far process, not fully proven) rather
+  than resolved or fully unresolved
+- Portfolio website design/build deliberately deferred to a later session —
+  this session scoped to case study content only
+- Other past projects (mentioned as existing) explicitly deferred — not
+  starting additional case studies yet
+
+## Stack / Tools Used
+- Fig-write: Figma Plugin API, React 18.3.1, TypeScript (strict), SCSS,
+  Webpack 5, ExcelJS 4.4.0, Phosphor Icons
+- Huana: React + Vite + Tailwind, Supabase (auth/OTP only), Dexie.js
+  (IndexedDB), Zustand, deployed on Vercel
+- Both built via AI-paired development (Claude Code + Claude.ai chat,
+  switched between the two, untracked)
+
+## Files Created or Modified
+- extract_history.sh — git history extraction script (commits, timeline,
+  author split, biggest commits, stack detection, LOC by language)
+- huana_case_study.txt — final case study, plain text, with image markers
+- figwrite_case_study.txt — final case study, plain text, with image markers
+
+## Current State
+Both case studies are complete, content-locked, and ready to be laid into a
+website. They include real commit/timeline data pulled from git (not
+estimates), inline image-placement recommendations tied to specific sources,
+and a numbers section ready to lift into a future stats/callout section.
+Portfolio site itself (design, layout, hosting) has not been started.
+
+## Next Steps
+- Design and build the portfolio website (layout, visual design, page
+  structure) — explicitly deferred to a future session
+- Investigate whether Claude Code local session transcripts still exist on
+  the user's machine — possible partial source for real prompt/message
+  counts (Claude.ai chat history has no export, confirmed unavailable)
+- Decide where/how the cross-project throughline (accessibility-agent
+  practice originating in Huana, inherited by fig-write) appears on the
+  site — likely a site-level callout, not buried in one case study
+- Produce the actual recommended images (Figma exports, live app
+  screenshots, new diagrams) referenced by the {recommend image of...}
+  markers in both files
+- Site will be hosted on GitHub, connected to uxaksh.ca (mentioned, not
+  started)
+
+## Open Questions
+- No real metric exists yet for AI prompt/message volume on either project —
+  open whether Claude Code transcripts can partially close this gap
+- No marketing plan yet for Huana (zero real users currently) — explicitly
+  still unresolved, intentionally not invented for the case study
+- Site information architecture (how case studies, stats callouts, and the
+  cross-project thread fit together visually) not yet decided
+
+## Context for Next Chat
+User is Aksh, building a knowledge-sharing portfolio site (not primarily for
+job hunting) documenting two AI-paired dev projects: Huana (cannabis session
+tracker, solo, 18 days, MVP shipped, zero users/no marketing yet) and
+Fig-write (Figma-to-Excel plugin, originally built with a friend, dormant
+~2yrs, solo-revived in 2026, 180 real users, now mid-rebuild with formal
+AI-code review passes). Two finished case study text files exist
+(huana_case_study.txt, figwrite_case_study.txt) with real git-derived
+metrics and embedded image-placement recommendations — treat these as
+locked content. Remaining work is entirely the website itself: visual
+design, layout, sourcing the recommended images, and deciding how stats/
+throughline content is presented. User prefers terse, direct, no-fluff
+communication, phase-by-phase delivery, and values honesty over polish
+(explicitly chose to leave open questions open rather than invent answers).

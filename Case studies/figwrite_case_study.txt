@@ -1,0 +1,191 @@
+FIG-WRITE — CASE STUDY
+A Figma plugin that bridges Figma text layers and Excel spreadsheets
+
+==================================================================
+WHAT IT IS
+==================================================================
+
+FigWrite lets designers export text content from selected Figma frames
+into an .xlsx file, hand it to a content team or translator, and import
+their edits back — applied automatically to the correct text layers.
+
+{recommend image of: the FigWrite plugin UI itself, both tabs (Export
+and Import) shown side by side or as two screenshots. Source: Figma,
+running the actual plugin, screenshot at 400x560 (its real plugin
+dimensions).}
+
+==================================================================
+THE SPARK
+==================================================================
+
+Built originally with a friend, Rajdeep, while I handled design. v1
+matched spreadsheet rows to Figma layers by node ID and layer name —
+workable, but brittle. Renaming a layer or restructuring a frame could
+silently break the sync.
+
+{recommend image of: any early v1 screenshots or Figma mockups from the
+original Dec 2023 build, if they still exist. Source: old Figma file
+version history, or git history if early UI screenshots were committed.}
+
+==================================================================
+THE GAP
+==================================================================
+
+MVP shipped Dec 2023 - Jan 2024, then went dormant for roughly two
+years. Rajdeep didn't have time to continue developing it, and I didn't
+yet have the engineering depth to take it forward solo. It sat untouched
+until I needed it again — and by then, AI coding tools had caught up
+enough that I could pick the problem back up myself.
+
+Commit timeline (by month) — note the gap:
+  2023-11   |   1 commit   (initial commit)
+  2023-12   |  15 commits  (MVP build)
+  2024-01   |  14 commits  (MVP cleanup, final polish)
+  -- ~2 YEAR GAP, dormant --
+  2026-05   |   8 commits  (solo revival)
+
+==================================================================
+THE REBUILD — V2, "WEEKEND" RELEASE, MAY 2026
+==================================================================
+
+This wasn't a patch. It was a full architectural rebuild, now a
+three-person effort (myself, Raj, and Dragan):
+
+  - UUID-based identity replacing layer-name matching — survives
+    renames, restructures, and file sharing
+  - Two independent tabs (Export / Import) replacing one linear flow
+  - Template mode — write into your own existing spreadsheet format,
+    not just a fresh file
+  - Three import safety guards: skip locked layers, skip unchanged
+    text, skip blank cells
+  - Dropped a CDN dependency (SheetJS) for a bundled MIT-licensed
+    library (ExcelJS) — removed a silent failure point
+  - Full WCAG 2.2 accessibility pass
+
+{recommend image of: a simple before/after diagram of the v1 vs v2
+architecture — specifically the identity system (layer-name matching vs
+UUID matching). This is the single most important technical decision in
+the whole project and deserves its own small diagram. Source: build new
+in Figma/Figjam, not pulled from existing docs — this should be made
+specifically to teach the concept.}
+
+{recommend image of: the actual two-tab Export/Import UI in the plugin,
+annotated to show the tab bar, frame selection, and safety guard
+messaging. Source: live plugin screenshot with your own annotations.}
+
+This single biggest commit in the project's history is this rebuild:
+23 files changed, 3,055 insertions, 240 deletions — "May062026 postv2
+fix urgent." The second-largest, "30 apr26 planning documentation," at
+69 files and 7,431 insertions, was the planning work that preceded it.
+
+==================================================================
+THE PART THAT ANSWERS "CAN AI BE TRUSTED AT SCALE"
+==================================================================
+
+After the rebuild, I ran formal review passes against the AI-written
+code — a code-quality review, an accessibility audit, and a
+performance/security review. Each produced a real findings table with
+severities. Each finding was either fixed, or explicitly logged as
+"not fixed, by design" with a stated reason.
+
+Real examples:
+  - A memory-leak-prone event listener pattern, re-assigned on every
+    React render with no cleanup (High severity — fixed)
+  - An unguarded type cast that could throw on bad input (Low — fixed)
+  - A documented decision NOT to fix postMessage('*') because Figma's
+    own plugin sandboxing makes it unexploitable — verified, not
+    assumed
+
+{recommend image of: a clean visual table/grid recreating 4-5 of the
+real findings above (severity, finding, fix) as a single graphic. This
+is genuinely interesting to other builders and works well as a
+standalone image, not just inline text. Source: build new, simple
+table-style graphic, in Figma or as a styled screenshot of a markdown
+table.}
+
+Two real production bugs surfaced after release, at scale (3,000+ text
+nodes):
+
+  1. UUID collisions from Math.random() — the collision probability
+     becomes real at that volume
+  2. Silent ID loss on text inside component instances — Figma's API
+     throws when writing plugin data to a read-only node, and the
+     original code silently swallowed that error
+
+The fix — switching to Figma's own native node ID instead of generating
+one — was scoped, planned, and shipped as v2.2.0 with an explicit
+backward-compatibility path: old export files are detected
+automatically and still import correctly, with a one-time, non-error
+banner nudging the user to re-export.
+
+{recommend image of: a short flow diagram showing the migration logic —
+"old UUID format detected -> import still succeeds -> info banner
+shown -> re-export generates new format." Helps a technical reader
+understand the backward-compatibility decision at a glance. Source:
+build new in Figma/Figjam.}
+
+That v2.2.0 plan is worth naming directly as a process, not just a fix:
+phased, one reviewable chunk at a time, an explicit "do not touch" list
+per release, a hard build-and-lint gate after every phase, and decisions
+about what's out of scope written down as clearly as what's in scope.
+
+==================================================================
+WHERE IT STANDS
+==================================================================
+
+180 users over the plugin's lifetime. A real feedback channel
+(figwrite@protonmail.com), with a live bug report and feature request
+currently outstanding.
+
+Deduplication — handling repeated strings like nav or footer text
+across many frames — is already scoped in detail for v2.3.0, including
+the specific edge cases (component instances, slot containers, global
+components) that make it harder than it sounds. Not yet built.
+
+{recommend image of: a screenshot of the actual Figma Community listing
+page for FigWrite, if public — shows real install/user numbers and
+social proof in the plugin's own words. Source: Figma Community page,
+browser screenshot.}
+
+==================================================================
+WHAT I LEARNED
+==================================================================
+
+The risk in AI-paired development isn't getting code that works once —
+it's catching the failure modes that only show up at scale, on inputs
+you didn't think to test, in places the AI didn't know to be careful (a
+component instance is read-only; Math.random() collides eventually).
+
+My answer so far has been to review AI output the way you'd review any
+engineer's pull request — formal passes, severity ratings, explicit
+accept/reject decisions, backward compatibility taken seriously.
+
+That process has held for two releases. What I haven't tested yet is
+whether it holds on something genuinely harder. Deduplication touches
+component architecture in ways the current bugs didn't, and I don't yet
+know if the same review process catches problems at that level of
+complexity — or if scaling further means rethinking how much I lean on
+AI versus doing the harder architectural calls myself.
+
+That's the actual open question. Not "should I use AI," but "where
+exactly does my current process stop being enough."
+
+==================================================================
+THE NUMBERS (for callout / stats section)
+==================================================================
+
+  Total commits          38
+  Active timeline         Dec 2023 - Jan 2024 (MVP), then a ~2 year
+                           gap, then May 2026 (rebuild + hardening)
+  Contributors             3 (Aksh, Raj, Dragan)
+  Real users               180, lifetime
+  Outstanding feedback     1 bug report, 1 feature request (live)
+  Major versions shipped   v1.0 -> v2.0 ("Weekend") -> v2.1 -> v2.2.0
+  Review passes run        3 (code quality, accessibility, performance
+                           /security) — each with a written findings
+                           table
+
+  Note: prompt/message counts with AI tools are not available for this
+  project — not tracked at the time. Commit, timeline, and review-table
+  data above is pulled directly from git history and project
+  documentation, not estimated.

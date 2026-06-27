@@ -1,0 +1,170 @@
+HUANA — CASE STUDY
+A privacy-first cannabis session tracker for Canadian recreational users
+
+==================================================================
+THE SPARK
+==================================================================
+
+It started from a personal annoyance: sharing a joint with friends, liking
+it, and never remembering which strain it was. Same gap at retail — buy
+something good, no way to record it for next time.
+
+I didn't want to guess this was a real problem, so I talked to people who
+were already solving it the hard way — keeping paper diaries of what they'd
+tried. That confirmed the gap was real enough to build for.
+
+{recommend image of: early Figma sketches or mood board for Huana, if any
+exist from this very first phase — shows the idea before any UI design
+started. Source: Figma file history / version history panel.}
+
+==================================================================
+THE BUILD
+==================================================================
+
+I designed the UI from scratch in Figma first, then paired with AI to
+implement it. The split was deliberate: AI wrote the line-by-line code,
+I focused on logic, problem-solving, and design — the parts I actually
+wanted to spend my time on.
+
+Built solo. 18 days. 41 commits.
+
+Stack: React + Vite + Tailwind, Supabase for auth only (email OTP, no
+password), Dexie.js / IndexedDB for session data, Zustand for state.
+
+{recommend image of: the Figma design file — main screens (Login, OTP,
+Dashboard, Logbook, Add Session modal) shown as a single frame overview.
+Source: Figma, "present" or overview mode, exported as PNG.}
+
+Privacy wasn't a tagline, it was an architectural line drawn on purpose:
+identity touches Supabase, consumption data never leaves the device.
+
+{recommend image of: a simple diagram showing this split — Supabase
+(auth/identity) on one side, on-device IndexedDB (session data) on the
+other, with a line showing they never cross. This doesn't exist yet —
+worth building as a small original diagram for the case study itself,
+not pulled from elsewhere.}
+
+The build moved in clear, ordered phases:
+
+  scaffold -> data layer -> auth -> dashboard -> modals -> navigation
+  -> page-by-page restyle to match Figma -> responsive polish
+  -> docs page -> deploy
+
+Commit timeline (by month):
+  2026-04   |  41 commits  (entire build, start to finish, one month)
+
+Author split:
+  Aksh     40 commits
+  Vercel    1 commit  (automated deploy integration)
+
+Largest commits by lines changed (the real milestones):
+  "Added website"             16 files,  3025 insertions   (marketing site)
+  "Getting ready to deploy"   40 files,   564 insertions   (prod hardening)
+  "Multiple updates"           6 files,   408 insertions   (mid-build UI pass)
+  "Wrapping up for now"        5 files,   547 insertions   (early checkpoint)
+
+==================================================================
+WHERE AI NEEDED A STRONG HAND
+==================================================================
+
+AI got the basic flows working fast — but layout and interaction details
+were a recurring weak point. Buttons that weren't really designed.
+Layouts that didn't hold together until I wrote the HTML/CSS myself and
+described the structure in depth for it to follow.
+
+{recommend image of: a before/after of one specific UI element that
+needed manual rework — e.g. the delete button, or a card layout. If you
+have any early AI-generated screenshots saved, or can recreate a rough
+version in browser dev tools next to the final version. Source: browser
+screenshot, before vs. after, side by side.}
+
+This is also where I first built a habit that later carried into other
+projects: bringing in a specialized accessibility-focused AI review pass,
+rather than trusting general-purpose AI output on accessibility by
+default. This practice started here — it's the reason later projects
+had a faster, more disciplined accessibility process from day one.
+
+==================================================================
+WHAT REAL USERS CAUGHT THAT REVIEW PASSES DIDN'T
+==================================================================
+
+I ran a feedback round with real users. None of what they found were
+logic bugs — they were interaction and polish problems that only show up
+when someone uses the interface with their own hands and their own data.
+
+  - Delete confirmation dialog stayed open after the deletion had
+    actually succeeded — no signal the action had worked
+  - OTP paste silently failed on the first attempt (only the first
+    character landed), worked fine on the second try
+  - Delete button was so visually dominant it became "the main focus"
+    of the card, crowding out the entry's actual content
+  - A session card field used the wrong text style entirely — traced to
+    one line, SessionCard.jsx:111
+  - No length limits anywhere on user input (title, description,
+    location) — long text broke layouts, and long pastes saved slowly
+    with no loading feedback, so the app looked frozen
+
+{recommend image of: 2-3 actual screenshots from the live app showing
+specific feedback items in context — e.g. the delete button dominance
+issue, or a session card with the text style bug. Source: live deployed
+app on Vercel, browser screenshot.}
+
+{recommend image of: a simple annotated screenshot or short callout grid
+pulling 3-4 of the verbatim user quotes above directly onto a UI
+screenshot, pointing at the exact element being described. This is a
+strong, concrete visual for a knowledge-sharing audience because it
+shows real user language next to the real interface. Source: live app
+screenshot + your own annotation in Figma or Figjam.}
+
+==================================================================
+WHERE IT STANDS
+==================================================================
+
+MVP fully shipped. Every planned feature is live. Deployed to Vercel.
+
+A few small things are deliberately still open, left visible on purpose
+rather than hidden:
+  - alert() calls standing in for proper toast notifications
+  - an unused avatarSeed field still being written to storage
+  - a customProducts table defined in the schema but never used
+
+==================================================================
+WHAT'S NEXT
+==================================================================
+
+Zero real users yet — not because the product doesn't work, but because
+there's been no marketing. That's genuinely still unresolved. No firm
+plan yet for how to fix it, and that's an honest gap in the project
+rather than a problem already solved.
+
+==================================================================
+WHAT I LEARNED
+==================================================================
+
+Getting from idea to a working, polished build was hard, and finishing
+it felt like a real win — but that's a different bar from a *product*.
+
+The harder lesson was that AI is weakest at the thing designers care
+about most: interaction and layout judgment. You can't fully delegate
+"make this feel right" — I ended up writing the CSS myself and learning,
+the hard way, that some problems need a specialized reviewer, not a
+general one. That lesson is what made a more disciplined AI-review
+process possible on every project since.
+
+==================================================================
+THE NUMBERS (for callout / stats section)
+==================================================================
+
+  Build time           18 days, solo
+  Commits               41
+  Timeline              April 2026, single continuous month
+  Stack                 React, Vite, Tailwind, Supabase, Dexie.js,
+                         Zustand
+  Features shipped      17 / 17 planned MVP features
+  Real users to date    0 (no marketing run yet — open problem)
+  Feedback items
+    collected            ~20 distinct, themed, user-quoted
+
+  Note: prompt/message counts with AI tools are not available for this
+  project — not tracked at the time. Commit and timeline data is pulled
+  directly from git history, not estimated.
