@@ -7,7 +7,7 @@ WHAT IT IS
 
 FigWrite lets designers export text content from selected Figma frames
 into an .xlsx file, hand it to a content team or translator, and import
-their edits back — applied automatically to the correct text layers.
+their edits back to the correct text layers.
 
 {recommend image of: the FigWrite plugin UI itself, both tabs (Export
 and Import) shown side by side or as two screenshots. Source: Figma,
