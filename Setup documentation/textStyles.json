@@ -1,0 +1,115 @@
+{
+  "fileName": "Portfolio Website Design",
+  "textStyles": [
+    {
+      "name": "h1",
+      "fontFamily": "Gambetta Variable",
+      "fontWeight": "Light",
+      "fontSize": 64,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "h2",
+      "fontFamily": "Gambetta Variable",
+      "fontWeight": "Light",
+      "fontSize": 48,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "h3",
+      "fontFamily": "Gambetta Variable",
+      "fontWeight": "Regular",
+      "fontSize": 36,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "h4",
+      "fontFamily": "Gambetta Variable",
+      "fontWeight": "Regular",
+      "fontSize": 28,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "h5",
+      "fontFamily": "Gambetta Variable",
+      "fontWeight": "Regular",
+      "fontSize": 24,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "h6",
+      "fontFamily": "Gambetta Variable",
+      "fontWeight": "Regular",
+      "fontSize": 20,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "heading subtitle",
+      "fontFamily": "Satoshi Variable",
+      "fontWeight": "Medium",
+      "fontSize": 15,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 4
+      },
+      "textCase": "UPPER"
+    },
+    {
+      "name": "body 1",
+      "fontFamily": "Satoshi Variable",
+      "fontWeight": "Regular",
+      "fontSize": 18,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "body 2",
+      "fontFamily": "Satoshi Variable",
+      "fontWeight": "Regular",
+      "fontSize": 16,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    },
+    {
+      "name": "button text",
+      "fontFamily": "Satoshi Variable",
+      "fontWeight": "Medium",
+      "fontSize": 16,
+      "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+      },
+      "textCase": "ORIGINAL"
+    }
+  ]
+}
