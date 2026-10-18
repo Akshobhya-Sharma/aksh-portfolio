@@ -1,76 +1,75 @@
 /* ==========================================================================
    DESIGN TOKENS
-   Source: Figma variable export (Portfolio.json, textStyles.json)
+   Source: Figma variable export
    Do not hardcode these values anywhere else — always reference the var.
    ========================================================================== */
 
 :root {
-
   /* ---- Spacing (4pt scale) ---- */
-  --space-0:   0px;
-  --space-4:   4px;
-  --space-8:   8px;
-  --space-12:  12px;
-  --space-16:  16px;
-  --space-20:  20px;
-  --space-32:  32px;
-  --space-40:  40px;
-  --space-48:  48px;
-  --space-80:  80px;
+  --space-0: 0px;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-80: 80px;
   --space-120: 120px;
   --space-160: 160px;
 
   /* ---- Color ---- */
-  --color-dark:        #1E1C1B;  /* primary text — 16.4:1 on bg, AAA */
-  --color-light:       #FCFCFD;  /* near-white, for text on dark surfaces */
-  --color-primary-bg:  #FCFBF8;  /* page background */
-  --color-link:        #2C3E50;  /* links / accents — 10.6:1 on bg, AAA */
+  --color-dark: #1e1c1b; /* primary text — 16.4:1 on bg, AAA */
+  --color-light: #fcfcfd; /* near-white, for text on dark surfaces */
+  --color-primary-bg: #fcfbf8; /* page background */
+  --color-link: #2c3e50; /* links / accents — 10.6:1 on bg, AAA */
   /* Grey ramp — rebuilt on one warm hue (30°, matches Dark/Primary bg's cast;
      old dGrey/lGrey/cGrey were pure neutral (0% sat) and clashed). Evenly
      spaced by lightness between Dark and Primary bg. Contrast checked
      against Primary bg so you know what's safe for text at a glance. */
-  --color-neutral-100: #E8E6E3;  /* 1.20:1 — decorative only (subtle dividers) */
-  --color-neutral-200: #C9C4C0;  /* 1.67:1 — decorative only (borders) */
-  --color-neutral-300: #ABA39C;  /* 2.40:1 — decorative only (disabled UI) */
-  --color-neutral-400: #8C8278;  /* 3.64:1 — decorative only (placeholder text max) */
-  --color-neutral-500: #696159;  /* 5.87:1 — AA text (secondary/caption text) */
-  --color-neutral-600: #45403B;  /* 9.90:1 — AAA text (safe alt to Dark) */
-  --color-neutral-700: #2C2926;  /* 13.97:1 — AAA text (near-Dark, softer) */
+  --color-neutral-100: #e8e6e3; /* 1.20:1 — decorative only (subtle dividers) */
+  --color-neutral-200: #c9c4c0; /* 1.67:1 — decorative only (borders) */
+  --color-neutral-300: #aba39c; /* 2.40:1 — decorative only (disabled UI) */
+  --color-neutral-400: #8c8278; /* 3.64:1 — decorative only (placeholder text max) */
+  --color-neutral-500: #696159; /* 5.87:1 — AA text (secondary/caption text) */
+  --color-neutral-600: #45403b; /* 9.90:1 — AAA text (safe alt to Dark) */
+  --color-neutral-700: #2c2926; /* 13.97:1 — AAA text (near-Dark, softer) */
 
   /* ---- Font families ---- */
-  --font-serif: "Gambetta Variable", Georgia, serif;   /* headings */
-  --font-sans:  "Satoshi Variable", -apple-system, sans-serif; /* body/UI */
+  --font-serif: "Gambetta Variable", Georgia, serif; /* headings */
+  --font-sans: "Satoshi Variable", -apple-system, sans-serif; /* body/UI */
 
   /* ---- Type scale ----
      Fluid via clamp() — scales smoothly between a 375px and 1440px viewport,
      so headings don't overflow/break mid-word on mobile. Formula: Utopia-style
      linear interpolation. min/max shown in the comment for reference.
      16px is the accessibility floor — nothing in this scale goes below it. */
-  --text-h1: clamp(2.125rem, 1.465rem + 2.817vw, 4.000rem);   /* 34px -> 64px */
-  --text-h2: clamp(1.875rem, 1.479rem + 1.690vw, 3.000rem);   /* 30px -> 48px */
-  --text-h3: clamp(1.625rem, 1.405rem + 0.939vw, 2.250rem);   /* 26px -> 36px */
-  --text-h4: clamp(1.375rem, 1.243rem + 0.563vw, 1.750rem);   /* 22px -> 28px */
-  --text-h5: clamp(1.250rem, 1.162rem + 0.376vw, 1.500rem);   /* 20px -> 24px */
-  --text-h6: clamp(1.125rem, 1.081rem + 0.188vw, 1.250rem);   /* 18px -> 20px */
-  --text-body-1: clamp(1.000rem, 0.956rem + 0.188vw, 1.125rem); /* 16px -> 18px */
-  --text-subtitle: 16px;   /* eyebrow/nav labels — fixed, not fluid */
-  --text-body-2:   16px;   /* already at the accessibility floor — stays fixed */
-  --text-button:   16px;   /* stays fixed — UI controls shouldn't shrink */
+  --text-h1: clamp(2.125rem, 1.465rem + 2.817vw, 4rem); /* 34px -> 64px */
+  --text-h2: clamp(1.875rem, 1.479rem + 1.69vw, 3rem); /* 30px -> 48px */
+  --text-h3: clamp(1.625rem, 1.405rem + 0.939vw, 2.25rem); /* 26px -> 36px */
+  --text-h4: clamp(1.375rem, 1.243rem + 0.563vw, 1.75rem); /* 22px -> 28px */
+  --text-h5: clamp(1.25rem, 1.162rem + 0.376vw, 1.5rem); /* 20px -> 24px */
+  --text-h6: clamp(1.125rem, 1.081rem + 0.188vw, 1.25rem); /* 18px -> 20px */
+  --text-body-1: clamp(1rem, 0.956rem + 0.188vw, 1.125rem); /* 16px -> 18px */
+  --text-subtitle: 16px; /* eyebrow/nav labels — fixed, not fluid */
+  --text-body-2: 16px; /* already at the accessibility floor — stays fixed */
+  --text-button: 16px; /* stays fixed — UI controls shouldn't shrink */
 
   /* ---- Font weights ---- */
-  --weight-light:   300;
+  --weight-light: 300;
   --weight-regular: 400;
-  --weight-medium:  500;
+  --weight-medium: 500;
 
   /* ---- Letter spacing ----
      Figma stores these as % of font-size; CSS has no % unit for
      letter-spacing, so they're pre-converted to em. */
   --tracking-subtitle: 0.04em; /* was 4% in Figma */
-  --tracking-normal:   0em;
+  --tracking-normal: 0em;
 
   /* ---- Line height (sensible defaults, not in Figma export — adjust freely) ---- */
   --leading-heading: 1.15;
-  --leading-body:    1.5;
+  --leading-body: 1.5;
 
   /* ---- Layout ----
      Breakpoints (reference only — @media can't consume custom properties,
@@ -81,12 +80,24 @@
        lg: 1440px  desktop / large — content stops growing here
        xl: 1920px  extra-large monitor, rare extra tuning only
   */
-  --content-max-width: 1440px;               /* caps content on 2560px+ screens */
-  --nav-max-width:     280px;
-  --nav-icon-size:     16px;
+  --content-max-width: 1440px; /* caps content on 2560px+ screens */
+  --nav-max-width: 280px;
+  --nav-icon-size: 16px;
 
-  --gap: clamp(24px, -2.667px + 2.604vw, 64px);            /* column gap, 24px->64px, 1024px->2560px viewport */
-  --section-padding-inline: clamp(20px, 10.141px + 2.629vw, 48px); /* 20px->48px, 375px->1440px viewport */
-  --section-padding-block:  clamp(48px, 36.732px + 3.005vw, 80px); /* 48px->80px, 375px->1440px viewport */
-  --logo-size: clamp(24px, 19.775px + 1.127vw, 36px);       /* drives header height */
+  --gap: clamp(
+    24px,
+    -2.667px + 2.604vw,
+    64px
+  ); /* column gap, 24px->64px, 1024px->2560px viewport */
+  --section-padding-inline: clamp(
+    20px,
+    10.141px + 2.629vw,
+    48px
+  ); /* 20px->48px, 375px->1440px viewport */
+  --section-padding-block: clamp(
+    48px,
+    36.732px + 3.005vw,
+    80px
+  ); /* 48px->80px, 375px->1440px viewport */
+  --logo-size: clamp(24px, 19.775px + 1.127vw, 36px); /* drives header height */
 }
