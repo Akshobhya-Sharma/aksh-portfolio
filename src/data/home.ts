@@ -1,4 +1,14 @@
 // Content for the whole homepage. Colours are token names (CSS custom properties), never hex.
+//
+// HOW TO EDIT THE PROJECTS SECTION (this file only, no component changes)
+// - Add a category: add { id, title, gradient } to `categories`. gradient is 'tile-blue' or 'tile-green'
+//   (-> --tile-<name>-core / --tile-<name>-edge in src/styles/tokens.css). A category with no projects is not rendered.
+// - Add a project: add an entry to `projects` with a unique slug and a categoryId matching a category id.
+//   Change categoryId to move a card to another category. Array order is page order.
+// - Accent: set `accent` to a token name from AccentToken. To add one, define --color-accent-<name> in tokens.css
+//   (>= 4.5:1 on the page bg; run `npm run contrast`) and add it to AccentToken below.
+// - Gradient: edit the --tile-* values in tokens.css (white text must stay >= 4.5:1; `npm run contrast` checks it).
+// - Images: put files in public/images/ and set image.src to '/images/<file>' with real alt, width and height.
 
 export type GradientToken = 'tile-blue' | 'tile-green'; // -> --tile-blue-core / --tile-blue-edge, etc.
 export type AccentToken =
@@ -94,8 +104,8 @@ export const projectsSection = {
 };
 
 export const categories = [
-	{ id: 'design-coding', title: 'Design and coding', gradient: 'tile-green' },
-	{ id: 'ux-ui', title: 'UX / UI Projects', gradient: 'tile-blue' },
+	{ id: 'design-coding', title: 'Design and coding', gradient: 'tile-blue' },
+	{ id: 'ux-ui', title: 'UX / UI Projects', gradient: 'tile-green' },
 ] satisfies Category[];
 
 const placeholder = (name: string) => ({

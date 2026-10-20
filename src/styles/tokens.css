@@ -36,6 +36,7 @@
   --color-focus: var(--color-link); /* focus ring — 10.6:1 on bg */
 
   /* Tile gradients. White text must stay >= 4.5:1 at the lightest point (core). */
+  --color-white: #ffffff; /* tile text */
   --tile-blue-core: #1565c0; /* 5.75:1 */
   --tile-blue-edge: #3a3270; /* 11.2:1 */
   --tile-green-core: #0c6b4a; /* 6.53:1 */

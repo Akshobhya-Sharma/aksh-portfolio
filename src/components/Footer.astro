@@ -1,0 +1,41 @@
+---
+import { footer } from '../data/home';
+---
+
+<footer class="site-footer">
+	<section id="connect" class="shell section" aria-labelledby="connect-heading">
+		<h2 id="connect-heading" class="sr-only">{footer.heading}</h2>
+		<p class="availability">
+			{footer.availability.before}<strong>{footer.availability.strong}</strong>{footer.availability.after}
+		</p>
+		<p class="email"><a href={`mailto:${footer.email}`}>{footer.email}</a></p>
+		{footer.extraLines.map((line) => <p class="extra">{line}</p>)}
+	</section>
+</footer>
+
+<style>
+	.site-footer {
+		border-top: 1px solid var(--color-neutral-200);
+	}
+	.availability {
+		margin: 0;
+		font-size: var(--text-body-1);
+	}
+	.email {
+		margin: var(--space-16) 0 var(--space-32);
+		font-family: var(--font-serif);
+		font-weight: var(--weight-light);
+		font-size: var(--text-h2);
+		line-height: var(--leading-heading);
+		overflow-wrap: anywhere;
+	}
+	.email a {
+		text-decoration: underline;
+	}
+	.extra {
+		margin: var(--space-8) 0 0;
+		max-width: 60ch;
+		font-size: var(--text-body-2);
+		color: var(--color-neutral-600);
+	}
+</style>

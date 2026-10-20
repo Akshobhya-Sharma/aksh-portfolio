@@ -12,7 +12,9 @@
     "astro": "astro",
     "lint": "eslint .",
     "typecheck": "astro check",
-    "check": "npm run lint && npm run typecheck && npm run build"
+    "a11y": "node scripts/a11y.mjs",
+    "contrast": "node scripts/contrast-check.mjs",
+    "check": "npm run lint && npm run typecheck && npm run build && npm run contrast"
   },
   "dependencies": {
     "astro": "^7.4.1"
@@ -20,10 +22,12 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.11",
     "@eslint/js": "^9.39.5",
+    "axe-core": "^4.14.0",
     "eslint": "^9.39.5",
-    "eslint-plugin-astro": "^1.7.0",
+    "eslint-plugin-astro": "^1.5.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "globals": "^17.13.0",
+    "puppeteer-core": "^25.15.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.0"
   }

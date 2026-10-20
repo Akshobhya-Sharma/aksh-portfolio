@@ -1,0 +1,79 @@
+---
+import type { Project } from '../data/home';
+
+interface Props {
+	project: Project;
+}
+const { project } = Astro.props;
+---
+
+<li class="card" style={`--accent: var(--${project.accent})`}>
+	<img
+		src={project.image.src}
+		alt={project.image.alt}
+		width={project.image.width}
+		height={project.image.height}
+		loading="lazy"
+		decoding="async"
+	/>
+	<div class="card__body">
+		<h4>{project.title}</h4>
+		<p>{project.summary}</p>
+		<a class="card__link" href={`/work/${project.slug}`}>Read more<span class="sr-only"> about {project.srName}</span></a>
+	</div>
+</li>
+
+<style>
+	.card {
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-24);
+		min-width: 0;
+	}
+	.card img {
+		width: 100%;
+		height: auto;
+		border-radius: var(--space-4);
+	}
+	/* Accent is decoration only: a bar above the title. */
+	.card__body {
+		border-top: var(--space-4) solid var(--accent);
+		padding-top: var(--space-16);
+	}
+	.card h4 {
+		font-weight: var(--weight-regular);
+	}
+	.card p {
+		margin: var(--space-12) 0 var(--space-16);
+	}
+	.card__link {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--target-size);
+		color: var(--color-link);
+		text-decoration: none;
+	}
+	/* Stretched overlay: whole card is one click target and one tab stop. */
+	.card__link::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+	}
+	.card:hover .card__link {
+		text-decoration: underline;
+	}
+	/* Ring is drawn around the card on the page background, not on the link. */
+	.card__link:focus-visible {
+		outline: none;
+	}
+	.card:has(.card__link:focus-visible) {
+		outline: var(--focus-ring-width) solid var(--color-focus);
+		outline-offset: var(--focus-ring-offset);
+	}
+	@media (forced-colors: active) {
+		.card:has(.card__link:focus-visible) {
+			outline-color: Highlight;
+		}
+	}
+</style>
