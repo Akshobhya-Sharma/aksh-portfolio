@@ -1,57 +1,74 @@
 ---
-import { toolkit } from '../data/home';
+import { toolkit } from "../data/home";
 ---
 
-<section class="section" aria-labelledby="toolkit-heading">
-	<div class="shell section-columns">
-		<div>
-			<h2 id="toolkit-heading">{toolkit.heading}</h2>
-			<p class="intro">{toolkit.intro}</p>
-		</div>
-		{/* role=list keeps list semantics in Safari/VoiceOver with list-style:none */}
-		{/* eslint-disable-next-line astro/jsx-a11y/no-redundant-roles */}
-		<ul class="tools" role="list" aria-label={toolkit.listLabel}>
-			{
-				toolkit.items.map((t) => {
-					const Tag = t.href ? 'a' : 'span';
-					return (
-						<li>
-							<Tag href={t.href}>
-								{t.logo && <img src={t.logo} alt="" width="24" height="24" loading="lazy" decoding="async" />}
-								{t.name}
-							</Tag>
-						</li>
-					);
-				})
-			}
-		</ul>
-	</div>
+<section class="shell section toolkit" aria-labelledby="toolkit-heading">
+  <div class="section-columns">
+    <div>
+      <h2 id="toolkit-heading">{toolkit.heading}</h2>
+    </div>
+    <div>
+      <p class="intro">{toolkit.intro}</p>
+      {
+        /* role=list keeps list semantics in Safari/VoiceOver with list-style:none */
+      }
+      {/* eslint-disable-next-line astro/jsx-a11y/no-redundant-roles */}
+      <ul class="tools" role="list" aria-label={toolkit.listLabel}>
+        {
+          toolkit.items.map((t) => {
+            const Tag = t.href ? "a" : "span";
+            return (
+              <li>
+                <Tag href={t.href}>
+                  {t.logo && (
+                    <img
+                      src={t.logo}
+                      alt=""
+                      width="24"
+                      height="24"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  )}
+                  {t.name}
+                </Tag>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </div>
+  </div>
 </section>
 
 <style>
-	.intro {
-		margin-block: var(--space-16) 0;
-		max-width: 60ch;
-	}
-	.tools {
-		display: flex;
-		flex-wrap: wrap;
-		align-content: start;
-		gap: var(--space-12);
-		margin: 0;
-		padding: 0;
-		list-style: none;
-	}
-	.tools li > * {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--space-8);
-		min-height: var(--target-size);
-		padding-inline: var(--space-16);
-		border: 1px solid var(--color-neutral-400);
-		color: var(--color-dark);
-	}
-	.tools a {
-		color: var(--color-link);
-	}
+  /* Sectioning background: the `light` token, full width; content stays in the shell. */
+  .toolkit {
+    background: var(--color-light);
+  }
+  .intro {
+    margin-block: 0 var(--space-24);
+    max-width: 60ch;
+  }
+  .tools {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: start;
+    gap: var(--space-12);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .tools li > * {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    min-height: var(--target-size);
+    padding-inline: var(--space-16);
+    border: 1px solid var(--color-neutral-400);
+    color: var(--color-dark);
+  }
+  .tools a {
+    color: var(--color-link);
+  }
 </style>

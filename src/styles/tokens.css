@@ -7,6 +7,7 @@
 :root {
   /* ---- Spacing (4pt scale) ---- */
   --space-0: 0px;
+  --space-2: 2px;
   --space-4: 4px;
   --space-8: 8px;
   --space-12: 12px;
@@ -32,7 +33,9 @@
   --color-accent-huana: #0c6b4a; /* PLACEHOLDER per-project slot */
   --color-accent-figwrite: #3a3270; /* PLACEHOLDER per-project slot */
   --color-accent-tyia: #1565c0; /* PLACEHOLDER per-project slot */
-  --color-accent: var(--color-accent-home); /* a page or project overrides this one */
+  --color-accent: var(
+    --color-accent-home
+  ); /* a page or project overrides this one */
   --color-focus: var(--color-link); /* focus ring — 10.6:1 on bg */
 
   /* Tile gradients. White text must stay >= 4.5:1 at the lightest point (core). */
@@ -58,7 +61,8 @@
 
   /* ---- Font families (self-hosted, see fonts.css) ---- */
   --font-serif: "Newsreader", Georgia, "Times New Roman", serif; /* headings */
-  --font-sans: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* body/UI */
+  --font-sans:
+    "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* body/UI */
 
   /* ---- Type scale ----
      Fluid via clamp() — scales smoothly between a 375px and 1440px viewport,
@@ -95,13 +99,10 @@
      Breakpoints (reference only — @media can't consume custom properties,
      so these numbers are hardcoded directly in media queries; keep in sync):
        1024px  tablet / desktop — two-column layouts stack below this
-       640px   phone / tablet — grids drop to fewer columns
-       480px   small phone — grids go single column
+       640px   phone — projects grid goes single column
        1440px  content stops growing (--content-max-width)
   */
   --content-max-width: 1440px; /* caps content on 2560px+ screens */
-  --nav-max-width: 280px;
-  --nav-icon-size: 1rem;
 
   --gap: clamp(
     24px,

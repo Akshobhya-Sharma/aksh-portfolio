@@ -1,0 +1,23 @@
+---
+// Inlines one Phosphor SVG at build time. Zero JS shipped; only the icons used end up in the HTML.
+import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import type { IconName } from '../data/home';
+
+interface Props {
+	name: IconName;
+	weight?: 'thin' | 'light' | 'regular' | 'bold' | 'fill' | 'duotone';
+	size?: string; // any CSS length
+}
+const { name, weight = 'regular', size = '1.5rem' } = Astro.props;
+
+// Package exports map "<weight>/*.svg"; regular files have no suffix, others are "<name>-<weight>.svg".
+const file = weight === 'regular' ? name : `${name}-${weight}`;
+const raw = readFileSync(createRequire(import.meta.url).resolve(`@phosphor-icons/core/${weight}/${file}.svg`), 'utf8');
+const svg = raw.replace(
+	'<svg ',
+	`<svg aria-hidden="true" focusable="false" width="${size}" height="${size}" style="flex:none" `,
+);
+---
+
+<Fragment set:html={svg} />
