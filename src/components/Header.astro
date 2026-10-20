@@ -14,13 +14,11 @@ const links = [
     </a>
     <nav aria-label="Primary">
       <ul class="site-header__list">
-        {
-          links.map((l) => (
-            <li>
-              <a href={l.href}>{l.label}</a>
-            </li>
-          ))
-        }
+        {links.map((l) => (
+          <li>
+            <a href={l.href}>{l.label}</a>
+          </li>
+        ))}
       </ul>
     </nav>
   </div>

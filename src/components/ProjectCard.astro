@@ -21,10 +21,11 @@ const { project } = Astro.props;
     <h4>{project.title}</h4>
     <p>{project.summary}</p>
     <a class="card__link" href={`/work/${project.slug}`}>
-      <span class="card__icon"
-        ><Icon name="arrow-circle-right" weight="fill" size="1.75rem" /></span
-      >Read more<span class="sr-only"> about {project.srName}</span></a
-    >
+      <span class="card__icon">
+        <Icon name="arrow-circle-right" weight="fill" size="1.75rem" />
+      </span>
+      Read more<span class="sr-only"> about {project.srName}</span>
+    </a>
   </div>
 </li>
 
@@ -55,6 +56,12 @@ const { project } = Astro.props;
   }
   .card p {
     margin: var(--space-12) 0 var(--space-16);
+  }
+  /* Text sits above the overlay so it can be selected; the rest of the card still clicks through. */
+  .card h4,
+  .card p {
+    position: relative;
+    z-index: 1;
   }
   .card__link {
     display: inline-flex;
@@ -95,12 +102,15 @@ const { project } = Astro.props;
     color: var(--color-light);
   }
   /* Focus ring is drawn around the card on the page background, not on the link. */
-  .card__link:focus-visible {
-    outline: none;
-  }
-  .card:has(.card__link:focus-visible) {
-    outline: var(--focus-ring-width) solid var(--color-focus);
-    outline-offset: var(--focus-ring-offset);
+  /* Without :has() support the link keeps the default focus ring. */
+  @supports selector(:has(*)) {
+    .card__link:focus-visible {
+      outline: none;
+    }
+    .card:has(.card__link:focus-visible) {
+      outline: var(--focus-ring-width) solid var(--color-focus);
+      outline-offset: var(--focus-ring-offset);
+    }
   }
   @media (prefers-reduced-motion: no-preference) {
     .card,

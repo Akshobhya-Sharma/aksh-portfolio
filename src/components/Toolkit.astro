@@ -9,40 +9,29 @@ import { toolkit } from "../data/home";
     </div>
     <div>
       <p class="intro">{toolkit.intro}</p>
-      {
-        /* role=list keeps list semantics in Safari/VoiceOver with list-style:none */
-      }
+      {/* role=list keeps list semantics in Safari/VoiceOver with list-style:none */}
       {/* eslint-disable-next-line astro/jsx-a11y/no-redundant-roles */}
       <ul class="tools" role="list" aria-label={toolkit.listLabel}>
-        {
-          toolkit.items.map((t) => {
-            const Tag = t.href ? "a" : "span";
-            return (
-              <li>
-                <Tag href={t.href}>
-                  {t.logo && (
-                    <img
-                      src={t.logo}
-                      alt=""
-                      width="24"
-                      height="24"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  )}
-                  {t.name}
-                </Tag>
-              </li>
-            );
-          })
-        }
+        {toolkit.items.map((t) => {
+          const Tag = t.href ? "a" : "span";
+          return (
+            <li>
+              <Tag href={t.href}>
+                {t.logo && (
+                  <img src={t.logo} alt="" width="24" height="24" loading="lazy" decoding="async" />
+                )}
+                {t.name}
+              </Tag>
+            </li>
+          );
+        })}
       </ul>
     </div>
   </div>
 </section>
 
 <style>
-  /* Sectioning background: the `light` token, full width; content stays in the shell. */
+  /* Sectioning background: the `light` token, up to the shell max width. */
   .toolkit {
     background: var(--color-light);
   }

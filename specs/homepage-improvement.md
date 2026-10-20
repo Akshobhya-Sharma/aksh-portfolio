@@ -38,7 +38,7 @@ It looks like there are no interactive component islands on this page. Did you f
 
 - There is an <hr> or border-bottom (whichever practice we are using) at the bottom of each section which is missing. It separates the section from the skill set section.
 
-![](C:/Users/leoak/AppData/Roaming/marktext/images/2026-10-20-11-58-58-image.png)
+![](../design/homepage-improvement-images/2026-10-20-11-58-58-image.png)
 
 ### Skill set section
 
@@ -54,7 +54,7 @@ It looks like there are no interactive component islands on this page. Did you f
 
 - The skills are in a grid on larger viewports wraps below the <h2> and body-text until the viewport becomes too small which is when the grid collapses into a vertical stack.
 
-![](C:/Users/leoak/AppData/Roaming/marktext/images/2026-10-20-12-15-27-image.png)
+![](../design/homepage-improvement-images/2026-10-20-12-15-27-image.png)
 
 ### Custom toolkit section
 
@@ -64,7 +64,7 @@ It looks like there are no interactive component islands on this page. Did you f
 
 - this section also has <hr> or margin-bottom. I think margin-bottom works just as well so we should use that for all section separators.
 
-![](C:/Users/leoak/AppData/Roaming/marktext/images/2026-10-20-12-20-34-image.png)
+![](../design/homepage-improvement-images/2026-10-20-12-20-34-image.png)
 
 ### Projects section
 
@@ -76,7 +76,7 @@ It looks like there are no interactive component islands on this page. Did you f
 
 **Hover state of card:**
 
-![](C:/Users/leoak/AppData/Roaming/marktext/images/2026-10-20-12-32-51-image.png)
+![](../design/homepage-improvement-images/2026-10-20-12-32-51-image.png)
 
 ## End with
 
@@ -87,3 +87,7 @@ It looks like there are no interactive component islands on this page. Did you f
 - Provide a quick explanation on how to update case study image with an example so I understand. I think I understand how to add new case studies, categories and how to select categories for case studies but I didn't quite understand how to update the images. I can place them in the public/images folder but then do I just replace `image: placeholder("Huana"),` under `const projects` or is there something else I need to do. From what I understand, the `const placeholder` just contains url to one image and not per project image.
 
 - When done. Let me know so I can assess the work.
+
+## Done 2026-10-20
+
+Built. Section separators use `border-bottom` on `.section` (main.css), not `margin-bottom` or `<hr>`. This applies to every section, including the toolkit, so the margin-bottom suggestion above was not used. The footer has none. Layout and the remaining deviations are recorded in `specs/homepage.md` under Build notes. Pending human checks are listed there too.

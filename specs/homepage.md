@@ -1,6 +1,6 @@
 # Spec: Home page
 
-Type: feature Status: draft
+Type: feature Status: built (2026-10-20), pending human checks
 Save as: specs/homepage.md
 
 ## Goal
@@ -49,7 +49,7 @@ A visitor understands in seconds what Aksh does and who he works with, can brows
 
 ## References refs
 
-`design/*.png (home screenshot)`, `setup_docs/*.css (design guidance)`, `specs/*.md (references)`
+`design/*.png (home screenshot)`, `src/styles/*.css (tokens, main, fonts)`, `specs/*.md (references)`
 
 ## Constraints
 
@@ -61,22 +61,24 @@ A visitor understands in seconds what Aksh does and who he works with, can brows
 
 ## Acceptance
 
-- [ ] At 320, 375, 768, 1024, 1440 and 2560px wide there is no horizontal scrollbar.
-- [ ] At 1024px and wider, Hero, Skill set and Toolkit show heading and content side by side. Below 1024px they stack.
-- [ ] The page has exactly one `<h1>`, and headings never skip a level.
-- [ ] axe reports zero violations on the page.
-- [ ] Every text/background pair in the page, including white text on both gradient tiles, measures at least 4.5:1 (3:1 for text 24px or larger), checked with a contrast tool.
-- [ ] The "focus" accent word measures at least 4.5:1 against the page background.
-- [ ] Keyboard: Tab reaches the skip link first, then header links, button, each project card once, then the email link. Every stop has a visible focus ring.
-- [ ] Each project card has one link, and a screen reader announces it with the project name (for example "Read more about Huana").
-- [ ] Clicking anywhere on a card opens its link.
-- [ ] The toolkit is announced as a list of eight items.
-- [ ] With OS "reduce motion" on, no transitions or animations run.
-- [ ] Browser zoom at 200% keeps all content readable and reachable without horizontal scrolling.
-- [ ] No hex colors or pixel font sizes appear in the page's CSS, only token variables.
-- [ ] The page weighs under 100KB transferred, measured with images excluded in the Network tab.
-- [ ] The page loads and scrolls on Aksh's own phone without the browser crashing.
-- [ ] The mailto link opens a new message addressed to leoaksh@live.in.
+- [x] At 320, 375, 768, 1024, 1440 and 2560px wide there is no horizontal scrollbar.
+- [x] At 1024px and wider, Hero, Skill set and Toolkit show heading and content side by side. Below 1024px they stack.
+- [x] The page has exactly one `<h1>`, and headings never skip a level.
+- [x] axe reports zero violations on the page.
+- [x] Every text/background pair in the page, including white text on both gradient tiles, measures at least 4.5:1 (3:1 for text 24px or larger), checked with a contrast tool.
+- [x] The "focus" accent word measures at least 4.5:1 against the page background.
+- [x] Keyboard: Tab reaches the skip link first, then header links, button, each project card once, then the email link. Every stop has a visible focus ring.
+- [x] Each project card has one link.
+- [ ] (human) A screen reader announces each card link with the project name (for example "Read more about Huana"). NVDA pass pending.
+- [ ] (human) Clicking anywhere on a card opens its link.
+- [x] The toolkit renders as a list of eight items in the DOM.
+- [ ] (human) The toolkit is announced as a list of eight items.
+- [x] With OS "reduce motion" on, no transitions or animations run. Verified in CSS (global reduce override); the OS setting itself was not tested.
+- [x] Browser zoom at 200% keeps all content readable and reachable without horizontal scrolling. Re-check at 400% (grid bug fixed 2026-10-20; the project grid now stacks below 42rem).
+- [x] No hex colors or pixel font sizes appear in the page's CSS, only token variables.
+- [x] The page weighs under 100KB transferred, measured with images excluded (about 81KB).
+- [ ] (human) The page loads and scrolls on Aksh's own phone without the browser crashing.
+- [x] The mailto link is `mailto:leoaksh@live.in` (href verified). Opening a mail client is not tested.
 
 ## Open questions
 
@@ -90,3 +92,14 @@ A visitor understands in seconds what Aksh does and who he works with, can brows
 - Is the copy final? Examples: "an UX design" should probably be "a UX designer", and the TYIA text reads "hired us" (who is "us"?). [Response: This is not the final copy. This is the development copy to get us off the ground. Will be modified later in code manaully if required or in the json file if that is being used for content management.]
 - Mobile and tablet frames: are there designs, or should responsive behavior just follow main.css? [Response: Responsive behaviour has been identified as simple stack on smaller viewports and one mobile screenshot is available in design folder for reference however we need to follow proper industry standard responsiveness with enhancement such as clamp() for font-size so that it is readable, accessible and usable on all viewports (including really large viewports)]
 - Where does the Huana-to-FigWrite throughline callout go on this page, if at all? It is still undecided. [Response: For now, leave it be. We have defined this previously. We will also do a call out on the case study page.]
+
+## Build notes (2026-10-20)
+
+Where the build differs from the scope above, and why:
+
+- Toolkit lists Claude in place of Wix. The eight items are Figma, Claude, Webflow, Miro, Excel, HTML, JavaScript, CSS (`src/data/home.ts`).
+- Header has no "home" text link. The logo links home (`aria-label="Aksh, home"`). The nav is "work" and "connect".
+- Section separators use `border-bottom` on `.section` (main.css), not margins or `<hr>`. The footer has none.
+- `.shell` sits on the section in Hero, SkillSet, Toolkit and Footer, and on an inner wrapper in Header and Projects. The Toolkit band and those section rules cap at 1440px; the Projects rule is full width.
+- Breakpoints in use: 1024px (sections stack) and 640px (Projects groups go to one column). 480px is not used.
+- Icon sizes are rem props on `Icon.astro`, not tokens: hero 1.5rem, card 1.75rem, skills 2rem, back to top 1rem.

@@ -6,7 +6,6 @@
 
 :root {
   /* ---- Spacing (4pt scale) ---- */
-  --space-0: 0px;
   --space-2: 2px;
   --space-4: 4px;
   --space-8: 8px;
@@ -17,9 +16,6 @@
   --space-32: 32px;
   --space-40: 40px;
   --space-48: 48px;
-  --space-80: 80px;
-  --space-120: 120px;
-  --space-160: 160px;
 
   /* ---- Color ---- */
   --color-dark: #1e1c1b; /* primary text — 16.4:1 on bg, AAA */
@@ -33,9 +29,6 @@
   --color-accent-huana: #0c6b4a; /* PLACEHOLDER per-project slot */
   --color-accent-figwrite: #3a3270; /* PLACEHOLDER per-project slot */
   --color-accent-tyia: #1565c0; /* PLACEHOLDER per-project slot */
-  --color-accent: var(
-    --color-accent-home
-  ); /* a page or project overrides this one */
   --color-focus: var(--color-link); /* focus ring — 10.6:1 on bg */
 
   /* Tile gradients. White text must stay >= 4.5:1 at the lightest point (core). */
@@ -51,18 +44,14 @@
      old dGrey/lGrey/cGrey were pure neutral (0% sat) and clashed). Evenly
      spaced by lightness between Dark and Primary bg. Contrast checked
      against Primary bg so you know what's safe for text at a glance. */
-  --color-neutral-100: #e8e6e3; /* 1.20:1 — decorative only (subtle dividers) */
   --color-neutral-200: #c9c4c0; /* 1.67:1 — decorative only (borders) */
-  --color-neutral-300: #aba39c; /* 2.40:1 — decorative only (disabled UI) */
   --color-neutral-400: #8c8278; /* 3.64:1 — UI borders only (3:1), never text */
-  --color-neutral-500: #696159; /* 5.87:1 — large text only */
   --color-neutral-600: #45403b; /* 9.90:1 — AAA text (safe alt to Dark) */
   --color-neutral-700: #2c2926; /* 13.97:1 — AAA text (near-Dark, softer) */
 
   /* ---- Font families (self-hosted, see fonts.css) ---- */
   --font-serif: "Newsreader", Georgia, "Times New Roman", serif; /* headings */
-  --font-sans:
-    "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* body/UI */
+  --font-sans: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* body/UI */
 
   /* ---- Type scale ----
      Fluid via clamp() — scales smoothly between a 375px and 1440px viewport,
@@ -73,7 +62,6 @@
   --text-h2: clamp(1.875rem, 1.479rem + 1.69vw, 3rem); /* 30px -> 48px */
   --text-h3: clamp(1.625rem, 1.405rem + 0.939vw, 2.25rem); /* 26px -> 36px */
   --text-h4: clamp(1.375rem, 1.243rem + 0.563vw, 1.75rem); /* 22px -> 28px */
-  --text-h5: clamp(1.25rem, 1.162rem + 0.376vw, 1.5rem); /* 20px -> 24px */
   --text-h6: clamp(1.125rem, 1.081rem + 0.188vw, 1.25rem); /* 18px -> 20px */
   --text-body-1: clamp(1rem, 0.956rem + 0.188vw, 1.125rem); /* 16px -> 18px */
   --text-subtitle: 1rem; /* eyebrow/nav labels — fixed, not fluid */
@@ -82,14 +70,12 @@
 
   /* ---- Font weights ---- */
   --weight-light: 300;
-  --weight-regular: 400;
   --weight-medium: 500;
 
   /* ---- Letter spacing ----
      Figma stores these as % of font-size; CSS has no % unit for
      letter-spacing, so they're pre-converted to em. */
   --tracking-subtitle: 0.04em; /* was 4% in Figma */
-  --tracking-normal: 0em;
 
   /* ---- Line height (sensible defaults, not in Figma export — adjust freely) ---- */
   --leading-heading: 1.15;
@@ -99,7 +85,7 @@
      Breakpoints (reference only — @media can't consume custom properties,
      so these numbers are hardcoded directly in media queries; keep in sync):
        1024px  tablet / desktop — two-column layouts stack below this
-       640px   phone — projects grid goes single column
+       42rem   phone and high zoom — projects grid goes single column
        1440px  content stops growing (--content-max-width)
   */
   --content-max-width: 1440px; /* caps content on 2560px+ screens */

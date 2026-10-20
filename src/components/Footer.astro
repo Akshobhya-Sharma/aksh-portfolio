@@ -4,19 +4,21 @@ import Icon from "./Icon.astro";
 ---
 
 <footer>
-  <section
-    id="connect"
-    class="shell section footer__section"
-    aria-labelledby="connect-heading"
-  >
-    <h2 id="connect-heading" class="sr-only">{footer.heading}</h2>
+  <section id="connect" class="shell section footer__section" aria-labelledby="connect-heading">
+    <h2 id="connect-heading" class="sr-only">
+      {footer.heading}
+    </h2>
     <p class="availability">
-      {footer.availability.before}<strong>{footer.availability.strong}</strong>{
-        footer.availability.after
-      }
+      {footer.availability.before}
+      <strong>{footer.availability.strong}</strong>
+      {footer.availability.after}
     </p>
-    <p class="email"><a href={`mailto:${footer.email}`}>{footer.email}</a></p>
-    {footer.extraLines.map((line) => <p class="extra">{line}</p>)}
+    <p class="email">
+      <a href={`mailto:${footer.email}`}>{footer.email}</a>
+    </p>
+    {footer.extraLines.map((line) => (
+      <p class="extra">{line}</p>
+    ))}
     <a class="back-to-top" href="#top">
       <Icon name="arrow-up" size="1rem" />
       Back to top
@@ -39,9 +41,6 @@ import Icon from "./Icon.astro";
     font-size: var(--text-h2);
     line-height: var(--leading-heading);
     overflow-wrap: anywhere;
-  }
-  .email a {
-    text-decoration: underline;
   }
   .extra {
     margin: var(--space-8) 0 0;

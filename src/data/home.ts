@@ -19,10 +19,7 @@ import type { PhosphorIcon } from "@phosphor-icons/core";
 export type IconName = PhosphorIcon["name"]; // any Phosphor icon, see phosphoricons.com
 export type GradientToken = "tile-blue" | "tile-green"; // -> --tile-blue-core / --tile-blue-edge, etc.
 export type AccentToken =
-  | "color-accent-home"
-  | "color-accent-huana"
-  | "color-accent-figwrite"
-  | "color-accent-tyia";
+  "color-accent-home" | "color-accent-huana" | "color-accent-figwrite" | "color-accent-tyia";
 
 export interface Category {
   id: string;
@@ -35,7 +32,7 @@ export interface Project {
   srName: string; // used in "Read more about {srName}"
   title: string;
   summary: string;
-  categoryId: Category["id"];
+  categoryId: (typeof categories)[number]["id"]; // a typo fails typecheck
   accent: AccentToken;
   image: { src: string; alt: string; width: number; height: number };
 }
@@ -70,8 +67,7 @@ export const skillSet = {
     {
       icon: "microscope",
       title: "UX Design",
-      description:
-        "I craft responsive, accessible interfaces that are intuitive and inclusive.",
+      description: "I craft responsive, accessible interfaces that are intuitive and inclusive.",
     },
     {
       icon: "wheelchair",
@@ -119,7 +115,7 @@ export const projectsSection = {
 export const categories = [
   { id: "design-coding", title: "Design and coding", gradient: "tile-blue" },
   { id: "ux-ui", title: "UX / UI Projects", gradient: "tile-green" },
-] satisfies Category[];
+] as const satisfies readonly Category[];
 
 const placeholder = () => ({
   // TODO: replace `placeholder()` on each project with its real { src, alt, width, height }.

@@ -10,15 +10,13 @@ import Icon from "./Icon.astro";
       <p class="intro">{skillSet.intro}</p>
     </div>
     <ul class="skills">
-      {
-        skillSet.skills.map((s) => (
-          <li>
-            <Icon name={s.icon} size="2rem" />
-            <h3 class="skills__title">{s.title}</h3>
-            <p>{s.description}</p>
-          </li>
-        ))
-      }
+      {skillSet.skills.map((s) => (
+        <li>
+          <Icon name={s.icon} size="2rem" />
+          <h3 class="skills__title">{s.title}</h3>
+          <p>{s.description}</p>
+        </li>
+      ))}
     </ul>
   </div>
 </section>
@@ -39,7 +37,6 @@ import Icon from "./Icon.astro";
   }
   .skills li {
     min-width: 0;
-    color: var(--color-dark);
   }
   .skills p {
     margin: var(--space-8) 0 0;

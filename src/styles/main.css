@@ -1,7 +1,7 @@
 /* ==========================================================================
    MAIN — base + layout
    Requires tokens.css and fonts.css loaded first.
-   Breakpoints (1024 / 640 / 480) are documented in tokens.css — keep in sync.
+   Breakpoints (1024px, 42rem) are documented in tokens.css — keep in sync.
    Component-specific styles live in their components.
    ========================================================================== */
 
