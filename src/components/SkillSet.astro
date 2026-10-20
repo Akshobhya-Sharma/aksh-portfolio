@@ -1,0 +1,50 @@
+---
+import { skillSet } from "../data/home";
+import Icon from "./Icon.astro";
+---
+
+<section class="shell section" aria-labelledby="skills-heading">
+  <div class="section-columns">
+    <div>
+      <h2 id="skills-heading">{skillSet.heading}</h2>
+      <p class="intro">{skillSet.intro}</p>
+    </div>
+    <ul class="skills">
+      {skillSet.skills.map((s) => (
+        <li>
+          <Icon name={s.icon} size="2rem" />
+          <h3 class="skills__title">{s.title}</h3>
+          <p>{s.description}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .intro {
+    margin-block: var(--space-16) 0;
+    max-width: 60ch;
+  }
+  /* Wraps from 2 columns down to 1 as the container narrows. */
+  .skills {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(14rem, 100%), 1fr));
+    gap: var(--space-40) var(--space-32);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .skills li {
+    min-width: 0;
+  }
+  .skills p {
+    margin: var(--space-8) 0 0;
+  }
+  .skills__title {
+    margin-block-start: var(--space-16);
+    font-family: var(--font-sans);
+    font-weight: var(--weight-medium);
+    font-size: var(--text-h6);
+  }
+</style>

@@ -1,0 +1,67 @@
+---
+import Logo from "../assets/logo.svg";
+
+const links = [
+  { label: "work", href: "#projects" },
+  { label: "connect", href: "#connect" },
+];
+---
+
+<header class="site-header">
+  <div class="shell site-header__inner">
+    <a class="site-header__logo" href="/" aria-label="Aksh, home">
+      <Logo aria-hidden="true" focusable="false" />
+    </a>
+    <nav aria-label="Primary">
+      <ul class="site-header__list">
+        {links.map((l) => (
+          <li>
+            <a href={l.href}>{l.label}</a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .site-header__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8) var(--space-24);
+    padding-block: var(--space-16);
+  }
+  .site-header__logo {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target-size);
+    min-width: var(--target-size);
+    color: var(--color-dark);
+  }
+  .site-header__logo :global(svg) {
+    height: var(--logo-size);
+    width: auto;
+  }
+  .site-header__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-8) var(--space-24);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .site-header__list a {
+    display: inline-flex;
+    align-items: center;
+    min-height: var(--target-size);
+    font-size: var(--text-subtitle);
+    letter-spacing: var(--tracking-subtitle);
+    color: var(--color-link);
+    text-decoration: none;
+  }
+  .site-header__list a:hover {
+    text-decoration: underline;
+  }
+</style>

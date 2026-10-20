@@ -1,0 +1,58 @@
+---
+import { categories, projects, projectsSection } from "../data/home";
+import CategoryTile from "./CategoryTile.astro";
+import ProjectCard from "./ProjectCard.astro";
+
+const groups = categories
+  .map((category) => ({ category, items: projects.filter((p) => p.categoryId === category.id) }))
+  .filter((g) => g.items.length > 0);
+---
+
+<section id="projects" class="section" aria-labelledby="projects-heading">
+  <div class="shell">
+    <h2 id="projects-heading">{projectsSection.heading}</h2>
+    <p class="intro">{projectsSection.intro}</p>
+    {groups.map(({ category, items }) => (
+      <div class="group">
+        <CategoryTile category={category} />
+        {/* role=list keeps list semantics with list-style:none and display:contents */}
+        {/* eslint-disable-next-line astro/jsx-a11y/no-redundant-roles */}
+        <ul class="cards" role="list">
+          {items.map((project) => (
+            <ProjectCard project={project} />
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .intro {
+    margin-block: var(--space-16) var(--space-48);
+  }
+  /* Tile and cards share one two-column grid; the list is flattened into it. */
+  .group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap);
+    padding-block: var(--space-48);
+    border-top: 1px solid var(--color-neutral-200);
+  }
+  .group:first-of-type {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .cards {
+    display: contents;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* rem, not px: the grid also stacks at high zoom and large text. */
+  @media (max-width: 42rem) {
+    .group {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+</style>

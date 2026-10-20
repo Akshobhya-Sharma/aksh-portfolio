@@ -52,7 +52,7 @@ Visitors can read Aksh's case studies and find how to contact him, on any device
 tokens.css
 
 - Add `--space-24`, used in clamp minimums but missing from the scale.
-- Add `@font-face` for Gambetta Variable and Satoshi Variable (self-hosted woff2, `font-display: swap`).
+- Add `@font-face` for Newsreader and Figtree (self-hosted woff2, `font-display: swap`). Replaces Gambetta Variable and Satoshi Variable.
 - Add link hover/visited states and a focus ring token.
 - Add section theme tokens, each with a contrast-verified text pair.
 
@@ -81,7 +81,11 @@ main.css
 
 ## Design refs
 
-design/\*.png, design/tokens.md, setup_docs/\*.css
+design/*.png, src/styles/tokens.css
+
+## Tech stack documentation
+
+Astro docs has been added as an MCP server that allows for reading of latest Astro docs. The URL to the MCP server for Astro docs is `https://mcp.docs.astro.build/mcp`.
 
 ## Constraints
 
@@ -113,7 +117,7 @@ design/\*.png, design/tokens.md, setup_docs/\*.css
 ## Open questions
 
 - Accessibility target: the earlier plan aimed for AAA text contrast on noise gradients, but this brief says AA. Which applies to text on gradient backgrounds? [Response: AAA for text so that it is always readable.]
-- Font licensing: do the Gambetta and Satoshi licenses allow self-hosting on a public site? [Response: Use Newsreader and Figtree instead. Updated in tokens.css but needs to be properly implemented.]
+- Font licensing: do the Gambetta and Satoshi licenses allow self-hosting on a public site? [Response: Use Newsreader and Figtree instead. Implemented in src/styles/fonts.css.]
 - Side-nav label case: uppercase in main.css, lowercase in the screenshots. Which is correct? [Response: Use lowercase.]
 - Which pages exist beyond home and the two case studies? The header shows "work" and "connect"; is "work" a separate index page, or does it link to the Projects section on home? [Response: To begin with, work should anchor to the projects section; connect should anchor to bottom so that footer is exposed. Footer contains the contact email.]
 - Where does the cross-project throughline (accessibility-agent practice started in Huana, carried into FigWrite) appear on the site? Earlier guess was a site-level callout, not decided. [Response: use the combination. A one-line callout on the home page, plus a “carried over from Huana” section in FigWrite and a “where this practice started” note in Huana. It needs no new page, and it avoids repeating the story twice. it should only claim what the git history and your notes actually show (the review passes, the accessibility audit and the findings table), with no invented numbers.]

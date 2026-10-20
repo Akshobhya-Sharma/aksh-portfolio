@@ -1,13 +1,19 @@
 /* ==========================================================================
    MAIN — base + layout
-   Requires tokens.css loaded first.
-   Breakpoint numbers used below (sm 640 / md 1024 / lg 1440) are documented
-   in tokens.css — keep both in sync if they ever change.
+   Requires tokens.css and fonts.css loaded first.
+   Breakpoints (1024px, 42rem) are documented in tokens.css — keep in sync.
+   Component-specific styles live in their components.
    ========================================================================== */
 
 /* ---- Reset (minimal, not a full reset library) ---- */
-*, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
 body {
   margin: 0;
   background: var(--color-primary-bg);
@@ -16,206 +22,135 @@ body {
   font-size: var(--text-body-2);
   line-height: var(--leading-body);
 }
-img, svg { display: block; max-width: 100%; }
-a { color: var(--color-link); }
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+a {
+  color: var(--color-link);
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-serif);
+  font-weight: var(--weight-light);
+  line-height: var(--leading-heading);
+  margin: 0;
+}
+h1 {
+  font-size: var(--text-h1);
+}
+h2 {
+  font-size: var(--text-h2);
+}
+h3 {
+  font-size: var(--text-h3);
+}
+h4 {
+  font-size: var(--text-h4);
+}
+
+/* ---- Focus ---- */
+:focus-visible {
+  outline: var(--focus-ring-width) solid var(--color-focus);
+  outline-offset: var(--focus-ring-offset);
+}
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
+  }
+}
+
+/* ---- Skip link: first focusable element, visible on focus ---- */
+.skip-link {
+  position: absolute;
+  inset-block-start: var(--space-8);
+  inset-inline-start: var(--space-8);
+  z-index: 100;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--target-size);
+  padding-inline: var(--space-16);
+  background: var(--color-dark);
+  color: var(--color-light);
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+
+/* Anchor targets clear the top edge when jumped to. */
+[id] {
+  scroll-margin-top: var(--space-24);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* ---- Page shell ----
-   Every landmark (header row, main grid, footer row) shares ONE centered
-   max-width wrapper, so nothing spreads edge-to-edge on ultra-wide screens.
-   This is the answer to the 2560px problem: cap + center, let the grainy
-   background fill the rest. */
+   Every landmark shares ONE centered max-width wrapper, so nothing spreads
+   edge-to-edge on ultra-wide screens. Horizontal padding lives here only. */
 .shell {
   max-width: var(--content-max-width);
   margin-inline: auto;
   padding-inline: var(--section-padding-inline);
 }
 
-/* ---- Header ----
-   Height is intentionally NOT fixed — it's driven by --logo-size + padding,
-   so it scales naturally with the fluid logo. JS toggles .header--hidden on
-   scroll direction (built in the interactions phase); the transition lives
-   here so that's a one-line class swap, not new CSS. */
-.site-header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: var(--color-primary-bg);
-  transition: transform 0.3s ease;
-}
-.site-header.header--hidden {
-  transform: translateY(-100%);
-}
-.site-header .shell {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-block: var(--space-16);
-}
-.site-header .logo {
-  height: var(--logo-size);
-  width: auto;
-}
-.site-header nav {
-  display: flex;
-  gap: var(--space-32);
-}
-.site-header nav a {
-  font-size: var(--text-body-2);
-  text-decoration: none;
-}
-
-/* ---- Main grid: side-nav + content ----
-   Fixed 280px nav column down to md (1024px), where it collapses entirely
-   and the bottom-drawer nav (interactions phase) takes over instead. */
-.main-grid {
-  display: grid;
-  grid-template-columns: var(--nav-max-width) 1fr;
-  gap: var(--gap);
-  align-items: start;
-}
-
-.side-nav {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  max-width: var(--nav-max-width);
-  display: flex;
-  flex-direction: column;
-  justify-content: center; /* full-height, vertically centered per spec */
-  gap: var(--space-16);
-}
-.side-nav .nav-item {
-  display: flex;
-  align-items: center;
-  gap: var(--space-12);
-  width: 100%;
-}
-.side-nav .nav-dot {
-  flex: 0 0 var(--nav-icon-size);
-  width: var(--nav-icon-size);
-  height: var(--nav-icon-size);
-}
-.side-nav .nav-label {
-  width: 100%;         /* wraps naturally as the column narrows */
-  font-size: var(--text-subtitle);
-  letter-spacing: var(--tracking-subtitle);
-  text-transform: uppercase;
-}
-
 /* ---- Sections ----
-   No gap between sections in the flow — separation comes from padding +
-   an optional <hr>, per your design. Padding is fluid so 80/48 desktop
-   eases down to 48/20 on mobile instead of wasting space. */
-.main-content {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-}
-section {
+   Vertical rhythm only; horizontal padding comes from .shell. */
+.section {
   padding-block: var(--section-padding-block);
-  padding-inline: var(--section-padding-inline);
-}
-section hr {
-  border: none;
-  border-top: 1px solid var(--color-neutral-200);
-  margin: 0;
+  border-bottom: 1px solid var(--color-neutral-200); /* one separator style for every section */
 }
 
-/* Section's internal heading | content split — 50/50 per your spec. */
+/* Section's internal heading | content split — 50/50. min-width:0 lets
+   children shrink instead of forcing sideways scroll. */
 .section-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--gap);
 }
-
-/* ---- Grid utilities ----
-   Two flavors covers everything you described: explicit column counts
-   for controlled layouts, and auto-fit for organic reflow. Both collapse
-   sanely on small screens without extra per-page media queries. */
-.grid {
-  display: grid;
-  gap: var(--gap);
-}
-.grid-2 { grid-template-columns: repeat(2, 1fr); }
-.grid-3 { grid-template-columns: repeat(3, 1fr); }
-.grid-4 { grid-template-columns: repeat(4, 1fr); }
-.grid-auto { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
-
-/* ---- Full-bleed opt-in ----
-   Any element (image, carousel, pan-canvas) gets this class to break out
-   to true viewport edges, regardless of how deep it's nested. Everything
-   else defaults to contained. This is what gives you the "choose on the
-   fly" freedom you asked for. */
-.full-bleed {
-  width: 100vw;
-  margin-inline: calc(50% - 50vw);
-}
-
-/* ---- Footer ----
-   Minimal, per your design: contact block left, two link groups right. */
-.site-footer .shell {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: var(--gap);
-  padding-block: var(--section-padding-block);
-}
-.footer-links {
-  display: flex;
-  gap: var(--space-48);
-}
-.footer-links h4 {
-  font-size: var(--text-subtitle);
-  letter-spacing: var(--tracking-subtitle);
-  text-transform: uppercase;
-  margin: 0 0 var(--space-12);
-}
-.footer-links ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-8);
+.section-columns > * {
+  min-width: 0;
 }
 
 /* ==========================================================================
    RESPONSIVE
    ========================================================================== */
 
-/* md: 1024px — side-nav collapses, two-col sections stack.
-   Assumption flagged: I've tied section-column stacking to the same
-   breakpoint as the nav drawer, for one consistent "mobile mode" cutoff
-   rather than two different ones. Easy to split apart if you want the
-   two-col text to survive further down than the nav does. */
+/* 1024px — two-column sections stack. */
 @media (max-width: 1023px) {
-  .main-grid {
-    grid-template-columns: 1fr;
-  }
-  .side-nav {
-    display: none; /* bottom-drawer nav takes over — built in interactions phase */
-  }
   .section-columns {
     grid-template-columns: 1fr;
-    gap: var(--space-48); /* fixed 48px stacked gap, per spec */
-  }
-  .site-footer .shell {
-    grid-template-columns: 1fr;
+    gap: var(--space-48);
   }
 }
 
-/* sm: 640px — grid utilities collapse further, footer link groups stack */
-@media (max-width: 639px) {
-  .grid-3, .grid-4 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .footer-links {
-    flex-direction: column;
-    gap: var(--space-32);
+/* ---- Reduced motion: kill transitions/animations and smooth scroll ---- */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
-
-@media (max-width: 479px) {
-  .grid-2, .grid-3, .grid-4, .grid-auto {
-    grid-template-columns: 1fr;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

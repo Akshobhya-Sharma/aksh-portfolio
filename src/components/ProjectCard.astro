@@ -1,0 +1,130 @@
+---
+import type { Project } from "../data/home";
+import Icon from "./Icon.astro";
+
+interface Props {
+  project: Project;
+}
+const { project } = Astro.props;
+---
+
+<li class="card" style={`--accent: var(--${project.accent})`}>
+  <img
+    src={project.image.src}
+    alt={project.image.alt}
+    width={project.image.width}
+    height={project.image.height}
+    loading="lazy"
+    decoding="async"
+  />
+  <div class="card__body">
+    <h4>{project.title}</h4>
+    <p>{project.summary}</p>
+    <a class="card__link" href={`/work/${project.slug}`}>
+      <span class="card__icon">
+        <Icon name="arrow-circle-right" weight="fill" size="1.75rem" />
+      </span>
+      Read more<span class="sr-only"> about {project.srName}</span>
+    </a>
+  </div>
+</li>
+
+<style>
+  /* Cards in a grid row stretch to the same height; the link is pinned to the bottom. */
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-24);
+    min-width: 0;
+    padding: var(--space-20);
+    border: 1px solid transparent;
+  }
+  .card img {
+    width: 100%;
+    height: auto;
+    border-radius: var(--space-4);
+  }
+  /* Accent is decoration only: a bar above the title. */
+  .card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: flex-start;
+    border-top: var(--space-2) solid var(--accent);
+    padding-top: var(--space-16);
+  }
+  .card p {
+    margin: var(--space-12) 0 var(--space-16);
+  }
+  /* Text sits above the overlay so it can be selected; the rest of the card still clicks through. */
+  .card h4,
+  .card p {
+    position: relative;
+    z-index: 1;
+  }
+  .card__link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-8);
+    margin-top: auto;
+    min-height: var(--target-size);
+    padding-inline: var(--space-16);
+    border: 1px solid transparent;
+    color: var(--color-dark);
+    text-decoration: none;
+  }
+  /* Icon = dark circle with a white arrow: dark glyph over a light backing shows the arrow through the cut-out. */
+  .card__icon {
+    display: inline-flex;
+    border-radius: 50%;
+    color: var(--color-dark);
+  }
+  /* Stretched overlay: whole card is one click target and one tab stop. */
+  .card__link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+  }
+  /* Hover and keyboard focus share one state. */
+  .card:hover,
+  .card:has(.card__link:focus-visible) {
+    background: var(--color-light);
+    border-color: var(--color-neutral-200);
+  }
+  .card:hover .card__link,
+  .card:has(.card__link:focus-visible) .card__link {
+    background: var(--color-dark);
+    color: var(--color-light);
+  }
+  .card:hover .card__icon,
+  .card:has(.card__link:focus-visible) .card__icon {
+    color: var(--color-light);
+  }
+  /* Focus ring is drawn around the card on the page background, not on the link. */
+  /* Without :has() support the link keeps the default focus ring. */
+  @supports selector(:has(*)) {
+    .card__link:focus-visible {
+      outline: none;
+    }
+    .card:has(.card__link:focus-visible) {
+      outline: var(--focus-ring-width) solid var(--color-focus);
+      outline-offset: var(--focus-ring-offset);
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .card,
+    .card__link,
+    .card__icon {
+      transition:
+        background-color 0.15s,
+        border-color 0.15s,
+        color 0.15s;
+    }
+  }
+  @media (forced-colors: active) {
+    .card:has(.card__link:focus-visible) {
+      outline-color: Highlight;
+    }
+  }
+</style>
