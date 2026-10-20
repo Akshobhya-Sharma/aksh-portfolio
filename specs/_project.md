@@ -81,7 +81,11 @@ main.css
 
 ## Design refs
 
-design/\*.png, design/tokens.md, setup_docs/\*.css
+design/*.png, src/styles/tokens.css
+
+## Tech stack documentation
+
+Astro docs has been added as an MCP server that allows for reading of latest Astro docs. The URL to the MCP server for Astro docs is `https://mcp.docs.astro.build/mcp`.
 
 ## Constraints
 

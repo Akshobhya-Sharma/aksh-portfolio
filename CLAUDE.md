@@ -20,7 +20,7 @@ Static portfolio of UX case studies; light on memory, keyboard and screen-reader
 - Build-time over runtime: Shiki for code, Node scripts for noise tiles and contrast checks.
 
 ## UI
-- Tokens/base CSS: `setup_docs/tokens.css`, `setup_docs/main.css` (move to `src/styles/` in Milestone 2)
+- Tokens/base CSS: `src/styles/tokens.css` (the token source; no design/tokens.md), `src/styles/main.css`, `src/styles/fonts.css`
 - Fonts: Newsreader + Figtree, self-hosted woff2, `font-display: swap`
 - Design refs: `design/*.png` are screenshots; open only when a task refers to them
 - WCAG 2.2 AA floor, AAA for text contrast (including text on gradients)

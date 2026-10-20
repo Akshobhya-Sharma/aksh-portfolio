@@ -1,0 +1,56 @@
+---
+import { skillSet } from '../data/home';
+---
+
+<section class="section" aria-labelledby="skills-heading">
+	<div class="shell section-columns">
+		<div>
+			<h2 id="skills-heading">{skillSet.heading}</h2>
+			<p class="intro">{skillSet.intro}</p>
+		</div>
+		<ul class="skills">
+			{
+				skillSet.skills.map((s) => (
+					<li>
+						<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false">
+							<circle cx="8" cy="8" r="4" fill="currentColor" />
+						</svg>
+						<div>
+							<h3 class="skills__title">{s.title}</h3>
+							<p>{s.description}</p>
+						</div>
+					</li>
+				))
+			}
+		</ul>
+	</div>
+</section>
+
+<style>
+	.intro {
+		margin-block: var(--space-16) 0;
+		max-width: 60ch;
+	}
+	.skills {
+		display: grid;
+		gap: var(--space-32);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+	.skills li {
+		display: flex;
+		gap: var(--space-16);
+	}
+	.skills svg {
+		flex: none;
+		margin-block-start: var(--space-8);
+		color: var(--color-accent);
+	}
+	.skills p {
+		margin: var(--space-4) 0 0;
+	}
+	.skills__title {
+		font-size: var(--text-h5);
+	}
+</style>
