@@ -37,8 +37,8 @@
   --color-neutral-700: #2c2926; /* 13.97:1 — AAA text (near-Dark, softer) */
 
   /* ---- Font families ---- */
-  --font-serif: "Gambetta Variable", Georgia, serif; /* headings */
-  --font-sans: "Satoshi Variable", -apple-system, sans-serif; /* body/UI */
+  --font-serif: "Newsreader", Georgia, serif; /* headings */
+  --font-sans: "Figtree", -apple-system, sans-serif; /* body/UI */
 
   /* ---- Type scale ----
      Fluid via clamp() — scales smoothly between a 375px and 1440px viewport,
