@@ -4,7 +4,7 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 
 ## Stack
 
-- Astro 7 (static, zero client JS), TypeScript strict, plain CSS custom properties, Node 24 (`.nvmrc`), npm
+- Astro 7 (static, zero client JS), `@astrojs/mdx` (case studies are MDX, not plain Markdown), TypeScript strict, plain CSS custom properties, Node 24 (`.nvmrc`), npm
 - Prettier 3 with prettier-plugin-astro (dev only)
 - Deploy: GitHub Pages via `.github/workflows/deploy.yml` on push to main. `site` in astro.config.mjs and `public/CNAME` are staged for uxaksh.ca. No `base` is set, so a github.io/<repo> deploy would 404 assets.
 

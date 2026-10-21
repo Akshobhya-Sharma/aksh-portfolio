@@ -21,7 +21,7 @@ Visitors can read Aksh's case studies and find how to contact him, on any device
 - Astro, static output: ships no JS by default, outputs plain HTML/CSS that GitHub Pages serves.
 - Plain CSS with custom properties, no Tailwind: Aksh wants clean, readable code and already has tokens.css and main.css.
 - No client-side UI framework (no React): keeps JS payload and memory use low.
-- Case studies are Markdown files in an Astro content collection: adding one means adding one file.
+- Case studies are MDX files in an Astro content collection (`@astrojs/mdx`): adding one means adding one file, and components can be imported inside it. Plain Markdown tables and fenced code still work.
 - Side nav is generated from case study headings: no manual nav upkeep.
 - Shiki for the fake IDE code window: highlights at build time, zero client JS.
 - Noise gradient is a small pre-rendered tile over a CSS gradient, with a build-time contrast check: avoids heavy live SVG filters and enforces accessible text on backgrounds.
@@ -29,7 +29,7 @@ Visitors can read Aksh's case studies and find how to contact him, on any device
 - Animation is CSS only, transform and opacity, with a reduced-motion fallback: cheap on memory and respects user settings.
 - Cross-document View Transitions as progressive enhancement: page transitions without a JS router.
 - GitHub Actions deploys to GitHub Pages, custom domain via CNAME: free, and the source stays in the repo.
-- A `/styleguide` page shows every component and variant: the closest thing to a visual workspace, and an accessibility test bench.
+- A dev-only `/components` page (driven by `src/data/components.ts`) shows every case-study component and variant; a `/styleguide` page may follow: the closest thing to a visual workspace, and an accessibility test bench.
 - Claude Code governed by a CLAUDE.md: keeps generated code consistent with these rules.
 - Visual editors (e.g. Caret) are not in the core stack: they add a React and sync layer this site does not need.
 - Decorative-only greys (neutral-100 to 400) are never used for text: their contrast is too low per tokens.css notes.
@@ -38,7 +38,7 @@ Visitors can read Aksh's case studies and find how to contact him, on any device
 ## Scope
 
 - Home page: hero, skill set, custom toolkit, projects, contact footer.
-- Case study pages (FigWrite, Huana) from Markdown, with side nav, tables, stat cards, commit timeline, code window.
+- Case study pages (FigWrite, Huana) from MDX, with side nav, tables, stat cards, commit timeline, code window.
 - Global header, footer, mobile menu, mobile page-nav disclosure.
 - Section theme variants (plain, tinted, gradient, dark).
 - Noise gradient generator with automated contrast check.
@@ -101,7 +101,7 @@ Astro docs has been added as an MCP server that allows for reading of latest Ast
 
 - [ ] `npm run build` completes with no errors and outputs static files only.
 - [ ] https://uxaksh.ca loads over HTTPS from GitHub Pages.
-- [ ] Adding a new `.md` file to `src/content/work/` produces a new case study page without editing any other file.
+- [ ] Adding a new `.mdx` file to `src/content/work/` produces a new case study page without editing any other file.
 - [ ] Every page passes an automated axe scan with zero violations.
 - [ ] Every page can be fully operated by keyboard alone, with a visible focus indicator and a working skip link.
 - [ ] Contrast script fails the build when a text color on a gradient or noise background is below AA, and passes on all shipped backgrounds.
@@ -134,7 +134,7 @@ Astro docs has been added as an MCP server that allows for reading of latest Ast
 - Astro (static): zero JS by default, component and Markdown workflow, outputs plain files for GitHub Pages.
 - Plain CSS with custom properties: clean, readable, already written.
 - TypeScript: not decided. Astro works with plain JS. See Open questions if needed.
-- Markdown via Astro content collections: case studies as files.
+- MDX via Astro content collections (`@astrojs/mdx`, MIT): case studies as files, with components usable inside.
 - Shiki: build-time code highlighting.
 - Node scripts (`make-noise.mjs`, `check-contrast.mjs`): generate noise tiles and enforce contrast without runtime cost.
 - Database: none, content is files.
