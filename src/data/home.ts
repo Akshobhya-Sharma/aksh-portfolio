@@ -6,7 +6,7 @@
 // - Add a project: add an entry to `projects` with a unique slug and a categoryId matching a category id.
 //   Change categoryId to move a card to another category. Array order is page order.
 // - Accent: set `accent` to a token name from AccentToken. To add one, define --color-accent-<name> in tokens.css
-//   (>= 4.5:1 on the page bg; run `npm run contrast`) and add it to AccentToken below.
+//   (>= 4.5:1 on the page bg; run `npm run contrast`) and add it to `accentTokens` below. A new category id goes in `categoryIds` too.
 // - Gradient: edit the --tile-* values in tokens.css (white text must stay >= 4.5:1; `npm run contrast` checks it).
 // - Images: put files in public/images/ and replace a project's `image` with
 //   { src: "/images/<file>", alt: "<what the image shows>", width: <px>, height: <px> }.
@@ -18,17 +18,23 @@ import type { PhosphorIcon } from "@phosphor-icons/core";
 
 export type IconName = PhosphorIcon["name"]; // any Phosphor icon, see phosphoricons.com
 export type GradientToken = "tile-blue" | "tile-green"; // -> --tile-blue-core / --tile-blue-edge, etc.
-export type AccentToken =
-  "color-accent-home" | "color-accent-huana" | "color-accent-figwrite" | "color-accent-tyia";
+export const accentTokens = [
+  "color-accent-home",
+  "color-accent-huana",
+  "color-accent-figwrite",
+  "color-accent-tyia",
+] as const;
+export type AccentToken = (typeof accentTokens)[number];
+export const categoryIds = ["design-coding", "ux-ui"] as const; // also the `work` collection category enum
 
 export interface Category {
-  id: string;
+  id: (typeof categoryIds)[number];
   title: string;
   gradient: GradientToken;
 }
 
 export interface Project {
-  slug: string; // case study lives at /work/<slug> (page not built yet)
+  slug: string; // case study lives at /work/<slug> (see src/content/work)
   srName: string; // used in "Read more about {srName}"
   title: string;
   summary: string;

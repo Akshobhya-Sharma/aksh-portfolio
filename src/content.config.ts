@@ -1,8 +1,9 @@
 import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { accentTokens, categoryIds } from "./data/home";
 
-// category ids match `categories` in src/data/home.ts.
+// category and accent enums come from src/data/home.ts.
 // accent is a full token name (as in home.ts AccentToken): use as `var(--${accent})`.
 const work = defineCollection({
   loader: glob({ pattern: "**/*.mdx", base: "./src/content/work" }),
@@ -11,14 +12,9 @@ const work = defineCollection({
       .object({
         title: z.string(),
         summary: z.string(),
-        category: z.enum(["design-coding", "ux-ui"]),
-        layout: z.enum(["default", "wide"]).default("default"),
-        accent: z.enum([
-          "color-accent-home",
-          "color-accent-huana",
-          "color-accent-figwrite",
-          "color-accent-tyia",
-        ]),
+        category: z.enum(categoryIds),
+        width: z.enum(["default", "wide"]).default("default"),
+        accent: z.enum(accentTokens),
         cover: z.object({ src: image(), alt: z.string().min(1) }).optional(),
         date: z.coerce.date(),
         draft: z.boolean().default(false),

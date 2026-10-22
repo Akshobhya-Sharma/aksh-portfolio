@@ -1,0 +1,103 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata, MarkdownHeading } from "astro";
+import BaseLayout from "./BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import SideNav from "../components/case-study/SideNav.astro";
+
+interface Props {
+  title: string;
+  summary: string;
+  width: "default" | "wide";
+  accent: string;
+  cover?: { src: ImageMetadata; alt: string };
+  headings: MarkdownHeading[];
+}
+
+const { title, summary, width, accent, cover, headings } = Astro.props;
+---
+
+<BaseLayout title={`${title} | Aksh`} description={summary}>
+  <Header slot="header" />
+  <article
+    class={`shell case-study case-study--${width}`}
+    style={`--case-accent: var(--${accent})`}
+  >
+    <header class="case-study__intro">
+      <h1>{title}</h1>
+      <p class="case-study__summary">{summary}</p>
+      {cover && (
+        <Image
+          class="case-study__cover"
+          src={cover.src}
+          alt={cover.alt}
+          loading="eager"
+          fetchpriority="high"
+        />
+      )}
+    </header>
+    <div class="case-study__body">
+      <SideNav headings={headings} />
+      <div class="case-study__content">
+        <slot />
+      </div>
+    </div>
+  </article>
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .case-study {
+    padding-block: var(--section-padding-block);
+  }
+  .case-study__intro {
+    max-width: 70ch;
+    padding-block-start: var(--space-24);
+    border-block-start: var(--space-8) solid var(--case-accent); /* decoration only */
+    margin-block-end: var(--space-48);
+  }
+  .case-study--wide .case-study__intro {
+    max-width: none;
+  }
+  .case-study__summary {
+    margin: var(--space-16) 0 0;
+    font-size: var(--text-body-1);
+  }
+  .case-study__cover {
+    margin-block-start: var(--space-32);
+    width: 100%;
+    height: auto;
+  }
+  .case-study__body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-32);
+  }
+  .case-study__content {
+    min-width: 0;
+    max-width: 70ch;
+    overflow-wrap: anywhere;
+  }
+  .case-study--wide .case-study__content {
+    max-width: 100ch;
+  }
+  .case-study__content > :global(* + *) {
+    margin-block-start: var(--space-16);
+  }
+  .case-study__content > :global(:is(h2, h3, h4)) {
+    margin-block-start: var(--space-40);
+    scroll-margin-top: var(--sticky-offset);
+  }
+  .case-study__content :global(p),
+  .case-study__content :global(li) {
+    font-size: var(--text-body-1);
+  }
+  @media (min-width: 1024px) {
+    .case-study__body {
+      grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+      gap: var(--gap);
+      align-items: start;
+    }
+  }
+</style>

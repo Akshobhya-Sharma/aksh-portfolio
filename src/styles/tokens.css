@@ -107,6 +107,7 @@
   ); /* 48px->80px, 375px->1440px viewport */
   --logo-size: clamp(24px, 19.775px + 1.127vw, 36px); /* drives header height */
 
+  --sticky-offset: var(--space-24); /* top offset for sticky page nav; header is not sticky */
   --target-size: 2.75rem; /* minimum interactive target (44px) */
   --focus-ring-width: 3px;
   --focus-ring-offset: 3px;

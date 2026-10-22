@@ -1,0 +1,82 @@
+---
+import type { MarkdownHeading } from "astro";
+import PageNavList from "./PageNavList.astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+const items = Astro.props.headings.filter((h) => h.depth === 2);
+---
+
+{items.length > 0 && (
+  <div class="page-nav-wrap">
+    <nav class="side-nav" aria-label="On this page">
+      <p class="side-nav__label" aria-hidden="true">
+        on this page
+      </p>
+      <PageNavList headings={items} />
+    </nav>
+    <details class="page-nav">
+      <summary>on this page</summary>
+      <nav aria-label="On this page">
+        <PageNavList headings={items} />
+      </nav>
+    </details>
+  </div>
+)}
+
+<style>
+  .side-nav__label,
+  summary {
+    margin: 0;
+    font-size: var(--text-subtitle);
+    letter-spacing: var(--tracking-subtitle);
+    color: var(--color-dark);
+  }
+  .side-nav__label {
+    padding-block-end: var(--space-8);
+  }
+  .page-nav {
+    border: 1px solid var(--color-neutral-400);
+    padding-inline: var(--space-16);
+  }
+  summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    min-height: var(--target-size);
+    cursor: pointer;
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::before {
+    content: "+" / "";
+    font-weight: var(--weight-medium);
+  }
+  details[open] > summary::before {
+    content: "\2212" / "";
+  }
+  .page-nav nav {
+    padding-block-end: var(--space-8);
+  }
+  .side-nav {
+    display: none;
+  }
+  @media (min-width: 1024px) {
+    .side-nav {
+      display: block;
+    }
+    .page-nav {
+      display: none;
+    }
+    .page-nav-wrap {
+      position: sticky;
+      top: var(--sticky-offset);
+      max-height: calc(100dvh - var(--sticky-offset));
+      overflow-y: auto;
+      padding: var(--space-4);
+    }
+  }
+</style>

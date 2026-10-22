@@ -1,0 +1,34 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+}
+const { headings } = Astro.props;
+---
+
+{/* eslint-disable-next-line astro/jsx-a11y/no-redundant-roles */}
+<ul class="page-nav-list" role="list">
+  {headings.map((h) => (
+    <li>
+      <a href={`#${h.slug}`}>{h.text}</a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .page-nav-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .page-nav-list a {
+    display: flex;
+    align-items: center;
+    min-height: var(--target-size);
+    font-size: var(--text-body-2);
+    color: var(--color-link);
+    text-transform: lowercase;
+    overflow-wrap: anywhere;
+  }
+</style>
