@@ -1,0 +1,65 @@
+---
+import Icon from "../Icon.astro";
+
+interface Props {
+  tone: "note" | "insight" | "warning";
+  title?: string;
+}
+const { tone, title } = Astro.props;
+const meta = {
+  note: { label: "Note", icon: "info" },
+  insight: { label: "Insight", icon: "lightbulb" },
+  warning: { label: "Warning", icon: "warning" },
+} as const;
+---
+
+<div class={`callout callout--${tone}`} role="note">
+  <p class="callout__label">
+    <Icon name={meta[tone].icon} size="1.25rem" />
+    <span>{meta[tone].label}</span>
+  </p>
+  {title && <p class="callout__title">{title}</p>}
+  <div class="callout__body">
+    <slot />
+  </div>
+</div>
+
+<style>
+  /* Tone is carried by label text, icon and border style, never colour alone */
+  .callout {
+    padding: var(--space-16) var(--space-20);
+    border: 1px solid var(--color-neutral-400);
+    border-inline-start: var(--space-8) solid var(--color-neutral-600);
+    background: var(--color-light);
+    color: var(--color-dark);
+  }
+  .callout--insight {
+    border-inline-start-style: dashed;
+  }
+  .callout--warning {
+    border-inline-start-style: double;
+  }
+  .callout__label {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+    margin: 0;
+    font-size: var(--text-subtitle);
+    letter-spacing: var(--tracking-subtitle);
+    font-weight: var(--weight-medium);
+    color: var(--color-neutral-700);
+  }
+  .callout__title {
+    margin: var(--space-8) 0 0;
+    font-weight: var(--weight-medium);
+  }
+  .callout__body {
+    margin-block-start: var(--space-8);
+  }
+  .callout__body > :global(:first-child) {
+    margin-block-start: 0;
+  }
+  .callout__body > :global(:last-child) {
+    margin-block-end: 0;
+  }
+</style>

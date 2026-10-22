@@ -1,0 +1,41 @@
+---
+// Dev-only: shows registry code for one variant, escaped by Astro, selectable in one click.
+import { components } from "../../data/components";
+
+interface Props {
+  component: string;
+  variant: string;
+}
+const { component, variant } = Astro.props;
+const entry = components.find((c) => c.id === component);
+const v = entry?.variants.find((x) => x.name === variant);
+if (!entry || !v) throw new Error(`Snippet: unknown ${component}/${variant}`);
+const code = entry.importLine.startsWith("No import")
+  ? v.snippet
+  : `${entry.importLine}\n\n${v.snippet}`;
+---
+
+{/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */}
+<pre
+  class="snippet"
+  tabindex="0"
+  role="region"
+  aria-label={`Code: ${entry.name} ${v.name}`}
+><code>{code}</code></pre>
+{/* eslint-enable astro/jsx-a11y/no-noninteractive-tabindex */}
+
+<style>
+  .snippet {
+    margin: 0;
+    padding: var(--space-16);
+    max-width: 100%;
+    overflow-x: auto;
+    border: 1px solid var(--color-neutral-400);
+    background: var(--color-light);
+    color: var(--color-dark);
+    font-family: var(--font-mono);
+    font-size: var(--text-body-2);
+    line-height: var(--leading-body);
+    user-select: all;
+  }
+</style>

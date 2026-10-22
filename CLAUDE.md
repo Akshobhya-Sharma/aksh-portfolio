@@ -14,12 +14,15 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 - Format `npm run format` (writes) · `npm run format:check` (read-only)
 - Lint `npm run lint` · Types `npm run typecheck` · Contrast `npm run contrast`
 - A11y `npm run a11y` (needs a build; Chrome/Edge or CHROME_PATH; axe WCAG 2.2 AA)
-- Gate `npm run check`: format:check, lint, typecheck, build, contrast. No test runner yet.
+- A11y `npm run a11y` also audits built /work/* pages at 1280px and 320px; `npm run a11y:dev` audits /components.
+- Gate `npm run check`: format:check, lint, typecheck, build, contrast, check:registry. No test runner yet.
 
 ## Structure
 
 - `src/data/home.ts`: all homepage content (typed; colours are token names)
 - `src/components/`: Header, Hero, SkillSet, Toolkit, Projects, CategoryTile, ProjectCard, Footer, Icon
+- `src/content.config.ts` (`work` collection), `src/content/work/*.mdx` (case studies; use `width`, not `layout`, in frontmatter), `src/pages/work/[slug].astro`, `src/layouts/CaseStudy.astro`
+- `src/components/case-study/`: Callout, StatGrid/StatCard, DataTable, Figure (MDX components), SideNav/PageNavList. Registry `src/data/components.ts` drives the dev-only `/components` page (`src/pages/[dev].astro`, not in the build); `npm run check:registry` verifies its import paths. Code theme: `src/styles/code-theme.json` (contrast-checked).
 - `src/layouts/BaseLayout.astro`: skip link markup, font preloads, style imports
 - `src/styles/`: `tokens.css` (tokens), `main.css` (focus ring, reduced motion, shell, sections), `fonts.css`
 - `public/fonts`, `public/images`, `src/assets/logo.svg`, `eslint.config.js`, `.prettierrc`, `.prettierignore`

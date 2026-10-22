@@ -22,10 +22,12 @@ if (!executablePath) {
   process.exit(2);
 }
 
+// --dev audits /components on `astro dev` (the page is not in the build); default audits the built site.
+const dev = process.argv.includes("--dev");
 const port = 4399;
 const server = spawn(
   process.execPath,
-  ["node_modules/astro/bin/astro.mjs", "preview", "--port", String(port)],
+  ["node_modules/astro/bin/astro.mjs", dev ? "dev" : "preview", "--port", String(port)],
   {
     stdio: "ignore",
   },
@@ -44,8 +46,16 @@ try {
       break;
     await new Promise((r) => setTimeout(r, 200));
   }
-  const paths = ["/"];
-  if (existsSync("dist/work"))
+  const runAxe = (page) =>
+    page.evaluate(() =>
+      // eslint-disable-next-line no-undef
+      axe.run(
+        { exclude: [["astro-dev-toolbar"]] },
+        { runOnly: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] },
+      ),
+    );
+  const paths = dev ? ["/components"] : ["/"];
+  if (!dev && existsSync("dist/work"))
     for (const d of readdirSync("dist/work", { withFileTypes: true }))
       if (d.isDirectory()) paths.push(`/work/${d.name}/`);
   const browser = await puppeteer.launch({ executablePath, headless: true });
@@ -55,23 +65,13 @@ try {
     await page.setViewport({ width: 1280, height: 800 });
     await page.goto(`http://localhost:${port}${path}`, { waitUntil: "networkidle0" });
     await page.evaluate(axeSource);
-    const { violations } = await page.evaluate(() =>
-      // eslint-disable-next-line no-undef
-      axe.run({
-        runOnly: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"],
-      }),
-    );
+    const { violations } = await runAxe(page);
     // Narrow viewport: also re-run axe (mobile nav variant) and check for sideways scroll.
     await page.setViewport({ width: 320, height: 800 });
     // eslint-disable-next-line no-undef
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > 320);
     await page.evaluate(axeSource);
-    const narrow = await page.evaluate(() =>
-      // eslint-disable-next-line no-undef
-      axe.run({
-        runOnly: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"],
-      }),
-    );
+    const narrow = await runAxe(page);
     console.log(
       `${path}: axe violations ${violations.length} (1280px), ${narrow.violations.length} (320px); horizontal scroll at 320px: ${overflow ? "YES" : "no"}`,
     );

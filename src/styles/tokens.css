@@ -53,6 +53,8 @@
   --font-serif: "Newsreader", Georgia, "Times New Roman", serif; /* headings */
   --font-sans: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* body/UI */
 
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; /* code */
+
   /* ---- Type scale ----
      Fluid via clamp() — scales smoothly between a 375px and 1440px viewport,
      so headings don't overflow/break mid-word on mobile. Formula: Utopia-style

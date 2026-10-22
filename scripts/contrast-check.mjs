@@ -42,9 +42,33 @@ const pairs = [
   ["--color-dark", "--color-primary-bg", 7, "card link and icon (default)"],
   ["--color-dark", "--color-light", 3, "card icon circle on hover (UI 3:1)"],
   ["--color-neutral-400", "--color-light", 3, "toolkit tool border on light (UI 3:1)"],
+  ["--color-neutral-700", "--color-light", 7, "callout label on light"],
+  [
+    "--color-neutral-400",
+    "--color-primary-bg",
+    3,
+    "callout, table and card borders on bg (UI 3:1)",
+  ],
+  ["--color-neutral-600", "--color-primary-bg", 3, "callout tone border on bg (UI 3:1)"],
 ];
 for (const [fg, bgName, min, label] of pairs)
   checks.push([`${label} (${fg} on ${bgName})`, ratio(hex[fg], hex[bgName]), min]);
+
+// Code theme (src/styles/code-theme.json): every token colour >= 7:1 on the editor background
+// (Shiki ignores per-scope backgrounds).
+const theme = JSON.parse(
+  readFileSync(new URL("../src/styles/code-theme.json", import.meta.url), "utf8"),
+);
+const codeBg = theme.colors["editor.background"];
+const tokenColours = [["editor.foreground", theme.colors["editor.foreground"], codeBg]];
+for (const t of theme.tokenColors) {
+  const fg = t.settings?.foreground;
+  if (fg && /^#[0-9a-f]{6}$/i.test(fg))
+    tokenColours.push([[].concat(t.scope ?? []).join(","), fg, codeBg]);
+}
+let minCode = Infinity;
+for (const [, fg, bgc] of tokenColours) minCode = Math.min(minCode, ratio(fg, bgc));
+checks.push([`code theme: lowest of ${tokenColours.length} token colours`, minCode, 7]);
 
 let failed = false;
 for (const [label, r, min = 4.5] of checks) {

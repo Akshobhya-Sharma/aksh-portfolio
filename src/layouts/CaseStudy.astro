@@ -4,6 +4,7 @@ import type { ImageMetadata, MarkdownHeading } from "astro";
 import BaseLayout from "./BaseLayout.astro";
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import "../styles/prose.css";
 import SideNav from "../components/case-study/SideNav.astro";
 
 interface Props {
@@ -39,7 +40,7 @@ const { title, summary, width, accent, cover, headings } = Astro.props;
     </header>
     <div class="case-study__body">
       <SideNav headings={headings} />
-      <div class="case-study__content">
+      <div class="case-study__content prose">
         <slot />
       </div>
     </div>
