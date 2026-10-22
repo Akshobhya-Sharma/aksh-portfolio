@@ -22,7 +22,7 @@ if (!executablePath) {
   process.exit(2);
 }
 
-// --dev audits /components on `astro dev` (the page is not in the build); default audits the built site.
+// --dev audits /components and /work/huana (draft) on `astro dev` (the page is not in the build); default audits the built site.
 const dev = process.argv.includes("--dev");
 const port = 4399;
 const server = spawn(
@@ -54,7 +54,7 @@ try {
         { runOnly: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "wcag22aa", "best-practice"] },
       ),
     );
-  const paths = dev ? ["/components"] : ["/"];
+  const paths = dev ? ["/components", "/work/huana"] : ["/"];
   if (!dev && existsSync("dist/work"))
     for (const d of readdirSync("dist/work", { withFileTypes: true }))
       if (d.isDirectory()) paths.push(`/work/${d.name}/`);

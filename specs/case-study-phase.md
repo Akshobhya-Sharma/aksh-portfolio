@@ -81,3 +81,13 @@ Decisions:
 - 2026-10-21: "Commit, then STOP after each phase" now means one commit per phase made by the orchestrator, with review between phases. Why: user-approved workflow for this build.
 - 2026-10-21: Phase 4 "simple test page" changed to a dev-only `/components` page driven by `src/data/components.ts`. Why: one registry feeds the page and future components; keeps test content out of production.
 - 2026-10-21: Added `specs/_component.template.md` for requesting new components. Why: repeatable way to spec each component.
+- 2026-10-21: Frontmatter `layout` renamed to `width`. Why: MDX reserves `layout` and treated its value as a module import.
+- 2026-10-21: StatCard shows the label above the value. Why: a valid `dl` needs dt before dd, and reordering with CSS was rejected.
+- 2026-10-21: DataTable takes `caption` as a prop and injects it as the table's first child. Why: a caption inside a nested markdown table is not possible, and this keeps the HTML valid.
+- 2026-10-21: Wide plain markdown tables: use DataTable. Why: a global table override would nest a second scroll region inside DataTable.
+- 2026-10-21: Custom Shiki theme `src/styles/code-theme.json`, based on github-dark-high-contrast (MIT, from Shiki) with one colour raised (markup.ignored). Why: every token colour must reach 7:1; the minimum is 9.23:1.
+- 2026-10-21: Figure uses Picture (AVIF/WebP) for raster images and Image for SVG. Why: Picture errors on SVG sources.
+- 2026-10-21: Homepage cards stay on src/data/home.ts. Why: TYIA has no case study and card fields (srName, card image) are not in the collection. Revisit once Huana and FigWrite are published.
+- 2026-10-21: Header links changed to /#projects and /#connect. Why: they must reach the homepage from case study pages.
+- 2026-10-21: /components is dev-only (route [dev].astro returns no paths in production).
+- 2026-10-21: Phases 1 to 5 built (MDX and docs; collection; layout, routing, side nav; components and /components; Huana draft skeleton, template and README). Added templates/case-study.mdx as the copy-me starter.

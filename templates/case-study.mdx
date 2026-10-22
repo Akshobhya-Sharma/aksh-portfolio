@@ -1,0 +1,58 @@
+---
+# Copy this file to src/content/work/<slug>.mdx. The slug becomes the URL /work/<slug>
+# and must match the project's slug in src/data/home.ts.
+title: Project name # shown as the h1 and in the browser tab
+summary: One-line summary. # shown under the title and used as the meta description
+category: design-coding # design-coding or ux-ui (ids in src/data/home.ts)
+accent: color-accent-huana # an accent token name from src/data/home.ts; decoration only
+width: default # default (about 70 characters per line) or wide. Never name this field layout.
+date: 2026-01-01 # YYYY-MM-DD
+draft: true # true = shown in dev only, left out of the build. Set false to publish.
+# Optional cover. Put the image in src/assets/work/<slug>/ and write real alt text:
+# cover:
+#   src: ../../assets/work/<slug>/cover.png
+#   alt: What the image shows
+---
+
+import Callout from "../../components/case-study/Callout.astro";
+import StatGrid from "../../components/case-study/StatGrid.astro";
+import StatCard from "../../components/case-study/StatCard.astro";
+import DataTable from "../../components/case-study/DataTable.astro";
+import Figure from "../../components/case-study/Figure.astro";
+import placeholder from "../../assets/work/_examples/placeholder.svg";
+
+{/* Each ## heading becomes an item in the "on this page" nav. Keep them in sentence case. */}
+
+## Overview
+
+Write the text here.
+
+{/* Callout: tone is note, insight or warning. */}
+
+<Callout tone="note">Short point to notice.</Callout>
+
+## Section two
+
+{/* StatCard: only real values from your own notes or data. Always inside StatGrid. */}
+
+<StatGrid>
+  <StatCard value="[value]" label="[what it measures]" />
+</StatGrid>
+
+{/* DataTable: for wide tables. caption is required. Blank lines around the table. */}
+
+<DataTable caption="What this table shows">
+
+| Column A | Column B | Column C |
+| -------- | -------- | -------- |
+| [cell]   | [cell]   | [cell]   |
+
+</DataTable>
+
+{/* Figure: alt says what the image is for. Use alt="" with decorative only for decoration. */}
+
+<Figure src={placeholder} alt="What this image is for" caption="Caption" />
+
+```ts
+// Fenced code: add the language after the backticks.
+```

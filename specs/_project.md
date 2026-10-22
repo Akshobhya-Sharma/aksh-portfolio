@@ -154,7 +154,7 @@ GitHub Pages deployed by GitHub Actions (`withastro/action`), custom domain via 
 6. Noise gradient generator and contrast check script (needed by the gradient project cards).
 7. Home: skill set and custom toolkit.
 8. Home: projects section and contact footer.
-9. Case study template: content collection, `CaseStudy` layout, side nav from headings, mobile page-nav disclosure, `DataTable`, `StatCard`, `CommitTimeline`.
+9. Case study template: content collection, `CaseStudy` layout, side nav from headings, mobile page-nav disclosure, `DataTable`, `StatCard`, `Callout`, `Figure`. Built 2026-10-21 on feat/case-study-template (dev-only /components page; `CommitTimeline` not built yet).
 10. CodeWindow component (fake IDE, Shiki).
 11. Case study: FigWrite (rewritten content, images).
 12. Case study: Huana (rewritten content, images).

@@ -23,6 +23,7 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 - `src/components/`: Header, Hero, SkillSet, Toolkit, Projects, CategoryTile, ProjectCard, Footer, Icon
 - `src/content.config.ts` (`work` collection), `src/content/work/*.mdx` (case studies; use `width`, not `layout`, in frontmatter), `src/pages/work/[slug].astro`, `src/layouts/CaseStudy.astro`
 - `src/components/case-study/`: Callout, StatGrid/StatCard, DataTable, Figure (MDX components), SideNav/PageNavList. Registry `src/data/components.ts` drives the dev-only `/components` page (`src/pages/[dev].astro`, not in the build); `npm run check:registry` verifies its import paths. Code theme: `src/styles/code-theme.json` (contrast-checked).
+- Case study workflow: copy `templates/case-study.mdx` (not matched by the glob) to `src/content/work/<slug>.mdx`. New component: spec from `specs/_component.template.md` into `specs/components/<name>.md`, build in `src/components/case-study/`, add a registry entry and a live example on `[dev].astro`, then run `check`, `a11y`, `a11y:dev`. Draft entries show in dev only.
 - `src/layouts/BaseLayout.astro`: skip link markup, font preloads, style imports
 - `src/styles/`: `tokens.css` (tokens), `main.css` (focus ring, reduced motion, shell, sections), `fonts.css`
 - `public/fonts`, `public/images`, `src/assets/logo.svg`, `eslint.config.js`, `.prettierrc`, `.prettierignore`
@@ -57,7 +58,7 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 
 - Toolkit logos: each becomes a clickable brand logo with alt text and a hover tooltip (tap on mobile/tablet) showing a one-line description. Do after layout and copy are final.
 - Real project images and per-project accents (placeholders now).
-- Case study pages: `/work/<slug>` links 404 until built. Signal Fire card is in the design, not the spec.
+- Case studies: `/work/huana` is a draft skeleton (`draft: true`); `/work/figwrite` has no file yet; TYIA has no page (its link 404s, out of scope). Signal Fire card is in the design, not the spec.
 - NVDA screen reader pass (pending).
 - Comment-minimising pass at the final stage.
 - Domain: connect uxaksh.ca at production. Verify it in GitHub Settings > Pages first (subdomain takeover risk).

@@ -12,6 +12,10 @@ for (const [, name] of source.matchAll(/imp\("(\w+)"\)/g))
   imports.add(`../../components/case-study/${name}.astro`);
 for (const [, p] of source.matchAll(/from "(\.\.\/[^"$]+)"/g)) imports.add(p);
 
+// The template is copied into src/content/work, so its imports resolve from there too.
+const template = readFileSync(resolve(root, "templates/case-study.mdx"), "utf8");
+for (const [, p] of template.matchAll(/^import .* from "(\.\.\/[^"]+)"/gm)) imports.add(p);
+
 let failed = false;
 for (const p of imports) {
   const ok = existsSync(resolve(from, p));
