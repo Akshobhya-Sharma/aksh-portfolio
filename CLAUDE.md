@@ -26,7 +26,7 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 - `src/layouts/BaseLayout.astro`: skip link markup, font preloads, style imports
 - `src/styles/`: `tokens.css` (tokens), `main.css` (focus ring, reduced motion, shell, sections), `fonts.css`
 - `public/fonts`, `public/images`, `src/assets/logo.svg`, `eslint.config.js`, `.prettierrc`, `.prettierignore`
-- `specs/`: contracts; `_project.md` is the site brief. `design/` (PNG) and `docs/` are gitignored. Open design/ only when asked.
+- `specs/`: contracts; `_project.md` is the site brief. Specs stay flat in `specs/`, numbered by the user. Never move them into subfolders (no `specs/done/`). `design/` (PNG) and `docs/` are gitignored. Open design/ only when asked.
 
 ## Conventions
 
@@ -61,7 +61,7 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 - Toolkit logos: each becomes a clickable brand logo with alt text and a hover tooltip (tap on mobile/tablet) showing a one-line description. Do after layout and copy are final.
 - Real project images and per-project accents (placeholders now).
 - DataTable: duplicate id when two tables on a page share a caption (DataTable.astro:12-13). `scope="col"` on every th; row-header tables unsupported.
-- Local CRLF working tree makes `format:check` fail on Windows (index is LF, CI passes). Fix locally with `git add --renormalize .` or `npm run format`.
+- `.gitattributes` forces LF. If an old Windows checkout still fails `format:check` on CRLF files, run `git add --renormalize .` once.
 - `npm audit`: 4 high, dev-only, in the lint chain (braces via astro-eslint-parser). No non-breaking fix; accepted. None in prod.
 - Human checks pending: NVDA and VoiceOver on case study components, Windows High Contrast, 400% zoom, keyboard walkthrough, phone.
 - Comment-minimising pass at the final stage.
