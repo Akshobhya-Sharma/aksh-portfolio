@@ -1,0 +1,197 @@
+---
+// Dev-only route: getStaticPaths returns nothing in a production build, so /components is not in dist.
+import type { ThemeRegistration } from "shiki";
+import { Code } from "astro:components";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageNavList from "../components/case-study/PageNavList.astro";
+import Callout from "../components/case-study/Callout.astro";
+import StatGrid from "../components/case-study/StatGrid.astro";
+import StatCard from "../components/case-study/StatCard.astro";
+import DataTable from "../components/case-study/DataTable.astro";
+import Figure from "../components/case-study/Figure.astro";
+import Snippet from "../components/dev/Snippet.astro";
+import placeholder from "../assets/work/_examples/placeholder.svg";
+import codeTheme from "../styles/code-theme.json";
+import { components } from "../data/components";
+import "../styles/prose.css";
+
+export function getStaticPaths() {
+  return import.meta.env.DEV ? [{ params: { dev: "components" } }] : [];
+}
+
+const nav = components.map((c) => ({ depth: 2, slug: c.id, text: c.name }));
+---
+
+<BaseLayout
+  title="Components | Aksh"
+  description="Development reference for case study components."
+>
+  <meta slot="head" name="robots" content="noindex" />
+  <Header slot="header" />
+  <div class="shell section components">
+    <h1>Components</h1>
+    <p>
+      Every MDX component for case studies, with live examples and code to copy. This page is only
+      available in development.
+    </p>
+    <p>Example values and text are placeholders.</p>
+    <nav aria-label="Components">
+      <PageNavList headings={nav} />
+    </nav>
+
+    {components.map((c) => (
+      <section aria-labelledby={c.id} class="components__section">
+        <h2 id={c.id}>{c.name}</h2>
+        <h3>How to use</h3>
+        {c.howTo.map((t) => (
+          <p>{t}</p>
+        ))}
+
+        {c.id === "callout" && (
+          <>
+            <h3 id="callout-note-h">Variant: note</h3>
+            <div class="example" role="group" aria-labelledby="callout-note-h">
+              <Callout tone="note">Placeholder text for a note.</Callout>
+            </div>
+            <Snippet component="callout" variant="note" />
+            <h3 id="callout-insight-h">Variant: insight</h3>
+            <div class="example" role="group" aria-labelledby="callout-insight-h">
+              <Callout tone="insight" title="Placeholder title">
+                Placeholder text for an insight.
+              </Callout>
+            </div>
+            <Snippet component="callout" variant="insight" />
+            <h3 id="callout-warning-h">Variant: warning</h3>
+            <div class="example" role="group" aria-labelledby="callout-warning-h">
+              <Callout tone="warning">Placeholder text for a warning.</Callout>
+            </div>
+            <Snippet component="callout" variant="warning" />
+          </>
+        )}
+
+        {c.id === "statcard" && (
+          <>
+            <h3 id="statcard-ex-h">Example</h3>
+            <div class="example" role="group" aria-labelledby="statcard-ex-h">
+              <StatGrid>
+                <StatCard value="00" label="Placeholder label" />
+                <StatCard value="00" label="Placeholder label" />
+                <StatCard value="00" label="Placeholder label" />
+              </StatGrid>
+            </div>
+            <Snippet component="statcard" variant="three in a grid" />
+          </>
+        )}
+
+        {c.id === "datatable" && (
+          <>
+            <h3 id="datatable-ex-h">Example</h3>
+            <div class="example prose" role="group" aria-labelledby="datatable-ex-h">
+              <DataTable caption="Placeholder caption">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Column A</th>
+                      <th>Column B</th>
+                      <th>Column C</th>
+                      <th>Column D</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Placeholder</td>
+                      <td>Placeholder</td>
+                      <td>Placeholder</td>
+                      <td>Placeholder</td>
+                    </tr>
+                    <tr>
+                      <td>Placeholder</td>
+                      <td>Placeholder</td>
+                      <td>Placeholder</td>
+                      <td>Placeholder</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </DataTable>
+            </div>
+            <Snippet component="datatable" variant="markdown table" />
+          </>
+        )}
+
+        {c.id === "figure" && (
+          <>
+            <h3 id="figure-cap-h">Variant: with caption</h3>
+            <div class="example" role="group" aria-labelledby="figure-cap-h">
+              <Figure
+                src={placeholder}
+                alt="Placeholder: describe what the image is for"
+                caption="Placeholder caption"
+              />
+            </div>
+            <Snippet component="figure" variant="with caption" />
+            <h3 id="figure-dec-h">Variant: decorative</h3>
+            <div class="example" role="group" aria-labelledby="figure-dec-h">
+              <Figure src={placeholder} alt="" decorative />
+            </div>
+            <Snippet component="figure" variant="decorative" />
+          </>
+        )}
+
+        {c.id === "plain-markdown" && (
+          <>
+            <h3 id="md-table-h">Variant: table</h3>
+            <div class="example prose" role="group" aria-labelledby="md-table-h">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Column A</th>
+                    <th>Column B</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Placeholder</td>
+                    <td>Placeholder</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <Snippet component="plain-markdown" variant="table" />
+            <h3 id="md-code-h">Variant: code</h3>
+            <div class="example prose" role="group" aria-labelledby="md-code-h">
+              <Code
+                code="const placeholder = true;"
+                lang="ts"
+                theme={codeTheme as ThemeRegistration}
+              />
+            </div>
+            <Snippet component="plain-markdown" variant="code" />
+          </>
+        )}
+        <p class="copy-hint">Click a snippet to select it, then copy with Ctrl+C or Cmd+C.</p>
+      </section>
+    ))}
+  </div>
+  <Footer slot="footer" />
+</BaseLayout>
+
+<style>
+  .components__section {
+    margin-block-start: var(--space-48);
+  }
+  .components__section :global(h3) {
+    margin-block: var(--space-24) var(--space-8);
+    font-size: var(--text-h4);
+  }
+  .example {
+    padding: var(--space-16);
+    margin-block-end: var(--space-16);
+    border: 1px dashed var(--color-neutral-400);
+    overflow-wrap: anywhere;
+  }
+  .copy-hint {
+    color: var(--color-neutral-600);
+  }
+</style>

@@ -1,0 +1,17 @@
+---
+// Wraps StatCards. StatCard renders dt/dd pairs, so it must sit inside this <dl>.
+---
+
+<dl class="stat-grid">
+  <slot />
+</dl>
+
+<style>
+  .stat-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-16);
+    margin: 0;
+    min-width: 0;
+  }
+</style>

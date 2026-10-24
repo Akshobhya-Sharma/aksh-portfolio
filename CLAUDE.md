@@ -4,7 +4,7 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 
 ## Stack
 
-- Astro 7 (static, zero client JS), TypeScript strict, plain CSS custom properties, Node 24 (`.nvmrc`), npm
+- Astro 7 (static, zero client JS), `@astrojs/mdx` (case studies are MDX, not plain Markdown), TypeScript strict, plain CSS custom properties, Node 24 (`.nvmrc`), npm
 - Prettier 3 with prettier-plugin-astro (dev only)
 - Deploy: GitHub Pages via `.github/workflows/deploy.yml` on push to main. `site` in astro.config.mjs and `public/CNAME` are staged for uxaksh.ca. No `base` is set, so a github.io/<repo> deploy would 404 assets.
 
@@ -13,13 +13,16 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 - Install `npm install` · Dev `npm run dev` · Build `npm run build`
 - Format `npm run format` (writes) · `npm run format:check` (read-only)
 - Lint `npm run lint` · Types `npm run typecheck` · Contrast `npm run contrast`
-- A11y `npm run a11y` (needs a build; Chrome/Edge or CHROME_PATH; axe WCAG 2.2 AA)
-- Gate `npm run check`: format:check, lint, typecheck, build, contrast. No test runner yet.
+- A11y `npm run a11y` (needs a build; Chrome/Edge or CHROME_PATH; axe WCAG 2.2 AA) also audits built /work/* pages at 1280px and 320px; `npm run a11y:dev` audits /components.
+- Gate `npm run check`: format:check, lint, typecheck, build, contrast, check:registry. No test runner yet.
 
 ## Structure
 
 - `src/data/home.ts`: all homepage content (typed; colours are token names)
 - `src/components/`: Header, Hero, SkillSet, Toolkit, Projects, CategoryTile, ProjectCard, Footer, Icon
+- `src/content.config.ts` (`work` collection), `src/content/work/*.mdx` (case studies; use `width`, not `layout`, in frontmatter), `src/pages/work/[slug].astro`, `src/layouts/CaseStudy.astro`
+- `src/components/case-study/`: Callout, StatGrid/StatCard, DataTable, Figure (MDX components), SideNav/PageNavList. Registry `src/data/components.ts` drives the dev-only `/components` page (`src/pages/[dev].astro`, not in the build); `npm run check:registry` verifies its import paths. Code theme: `src/styles/code-theme.json` (contrast-checked).
+- Case study workflow: copy `templates/case-study.mdx` (not matched by the glob) to `src/content/work/<slug>.mdx`. Each case study needs at least one `##` heading (side nav is built from them). New component: spec from `specs/_component.template.md` into `specs/components/<name>.md`, build in `src/components/case-study/`, add a registry entry and a live example on `[dev].astro`, then run `check`, `a11y`, `a11y:dev`. Draft entries show in dev only.
 - `src/layouts/BaseLayout.astro`: skip link markup, font preloads, style imports
 - `src/styles/`: `tokens.css` (tokens), `main.css` (focus ring, reduced motion, shell, sections), `fonts.css`
 - `public/fonts`, `public/images`, `src/assets/logo.svg`, `eslint.config.js`, `.prettierrc`, `.prettierignore`
@@ -30,6 +33,8 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 - Run `npm run format` before committing. `check` fails on unformatted files. specs/, docs/, design/ and case_studies/ are excluded from Prettier.
 - Keep code comments minimal. Comment only where intent is not obvious.
 - Component CSS uses tokens only: no hex, px spacing or font literals.
+- Callout tones use `--color-callout-{note,insight,warning}` and `-bg` from tokens.css. `npm run contrast` checks each tone's label, body and border.
+- Tables: every table goes through `DataTable` (it takes a `caption`). Plain Markdown tables get no caption.
 - `.shell` (max 1440px) sits on the section in Hero, SkillSet, Toolkit and Footer, and on an inner wrapper in Header and Projects. The Toolkit band and those section rules stop at 1440px; the Projects rule is full width.
 - Section separators: `.section` uses `border-bottom` (main.css), not margin or `<hr>`. Footer opts out.
 - Breakpoints: below 1024px stacks two-column sections (main.css). Below 42rem makes Projects groups one column (Projects.astro, rem so it also stacks at 400% zoom).
@@ -52,14 +57,15 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 
 ## Next up
 
+- Case studies: hand-written one by one from `templates/case-study.mdx`. `/work/huana` stays `draft: true` as a placeholder. `/work/figwrite` has no file yet. TYIA has no page (out of scope). Homepage links to `/work/huana` and `/work/figwrite` 404 in prod until these exist. Signal Fire card is in the design, not the spec.
 - Toolkit logos: each becomes a clickable brand logo with alt text and a hover tooltip (tap on mobile/tablet) showing a one-line description. Do after layout and copy are final.
 - Real project images and per-project accents (placeholders now).
-- Case study pages: `/work/<slug>` links 404 until built. Signal Fire card is in the design, not the spec.
-- NVDA screen reader pass (pending).
+- DataTable: duplicate id when two tables on a page share a caption (DataTable.astro:12-13). `scope="col"` on every th; row-header tables unsupported.
+- Local CRLF working tree makes `format:check` fail on Windows (index is LF, CI passes). Fix locally with `git add --renormalize .` or `npm run format`.
+- `npm audit`: 4 high, dev-only, in the lint chain (braces via astro-eslint-parser). No non-breaking fix; accepted. None in prod.
+- Human checks pending: NVDA and VoiceOver on case study components, Windows High Contrast, 400% zoom, keyboard walkthrough, phone.
 - Comment-minimising pass at the final stage.
 - Domain: connect uxaksh.ca at production. Verify it in GitHub Settings > Pages first (subdomain takeover risk).
-- `npm audit`: 4 high, dev-only, in the lint chain (braces via astro-eslint-parser). No non-breaking fix; accepted. None in prod.
-- Human checks pending: 400% zoom re-check, NVDA, phone.
 
 ## Reference
 

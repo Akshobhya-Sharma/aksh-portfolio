@@ -1,0 +1,47 @@
+---
+// Author writes a caption-less table (markdown or HTML) as the child and passes `caption`.
+// The caption is injected as the table's first child so the HTML stays valid.
+interface Props {
+  caption: string;
+}
+const { caption } = Astro.props;
+const html = await Astro.slots.render("default");
+
+let hash = 5381;
+for (const ch of caption) hash = (hash * 33 + ch.codePointAt(0)!) >>> 0;
+const id = `table-${hash.toString(36)}`;
+const escaped = caption.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+
+if (!/<table[\s>]/.test(html)) throw new Error(`DataTable "${caption}": child must be a table`);
+const table = html
+  .replace(/<table([^>]*)>/, `<table$1><caption id="${id}">${escaped}</caption>`)
+  .replace(/<th(\s[^>]*)?>/g, (m, attrs = "") =>
+    /\sscope=/.test(attrs) ? m : `<th scope="col"${attrs}>`,
+  );
+---
+
+{/* eslint-disable-next-line astro/jsx-a11y/no-noninteractive-tabindex */}
+<div class="table-scroll" role="region" aria-labelledby={id} tabindex="0">
+  <Fragment set:html={table} />
+</div>
+
+<style>
+  .table-scroll {
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-wrap: normal;
+  }
+  .table-scroll :global(table) {
+    min-width: max-content;
+  }
+  .table-scroll :global(caption) {
+    padding: var(--space-8) 0;
+    text-align: start;
+    font-weight: var(--weight-medium);
+    color: var(--color-neutral-700);
+  }
+  .table-scroll :global(th),
+  .table-scroll :global(td) {
+    overflow-wrap: normal;
+  }
+</style>

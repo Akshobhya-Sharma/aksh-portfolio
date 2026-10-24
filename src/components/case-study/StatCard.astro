@@ -1,0 +1,37 @@
+---
+// Must be placed inside StatGrid (renders dt/dd). Label comes first in the DOM (valid dl order)
+// and sits above the value; no CSS reordering.
+interface Props {
+  value: string;
+  label: string;
+}
+const { value, label } = Astro.props;
+---
+
+<div class="stat-card">
+  <dt class="label">{label}</dt>
+  <dd class="value">{value}</dd>
+</div>
+
+<style>
+  .stat-card {
+    flex: 1 1 10rem;
+    min-width: 0;
+    padding: var(--space-16) var(--space-20);
+    border: 1px solid var(--color-neutral-400);
+    background: var(--color-light);
+    color: var(--color-dark);
+    overflow-wrap: anywhere;
+  }
+  .label {
+    font-size: var(--text-body-2);
+    color: var(--color-neutral-700);
+  }
+  .value {
+    margin: var(--space-4) 0 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-h2);
+    line-height: var(--leading-heading);
+    color: var(--color-dark);
+  }
+</style>

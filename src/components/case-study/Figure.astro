@@ -1,0 +1,55 @@
+---
+import { Image, Picture } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+interface Props {
+  src: ImageMetadata;
+  alt: string; // empty only with `decorative`
+  decorative?: boolean;
+  caption?: string;
+  eager?: boolean;
+}
+const { src, alt, decorative = false, caption, eager = false } = Astro.props;
+if (alt === "" && !decorative) throw new Error("Figure: alt is required unless decorative");
+const isSvg = src.format === "svg"; // vector: passed through, no AVIF/WebP
+const loading = eager ? "eager" : "lazy";
+const fetchpriority = eager ? "high" : undefined;
+---
+
+<figure class="figure">
+  {isSvg ? (
+    <Image
+      src={src}
+      alt={alt}
+      format="svg"
+      loading={loading}
+      decoding="async"
+      fetchpriority={fetchpriority}
+    />
+  ) : (
+    <Picture
+      src={src}
+      alt={alt}
+      formats={["avif", "webp"]}
+      loading={loading}
+      decoding="async"
+      fetchpriority={fetchpriority}
+    />
+  )}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .figure {
+    margin: 0;
+  }
+  .figure :global(img) {
+    max-width: 100%;
+    height: auto;
+  }
+  figcaption {
+    margin-block-start: var(--space-8);
+    font-size: var(--text-body-2);
+    color: var(--color-neutral-600);
+  }
+</style>
