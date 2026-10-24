@@ -49,6 +49,15 @@
   --color-neutral-600: #45403b; /* 9.90:1 — AAA text (safe alt to Dark) */
   --color-neutral-700: #2c2926; /* 13.97:1 — AAA text (near-Dark, softer) */
 
+  /* Callout tones: label text and thick border, on a matching tint.
+     Each tone is >= 7:1 on its tint (AAA); Dark body text is >= 15:1 on every tint. */
+  --color-callout-note: #1a4d80; /* blue, 7.84:1 on tint */
+  --color-callout-note-bg: #eef4fa;
+  --color-callout-insight: #5a2d82; /* violet, 8.78:1 on tint */
+  --color-callout-insight-bg: #f5f0fa;
+  --color-callout-warning: #5e4500; /* dark yellow, 8.27:1 on tint */
+  --color-callout-warning-bg: #fbf5e1;
+
   /* ---- Font families (self-hosted, see fonts.css) ---- */
   --font-serif: "Newsreader", Georgia, "Times New Roman", serif; /* headings */
   --font-sans: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; /* body/UI */

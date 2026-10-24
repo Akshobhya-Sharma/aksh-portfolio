@@ -42,14 +42,17 @@ const pairs = [
   ["--color-dark", "--color-primary-bg", 7, "card link and icon (default)"],
   ["--color-dark", "--color-light", 3, "card icon circle on hover (UI 3:1)"],
   ["--color-neutral-400", "--color-light", 3, "toolkit tool border on light (UI 3:1)"],
-  ["--color-neutral-700", "--color-light", 7, "callout label on light"],
   [
     "--color-neutral-400",
     "--color-primary-bg",
     3,
     "callout, table and card borders on bg (UI 3:1)",
   ],
-  ["--color-neutral-600", "--color-primary-bg", 3, "callout tone border on bg (UI 3:1)"],
+  ...["note", "insight", "warning"].flatMap((t) => [
+    [`--color-callout-${t}`, `--color-callout-${t}-bg`, 7, `callout ${t} label on tint`],
+    ["--color-dark", `--color-callout-${t}-bg`, 7, `callout ${t} body text on tint`],
+    ["--color-neutral-400", `--color-callout-${t}-bg`, 3, `callout ${t} border on tint (UI 3:1)`],
+  ]),
 ];
 for (const [fg, bgName, min, label] of pairs)
   checks.push([`${label} (${fg} on ${bgName})`, ratio(hex[fg], hex[bgName]), min]);

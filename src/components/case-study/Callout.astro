@@ -25,19 +25,25 @@ const meta = {
 </div>
 
 <style>
-  /* Tone is carried by label text, icon and border style, never colour alone */
+  /* Tone is carried by label text and icon; colour reinforces it, never replaces it */
   .callout {
     padding: var(--space-16) var(--space-20);
     border: 1px solid var(--color-neutral-400);
-    border-inline-start: var(--space-8) solid var(--color-neutral-600);
-    background: var(--color-light);
+    border-inline-start: var(--space-8) solid var(--callout-tone);
+    background: var(--callout-tint);
     color: var(--color-dark);
   }
+  .callout--note {
+    --callout-tone: var(--color-callout-note);
+    --callout-tint: var(--color-callout-note-bg);
+  }
   .callout--insight {
-    border-inline-start-style: dashed;
+    --callout-tone: var(--color-callout-insight);
+    --callout-tint: var(--color-callout-insight-bg);
   }
   .callout--warning {
-    border-inline-start-style: double;
+    --callout-tone: var(--color-callout-warning);
+    --callout-tint: var(--color-callout-warning-bg);
   }
   .callout__label {
     display: flex;
@@ -47,7 +53,7 @@ const meta = {
     font-size: var(--text-subtitle);
     letter-spacing: var(--tracking-subtitle);
     font-weight: var(--weight-medium);
-    color: var(--color-neutral-700);
+    color: var(--callout-tone);
   }
   .callout__title {
     margin: var(--space-8) 0 0;
