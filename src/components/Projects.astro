@@ -8,8 +8,8 @@ const groups = categories
   .filter((g) => g.items.length > 0);
 ---
 
-<section id="projects" class="section" aria-labelledby="projects-heading">
-  <div class="shell">
+<section id="projects" class="shell section" aria-labelledby="projects-heading">
+  <div>
     <h2 id="projects-heading">{projectsSection.heading}</h2>
     <p class="intro">{projectsSection.intro}</p>
     {groups.map(({ category, items }) => (
