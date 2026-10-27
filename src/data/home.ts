@@ -155,7 +155,12 @@ export const projects = [
       "I partnered with a friend (a developer) to create a Figma plugin that would extract and update content via spreadsheet.",
     categoryId: "design-coding",
     accent: "color-accent-figwrite",
-    image: placeholder(),
+    image: {
+      src: "/images/figwriteCommunityCover.png",
+      alt: "Mock up of FigWrite Figma plugin design",
+      width: 640,
+      height: 400,
+    },
   },
   {
     slug: "tyia",
