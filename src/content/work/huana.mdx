@@ -1,11 +1,14 @@
 ---
-title: Huana
-summary: "PLACEHOLDER: one-line summary."
+title: Huana - your personal consumption tracker
+summary: "A simple tracker to remember all the awesome strains a recreational marijuana consumer smoked around the world (or their city)!"
 category: design-coding
 accent: color-accent-huana
 width: default
-date: 2026-10-21 # PLACEHOLDER date
+date: 2026-10-25
 draft: true
+cover:
+  src: ../../assets/work/huana/huana-cover.png
+  alt: Mock up of Huana web app design
 ---
 
 import Callout from "../../components/case-study/Callout.astro";
@@ -14,79 +17,247 @@ import StatCard from "../../components/case-study/StatCard.astro";
 import DataTable from "../../components/case-study/DataTable.astro";
 import Figure from "../../components/case-study/Figure.astro";
 import placeholder from "../../assets/work/_examples/placeholder.svg";
+import researchPhase from "../../assets/work/huana/research-phase.png";
+import huanaMoodboard from "../../assets/work/huana/huana-moodboard.png";
+import developmentPipeline from "../../assets/work/huana/development-pipeline.svg";
 
 ## Overview
 
-PLACEHOLDER: replace this text with your own.
+As a recreational marijuana consumer, I always felt the need to keep some record of all the cool places I have explored and all the cool marijuana strains I have consumed.
 
-<Callout tone="note">PLACEHOLDER example. Replace or delete.</Callout>
+I was curious to see how many others have faced this issue and if there can be a tech-based solution for this real world issue.
 
-## Problem
+<Callout tone="note">
+  
+- It started from a personal annoyance: sharing a joint with friends, liking it, and never
+  remembering which strain it was. Same gap at retail, i.e. buy something good, no way to record it
+  for next time.
+- I didn't want to guess this was a real problem, so I talked to people who were
+  already solving it the hard way, keeping paper diaries of what they'd tried. That confirmed the
+  gap was real enough to build for.
 
-PLACEHOLDER: replace this text with your own.
+</Callout>
 
-## Goals
-
-PLACEHOLDER: replace this text with your own.
+---
 
 ## Research
 
-PLACEHOLDER: replace this text with your own.
+To understand the this issue and see what other consumers do currently, I conducted a 5 person research. This was done over call or online meeting and I synthesized the notes by creating `Empathy Maps`, `User Personas`, `I like, I wish, What if`, and `Feature prioritization matrix`.
 
-## Findings
+<Figure
+  src={researchPhase}
+  alt="Research phase showing `Empathy Maps`, `User Personas`, `I like, I wish, What if`, and `Feature prioritization matrix`"
+  caption="Figure: All the research I needed to do before I began design work."
+/>
 
-PLACEHOLDER: replace this text with your own.
+### What research told me
 
-PLACEHOLDER example. Replace or delete.
+The research showed 3 main pain-points and desire for something better and easier to use.
+
+<Callout
+  tone="insight"
+  title="Currently, a lot of folks use notebooks and product packaging stickers to document their consumption. "
+>
+
+Which is honestly great! There's a few issues with manual documentation:
+
+1. Stored notebooks experience wear and tear.
+2. Notebooks can get damaged or lost easily.
+3. No opportunity to see personal preference trends and other cool stats based on consumption patterns.
+
+</Callout>
+
+---
+
+## User experience and interface design
+
+I began with simple designs, collecting my inspirations via a `Moodboard` and setting basic `Typography` so I can start exploring designs.
+
+<Figure
+  src={huanaMoodboard}
+  alt="Moodboard with what I liked about each design"
+  caption="Figure: I usually look at sites like Dribbble for inspiration."
+/>
+
+### First designs
+
+My first designs were based on the simplest experience I could think of. I did not want to interrupt my users from completing their objective, i.e. **noting a strain down so that they can reference it later.**
+
+At this stage, I was just looking to build the simplest solution. My technical skills were not up to par yet and thus, I could not develop the whole web application on my own. This was pre-LLM revolution, so I didn't even have the support of an AI agent.
+
+(insert grid of mock ups)
+
+---
+
+## The age of LLMs
+
+I sat on this project for a long time, slowly building my skills to be able to develop and deploy it. That was, until LLMs became accessible to general public.
+
+I designed the UI from scratch in Figma first, then paired with AI to implement it. The split was deliberate: AI wrote the line-by-line code, I focused on logic, problem-solving, and design (the parts I actually wanted to spend my time on).
+
+### Redesign of Huana
+
+(insert grid of redesigned UI)
+
+### Solo build stats
 
 <StatGrid>
-  <StatCard value="[value]" label="[what it measures]" />
+  <StatCard value="18" label="Days spent on end to end process" />
+  <StatCard value="41" label="Total commits to release for testing" />
 </StatGrid>
 
-<DataTable caption="PLACEHOLDER table">
+### Tech stack
 
-| Column A | Column B | Column C |
-| -------- | -------- | -------- |
-| [cell]   | [cell]   | [cell]   |
+I selected the tech stack based on it's ability to do what I needed my application to do as well as my familiarity with the toolkit.
+
+<DataTable caption="Tech stack for Huana web-app">
+
+| Stack                 | Purpose                                      |
+| --------------------- | -------------------------------------------- |
+| React, Vite, Tailwind | Familiarity and ease of design customization |
+| Supabase              | For email auth only                          |
+| Dexie.js / IndexedDB  | To store session data (user's input)         |
+| Zustand               | State management                             |
 
 </DataTable>
 
-## Ideation
+#### Why use IndexedDB
 
-PLACEHOLDER: replace this text with your own.
+I wanted to protect my users privacy and so, the app data had to be stored on my users browser storage.
 
-## Design
+Now, it might seem like that will increase the storage my users' browsers use and also there would be data loss if my user switched browser. This is correct and a limitation I planned for. I gave the users an ability to `export` and `import` their data so they can carry it with themselves (the output was a json file), and load it in any browser they logged into Huana with.
 
-PLACEHOLDER: replace this text with your own.
+<Callout tone="note">
+  Privacy wasn't a tagline, it was an architectural line drawn on purpose: identity touches
+  `Supabase`, consumption data never leaves the device.
+</Callout>
 
-PLACEHOLDER example. Replace or delete.
+(insert image of tech-stack and privacy)
+
+---
+
+## Phases of build
+
+For the folks who are looking for a bit more technical write up, I want to explain how I went about it.
+
+The build moved in clear, ordered phases:
 
 <Figure
-  src={placeholder}
-  alt="PLACEHOLDER: describe what this image is for"
-  caption="PLACEHOLDER caption"
+  src={developmentPipeline}
+  alt="A nine step development process starting with scaffold, data layer, auth layer, UI development, UI audit, documentation and deployment."
+  caption="A 9 step process to deployment."
 />
 
-## Testing
+### Timeline
 
-PLACEHOLDER: replace this text with your own.
+The entire build was finished, from start to finish, within a month (04-2026).
 
-PLACEHOLDER example. Replace or delete.
+<StatGrid>
+  <StatCard value="40" label="Commits by me" />
+  <StatCard value="1" label="Commit by Vercel for deployment" />
+</StatGrid>
 
-| Column A | Column B |
-| -------- | -------- |
-| [cell]   | [cell]   |
+### Largest commits by lines changed
 
-## Outcome
+These commits were for the heaviest work I did with Claude Code.
 
-PLACEHOLDER: replace this text with your own.
+<DataTable caption="Largest commits">
 
-PLACEHOLDER example. Replace or delete.
+| Message                   | Impacted files | Insertions      | Notes                          |
+| ------------------------- | -------------- | --------------- | ------------------------------ |
+| "Added website"           | 16 files       | 3025 insertions | Marketing site                 |
+| "Getting ready to deploy" | 40 files       | 564 insertions  | Prod hardening                 |
+| "Multiple updates"        | 6 files        | 408 insertions  | Mid build UI updates           |
+| "Wrapping up for now"     | 5 files        | 547 insertions  | Early documentation checkpoint |
 
-```ts
-const placeholder = true;
-```
+</DataTable>
 
-## Reflections
+---
 
-PLACEHOLDER: replace this text with your own.
+## Lessons with AI
+
+AI got the basic flows working fast but layout and interaction details
+were a recurring weak point.
+
+- Buttons that weren't really designed.
+- Layouts that didn't hold together until I wrote the HTML/CSS myself and described the structure in depth for it to follow.
+
+In fact, some of the lingering UI bugs were spotted by testers who provided feedback on how the buttons didn't resize properly or the layout broke when the a text string was longer than 50 characters.
+
+<Callout tone="insight" title="I uncovered a habbit that I should adopt when working with LLMs!">
+  
+  This is where I first built a habit that later carried into other projects: bringing in **a
+  specialized accessibility-focused AI review pass**, rather than trusting general-purpose AI output
+  on accessibility by default.
+  
+  This practice started here and it's the reason later projects had a
+  faster, more disciplined accessibility process from day one.
+
+</Callout>
+
+---
+
+## Tester feedback
+
+I ran a feedback round with real users. None of what they found were
+logic bugs, but they were interaction and polish problems that only show up
+when someone uses the interface with their own hands and their own data.
+
+- Delete confirmation dialog stayed open after the deletion had
+  actually succeeded - no signal the action had worked.
+- OTP paste silently failed on the first attempt (only the first
+  character landed), worked fine on the second try.
+- Delete button was so visually dominant it became "the main focus"
+  of the card, crowding out the entry's actual content.
+- A session card field used the wrong text style entirely — traced to
+  one line, SessionCard.jsx:111.
+- No length limits anywhere on user input (title, description,
+  location) — long text broke layouts, and long pastes saved slowly
+  with no loading feedback, so the app looked frozen.
+
+---
+
+## Where it stands right now
+
+MVP was fully shipped. Every planned feature was live and deployed to Vercel. After I collected feedback from the testers, I had to take the web app offline due to temporary infrastructure I used.
+
+A few small things are deliberately still open, left visible on purpose
+rather than hidden:
+
+- alert() calls standing in for proper toast notifications
+- an unused avatarSeed field still being written to storage (dead code)
+- a customProducts table defined in the schema but never used (dead code)
+
+### What is next
+
+**To truly build and scale Huana, I need to use more stable and permanent infrastructure on which the app can be deployed.**
+
+I also need to resolve storage issues.
+
+I do not have any real users yet, not because the product doesn't work, but because
+there's been no marketing. That's genuinely still unresolved. I have no firm
+plan yet for how to fix it, and that's an honest gap in the project
+rather than a problem already solved.
+
+---
+
+## Learnings
+
+Getting from idea to a working, polished build was hard, and finishing
+it felt like a real win.
+
+The harder lesson was that AI is weakest at the thing designers care
+about most: interaction and layout judgment. You can't fully delegate
+"make this feel right". I ended up writing the CSS myself and learning,
+the hard way, that some problems need a specialized reviewer, not a
+general one. That lesson is what made a more disciplined AI-review
+process possible on every project since.
+
+<Callout tone="note">
+  Prompt/message counts with AI tools are not available for this project which were not tracked at
+  the time. Commit and timeline data is pulled directly from git history and is not an estimation.
+</Callout>
+
+---
+
+The end. You can read some of my other work from the [work section on my website](/#projects).

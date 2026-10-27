@@ -140,7 +140,12 @@ export const projects = [
       "Building a tool to allow recreational cannabis users track what they like and where they got it from.",
     categoryId: "design-coding",
     accent: "color-accent-huana",
-    image: placeholder(),
+    image: {
+      src: "/images/huana-cover.png",
+      alt: "Mock up of Huana web app design",
+      width: 640,
+      height: 400,
+    },
   },
   {
     slug: "figwrite",
