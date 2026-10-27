@@ -10,7 +10,7 @@ interface Props {
   height?: string; // frame height, any CSS length (rem, dvh)
 }
 const { id, src, alt, caption, height = "24rem" } = Astro.props;
-if (!id || /s/.test(id))
+if (!id || /\s/.test(id))
   throw new Error("ZoomCanvas: id must be a unique, non-empty id without spaces");
 const levels = [
   { value: "fit", label: "Fit" },

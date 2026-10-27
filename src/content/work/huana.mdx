@@ -19,6 +19,7 @@ import Figure from "../../components/case-study/Figure.astro";
 import ZoomCanvas from "../../components/case-study/ZoomCanvas.astro";
 import Quote from "../../components/case-study/Quote.astro";
 import ImageGrid from "../../components/case-study/ImageGrid.astro";
+import Section from "../../components/case-study/Section.astro";
 
 import placeholder from "../../assets/work/\_examples/placeholder.svg";
 import researchPhase from "../../assets/work/huana/research-phase.png";
@@ -28,6 +29,10 @@ import firstDesign_1 from "../../assets/work/huana/firstDesigns_Application - 1.
 import firstDesign_3 from "../../assets/work/huana/firstDesigns_Application - 3.png";
 import firstDesign_4 from "../../assets/work/huana/firstDesigns_Application - 4.png";
 import firstDesign_5 from "../../assets/work/huana/firstDesigns_Application - 5.png";
+import mvpSignIn from "../../assets/work/huana/mvpSignIn.png";
+import mvpOTP from "../../assets/work/huana/mvpOTP.png";
+import mvpDashboardEmptyState from "../../assets/work/huana/mvpDashboardEmptyState.png";
+import mvpLogbookEmptyState from "../../assets/work/huana/mvpLogbookEmptyState.png";
 
 ## Overview
 
@@ -108,6 +113,8 @@ At this stage, I was just looking to build the simplest solution. My technical s
 
 ---
 
+<Section tone="light" labelledby="placeholder-heading">
+
 ## The age of LLMs
 
 I sat on this project for a long time, slowly building my skills to be able to develop and deploy it. That was, until LLMs became accessible to general public.
@@ -116,7 +123,16 @@ I designed the UI from scratch in Figma first, then paired with AI to implement 
 
 ### Redesign of Huana
 
-(insert grid of redesigned UI)
+<ImageGrid
+  label="Huana's final design for MVP."
+  caption="Huana's final design for MVP."
+  images={[
+    { src: mvpSignIn, alt: "Mockup of MVP Huana sign in page." },
+    { src: mvpOTP, alt: "Mockup of MVP Huana OTP page." },
+    { src: mvpDashboardEmptyState, alt: "Mockup of MVP Huana dashboard, empty state." },
+    { src: mvpLogbookEmptyState, alt: "Mockup of MVP Huana logbook, empty state." },
+  ]}
+/>
 
 ### Solo build stats
 
@@ -151,7 +167,7 @@ Now, it might seem like that will increase the storage my users' browsers use an
   `Supabase`, consumption data never leaves the device.
 </Callout>
 
-(insert image of tech-stack and privacy)
+</Section>
 
 ---
 
@@ -267,8 +283,8 @@ rather than a problem already solved.
 Getting from idea to a working, polished build was hard, and finishing
 it felt like a real win.
 
-The harder lesson was that AI is weakest at the thing designers care
-about most: interaction and layout judgment. You can't fully delegate
+The harder lesson was that **AI is weakest at the thing designers care
+about most: interaction and layout judgment.** You can't fully delegate
 "make this feel right". I ended up writing the CSS myself and learning,
 the hard way, that some problems need a specialized reviewer, not a
 general one. That lesson is what made a more disciplined AI-review
