@@ -27,7 +27,7 @@
      Accent text is large text only (3:1 needed; all slots are >= 4.5:1 on bg). */
   --color-accent-home: #a64b1a; /* 5.57:1 on bg */
   --color-accent-huana: #0c6b4a; /* PLACEHOLDER per-project slot */
-  --color-accent-figwrite: #3a3270; /* PLACEHOLDER per-project slot */
+  --color-accent-figwrite: #495b55; /* PLACEHOLDER per-project slot */
   --color-accent-tyia: #1565c0; /* PLACEHOLDER per-project slot */
   --color-focus: var(--color-link); /* focus ring — 10.6:1 on bg */
 
@@ -48,6 +48,7 @@
   --color-neutral-400: #8c8278; /* 3.64:1 — UI borders only (3:1), never text */
   --color-neutral-600: #45403b; /* 9.90:1 — AAA text (safe alt to Dark) */
   --color-neutral-700: #2c2926; /* 13.97:1 — AAA text (near-Dark, softer) */
+  --color-neutral-tint: #f2f0ee; /* light background for muted callout, Quote and Section; dark text 15:1+ */
 
   /* Callout tones: label text and thick border, on a matching tint.
      Each tone is >= 7:1 on its tint (AAA); Dark body text is >= 15:1 on every tint. */

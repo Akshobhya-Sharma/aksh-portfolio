@@ -1,0 +1,52 @@
+---
+interface Props {
+  cite?: string;
+}
+const { cite } = Astro.props;
+---
+
+{cite ? (
+  <figure class="quote">
+    <blockquote class="quote__text quote__text--quoted">
+      <slot />
+    </blockquote>
+    <figcaption class="quote__cite">{cite}</figcaption>
+  </figure>
+) : (
+  <div class="quote quote__text">
+    <slot />
+  </div>
+)}
+
+<style>
+  /* Highlight = thick left border plus larger type, never colour alone */
+  .quote {
+    margin-inline: 0;
+    padding: var(--space-16) var(--space-24);
+    border-inline-start: var(--space-8) solid var(--color-neutral-700);
+    background: var(--color-neutral-tint);
+    color: var(--color-dark);
+  }
+  .quote__text {
+    margin: 0;
+    font-family: var(--font-serif);
+    font-size: var(--text-h6);
+    line-height: var(--leading-body);
+  }
+  /* Glyphs are decorative: empty alt text keeps them out of the accessibility tree */
+  .quote__text--quoted::before {
+    content: "\201C" / "";
+  }
+  .quote__text--quoted::after {
+    content: "\201D" / "";
+  }
+  .quote__text :global(p) {
+    margin: 0;
+    font-size: inherit;
+  }
+  .quote__cite {
+    margin-block-start: var(--space-8);
+    font-size: var(--text-body-2);
+    color: var(--color-neutral-700);
+  }
+</style>

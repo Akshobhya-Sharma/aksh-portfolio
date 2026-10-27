@@ -101,7 +101,7 @@ All homepage text, links, projects and icons live in `src/data/home.ts`. Compone
 
 ## How to add a component
 
-1. Spec: copy `specs/_component.template.md` to `specs/components/<name>.md`, fill it in, and ask Claude to build it.
+1. Spec: copy `specs/_component.template.md` to the next numbered file in `specs/` (`specs/NN <name>.md`), fill it in, and ask Claude to build it.
 2. Build: the component goes in `src/components/case-study/`. Tokens only, no client JS.
 3. Register: add an entry to `src/data/components.ts` (id, name, import line, variants with snippets, how-to text), then add its live example to `src/pages/[dev].astro`.
 4. Check it on `/components` in dev.

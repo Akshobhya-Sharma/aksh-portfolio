@@ -1,8 +1,7 @@
 name: Deploy to GitHub Pages
 
 on:
-  push:
-    branches: [main]
+  # Manual only for now. To re-enable auto-deploy, add `push: branches: [main]` here.
   workflow_dispatch:
 
 permissions:

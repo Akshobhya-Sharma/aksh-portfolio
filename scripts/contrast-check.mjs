@@ -53,6 +53,17 @@ const pairs = [
     ["--color-dark", `--color-callout-${t}-bg`, 7, `callout ${t} body text on tint`],
     ["--color-neutral-400", `--color-callout-${t}-bg`, 3, `callout ${t} border on tint (UI 3:1)`],
   ]),
+  // Muted callout reuses the neutral tint; its label and border are neutral-700
+  [
+    "--color-neutral-700",
+    "--color-neutral-tint",
+    7,
+    "callout muted label, Quote cite and border on tint",
+  ],
+  ["--color-dark", "--color-neutral-tint", 7, "callout muted, Quote and Section body text on tint"],
+  ["--color-neutral-400", "--color-neutral-tint", 3, "callout muted border on tint (UI 3:1)"],
+  ["--color-link", "--color-neutral-tint", 7, "Section tint links"],
+  ["--color-neutral-600", "--color-neutral-tint", 7, "Section tint secondary text"],
 ];
 for (const [fg, bgName, min, label] of pairs)
   checks.push([`${label} (${fg} on ${bgName})`, ratio(hex[fg], hex[bgName]), min]);

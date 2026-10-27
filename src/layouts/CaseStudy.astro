@@ -33,6 +33,9 @@ const { title, summary, width, accent, cover, headings } = Astro.props;
           class="case-study__cover"
           src={cover.src}
           alt={cover.alt}
+          quality={85}
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 1440px) 90rem, 100vw"
           loading="eager"
           fetchpriority="high"
         />

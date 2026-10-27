@@ -1,32 +1,42 @@
 ---
-// Dev-only: shows registry code for one variant, escaped by Astro, selectable in one click.
+// Dev-only: shows registry code, escaped by Astro, one block per line so a triple-click selects a single line.
+// Without `variant` it shows the component's import line; with one, that variant's usage code.
 import { components } from "../../data/components";
 
 interface Props {
   component: string;
-  variant: string;
+  variant?: string;
 }
 const { component, variant } = Astro.props;
 const entry = components.find((c) => c.id === component);
-const v = entry?.variants.find((x) => x.name === variant);
-if (!entry || !v) throw new Error(`Snippet: unknown ${component}/${variant}`);
-const code = entry.importLine.startsWith("No import")
-  ? v.snippet
-  : `${entry.importLine}\n\n${v.snippet}`;
+const v = variant === undefined ? undefined : entry?.variants.find((x) => x.name === variant);
+if (!entry || (variant !== undefined && !v))
+  throw new Error(`Snippet: unknown ${component}/${variant}`);
+const kind = v ? "Usage" : "Import";
+const lines = (v ? v.snippet : entry.importLine).split("\n");
+const labelId = `${component}-${variant ?? "import"}`.replace(/\s+/g, "-") + "-code";
 ---
 
+<p class="snippet__label" id={labelId}>
+  {v ? `Usage: ${variant}` : "Import"}
+</p>
 {/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */}
 <pre
   class="snippet"
   tabindex="0"
   role="region"
-  aria-label={`Code: ${entry.name} ${v.name}`}
-><code>{code}</code></pre>
+  aria-label={`${kind} code, scrollable`}
+  aria-describedby={labelId}
+><code>{lines.map((line) => <span class="line">{line}</span>)}</code></pre>
 {/* eslint-enable astro/jsx-a11y/no-noninteractive-tabindex */}
 
 <style>
+  .snippet__label {
+    margin: var(--space-16) 0 var(--space-4);
+    font-weight: var(--weight-medium);
+  }
   .snippet {
-    margin: 0;
+    margin: 0 0 var(--space-16);
     padding: var(--space-16);
     max-width: 100%;
     overflow-x: auto;
@@ -36,6 +46,10 @@ const code = entry.importLine.startsWith("No import")
     font-family: var(--font-mono);
     font-size: var(--text-body-2);
     line-height: var(--leading-body);
-    user-select: all;
+  }
+  /* One block per line; an empty line keeps its height */
+  .line {
+    display: block;
+    min-height: calc(var(--leading-body) * 1em);
   }
 </style>

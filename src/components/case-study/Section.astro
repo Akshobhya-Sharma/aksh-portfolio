@@ -1,0 +1,40 @@
+---
+interface Props {
+  tone: "light" | "tint";
+  labelledby?: string; // id of the heading that names this section
+}
+const { tone, labelledby } = Astro.props;
+const Tag = labelledby ? "section" : "div"; // a section landmark needs an accessible name
+---
+
+<Tag class={`band band--${tone}`} aria-labelledby={labelledby}>
+  <slot />
+</Tag>
+
+<style>
+  /* Sits in the content column, not full width. Dark text and the link colour stay AAA on both tones. */
+  .band {
+    padding: var(--space-24);
+    color: var(--color-dark);
+  }
+  .band--light {
+    background: var(--color-light);
+  }
+  .band--tint {
+    background: var(--color-neutral-tint);
+  }
+  /* Children are no longer direct children of the content column, so repeat its rhythm */
+  .band > :global(* + *) {
+    margin-block-start: var(--space-16);
+  }
+  .band > :global(:is(h2, h3, h4)) {
+    margin-block-start: var(--space-24);
+  }
+  .band > :global(:first-child) {
+    margin-block-start: 0;
+  }
+  .band :global(p),
+  .band :global(li) {
+    font-size: var(--text-body-1);
+  }
+</style>

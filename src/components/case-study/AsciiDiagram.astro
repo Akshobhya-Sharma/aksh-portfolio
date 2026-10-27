@@ -1,0 +1,57 @@
+---
+// The drawing is a fenced ```text block in the slot. MDX keeps its spaces and box characters there;
+// a template literal prop loses two leading spaces per line.
+interface Props {
+  label: string; // short name, shown in the caption
+  // Text alternative. Describe the steps and how they connect, in reading order.
+  // Start with what the diagram shows. Do not describe the characters.
+  description: string;
+}
+const { label, description } = Astro.props;
+if (!label.trim() || !description.trim())
+  throw new Error("AsciiDiagram: label and description are required");
+---
+
+<figure class="ascii">
+  {/* eslint-disable astro/jsx-a11y/no-noninteractive-tabindex */}
+  <div
+    class="ascii__box"
+    role="region"
+    tabindex="0"
+    aria-label={`${label} diagram (text version below)`}
+  >
+    <div aria-hidden="true">
+      <slot />
+    </div>
+  </div>
+  {/* eslint-enable astro/jsx-a11y/no-noninteractive-tabindex */}
+  <figcaption>
+    <strong>{label}.</strong> {description}
+  </figcaption>
+</figure>
+
+<style>
+  .ascii {
+    margin: 0;
+    min-width: 0;
+  }
+  .ascii__box {
+    max-width: 100%;
+    overflow: auto;
+    border: 1px solid var(--color-neutral-400);
+  }
+  .ascii__box :global(pre) {
+    margin: 0;
+    width: max-content;
+    min-width: 100%;
+    overflow: visible;
+    font-family: var(--font-mono);
+    font-size: var(--text-body-2);
+    line-height: var(--leading-body);
+  }
+  figcaption {
+    margin-block-start: var(--space-8);
+    font-size: var(--text-body-2);
+    color: var(--color-neutral-600);
+  }
+</style>
