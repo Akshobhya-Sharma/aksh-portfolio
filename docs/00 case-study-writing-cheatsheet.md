@@ -107,7 +107,7 @@ Use `../../assets/work/<slug>/file.ext` for every image. Put the files in `src/a
 
 ## 6. Callouts
 
-Three tones: `note`, `insight`, `warning`.
+Four tones: `note`, `insight`, `warning`, `muted`.
 
 ```mdx
 <Callout tone="insight" title="Short title">
@@ -121,6 +121,15 @@ Body text here.
 - **Blank lines are required** after the opening tag and before `</Callout>`. Without them, Prettier joins everything into one paragraph and lists stop working.
 - Don't indent the body. Prettier can turn indented lines into a code block.
 - The body can hold lists, bold text and links (see sections 4 and 5).
+- `muted` is a neutral grey for a mild aside. Its label reads "Aside". Use it when a point should not look like a note, a tip or a warning:
+
+  ```mdx
+  <Callout tone="muted" title="Short title">
+
+  Body text here.
+
+  </Callout>
+  ```
 
 ```mdx
 <Callout tone="note">
@@ -133,7 +142,80 @@ Body text here.
 
 ---
 
-## 7. Stat cards
+## 7. Quotes
+
+Use `<Quote>` to highlight a sentence, a message or a spoken line. Only quote real words from your notes or research.
+
+With a person (the `cite` is shown under the quote, with quote marks):
+
+```mdx
+<Quote cite="Placeholder name, placeholder role">
+Placeholder spoken line.
+</Quote>
+```
+
+As a highlighted statement (no `cite`, no quote marks):
+
+```mdx
+<Quote>
+Placeholder highlighted statement.
+</Quote>
+```
+
+- Use one `<Quote>` pair per quote. Several paragraphs inside one Quote are fine.
+
+---
+
+## 8. Sections
+
+Wrap a group of content in `<Section>` to give it a background. Content that isn't wrapped keeps the site background.
+
+- Two tones: `light` and `tint` (the neutral tint). Text stays high contrast on both.
+
+```mdx
+<Section tone="tint">
+
+Placeholder text.
+
+</Section>
+```
+
+With a heading, add `labelledby` set to the heading's id, so screen readers can name the section:
+
+```mdx
+<Section tone="light" labelledby="placeholder-heading">
+
+## Placeholder heading
+
+Placeholder text.
+
+</Section>
+```
+
+- The id is the heading text in lowercase, with spaces as hyphens and punctuation removed. "What research told me" becomes `what-research-told-me`. If the id doesn't match, the section has no name for screen readers.
+- Without `labelledby`, Section is a plain wrapper, not a named region.
+- Put a blank line between the tags and the content.
+
+---
+
+## 9. Separators
+
+Use `---` to separate two parts of a page that are not one section. It draws a line in the same colour as the section borders.
+
+```mdx
+Paragraph above.
+
+---
+
+Paragraph below.
+```
+
+- Put a blank line on both sides of `---`. Without it, the line above turns into a heading.
+- Use it sparingly. A `##` heading already separates sections.
+
+---
+
+## 10. Stat cards
 
 Only use numbers you can back up from your notes or git history. Never invent metrics.
 
@@ -149,7 +231,7 @@ Only use numbers you can back up from your notes or git history. Never invent me
 
 ---
 
-## 8. Tables
+## 11. Tables
 
 Every table goes through `DataTable`, and `caption` is required:
 
@@ -170,9 +252,9 @@ Every table goes through `DataTable`, and `caption` is required:
 
 ---
 
-## 9. Images and figures
+## 12. Images and figures
 
-Use `<Figure>` for every image in the body:
+Use `<Figure>` for one image with a caption. Use `<ImageGrid>` for several mockups together, and `<ZoomCanvas>` for a large diagram or screenshot that readers may need to inspect (both below):
 
 ```mdx
 <Figure
@@ -188,18 +270,105 @@ Use `<Figure>` for every image in the body:
 - `alt=""` only with `decorative`, for images that are pure decoration.
 - `caption` is optional. Keep it short, one line.
 - `Figure` serves AVIF and WebP for raster images. SVGs pass through unchanged.
+- Export screenshots at 1920px wide or more for a full-width image. Smaller sources are not enlarged, so a 1280px image looks soft at full width.
+
+### ImageGrid: several images
+
+Import each image, then list them in reading order:
+
+```js
+import ImageGrid from "../../components/case-study/ImageGrid.astro";
+
+import firstDraft1 from "../../assets/work/<slug>/first-draft-1.png";
+import firstDraft2 from "../../assets/work/<slug>/first-draft-2.png";
+import firstDraft3 from "../../assets/work/<slug>/first-draft-3.png";
+```
+
+```mdx
+<ImageGrid
+  label="First design drafts"
+  caption="Placeholder caption for the whole group."
+  images={[
+    { src: firstDraft1, alt: "Placeholder: what the first draft shows", caption: "Placeholder caption" },
+    { src: firstDraft2, alt: "Placeholder: what the second draft shows" },
+    { src: firstDraft3, alt: "Placeholder: what the third draft shows" },
+  ]}
+/>
+```
+
+- `alt` is required on every image. The build fails without it. Use `alt=""` only for decoration.
+- `label` names the list for screen readers (it becomes the list's `aria-label`). It is not shown on the page.
+- An image `caption` sits under that image. The grid `caption` sits under the whole group. Both are optional.
+- The layout follows the count: 1 is full width, 2 is two columns, 3 is three columns, 4 is a 2×2 grid, and 5 or more fit as many columns as the width allows (at least 12rem each). Below 42rem every layout is one column.
+- One image: `<ImageGrid images={[{ src: firstDraft1, alt: "Placeholder: what it shows" }]} />`
+
+### ZoomCanvas: small or wide images readers can zoom
+
+Use it for a small or wide diagram. Readers pick Fit, 2x or 3x, then scroll inside the frame. It works without JavaScript.
+
+```js
+import ZoomCanvas from "../../components/case-study/ZoomCanvas.astro";
+
+import flowDiagram from "../../assets/work/<slug>/flow-diagram.svg";
+```
+
+```mdx
+<ZoomCanvas
+  id="flow-diagram"
+  src={flowDiagram}
+  alt="Placeholder: describe the diagram"
+  caption="Placeholder caption"
+  height="16rem"
+/>
+```
+
+- `id` is required. It must be non-empty, have no spaces, and be unique on the page. The build fails otherwise. Two canvases with the same `id` break each other's zoom buttons.
+- `height` sets the frame height in any CSS length, such as `16rem` or `60dvh`. The default is `24rem`. The image is centred at Fit.
+- `alt` says what the image shows. `caption` is optional.
+- Use a PNG screenshot at 1920px wide or more if it has small text. ZoomCanvas can show images up to 2880px wide, so a larger source stays sharp when zoomed.
 
 ---
 
-## 10. Diagrams and flowcharts
+## 13. Diagrams and flowcharts
 
 This site has no Mermaid support. Pasting Mermaid code into the `.mdx` file shows it as plain text.
 
-The recommended process:
+### Simple flows: AsciiDiagram
+
+Draw the flow in text. Tip: ask Claude to draw it as an ASCII box diagram, then paste the result into the fenced block.
+
+```js
+import AsciiDiagram from "../../components/case-study/AsciiDiagram.astro";
+```
+
+````mdx
+<AsciiDiagram
+  label="Sign-up flow"
+  description="A three-step sign-up flow. A person signs up, then verifies their email, then sees a welcome page."
+>
+
+```text
+┌──────────┐    ┌──────────┐    ┌──────────┐
+│ Sign up  │───▶│ Verify   │───▶│ Welcome  │
+└──────────┘    └──────────┘    └──────────┘
+```
+
+</AsciiDiagram>
+````
+
+- `label` is a short name, shown in the caption. `description` is required. Screen readers read it instead of the drawing, which is hidden from them.
+- Describe the steps and how they connect, in reading order. Start with what the diagram shows. Don't describe the box characters.
+- Put the drawing in a fenced `text` block between the tags, with a blank line on each side. Don't pass the drawing as a prop (a template literal). MDX drops its leading spaces.
+- The build fails if `label` or `description` is empty or only whitespace.
+- A wide drawing scrolls sideways inside its own box.
+
+### Flowcharts as SVG
+
+Use this for a diagram that an ASCII drawing can't hold. The recommended process:
 
 1. Render the diagram and export it as an SVG (mermaid.ai's export, or mermaid.live).
 2. Save it as `src/assets/work/<slug>/<name>.svg`.
-3. Import and use `<Figure>`:
+3. Import and use `<Figure>` (or `<ZoomCanvas>` for a wide diagram):
    ```js
    import flowDiagram from "../../assets/work/<slug>/flow-diagram.svg";
    ```
@@ -212,7 +381,7 @@ The recommended process:
 
 ---
 
-## 11. Writing rules for this site
+## 14. Writing rules for this site
 
 - **Don't invent claims or metrics.** Use only what's in your notes, git history or project files.
 - **Don't use placeholder text in published pages.** Remove every line starting with `PLACEHOLDER`, and every `[value]`-style example, before setting `draft: false`.
@@ -223,9 +392,11 @@ The recommended process:
 
 ---
 
-## 12. Accessibility checklist
+## 15. Accessibility checklist
 
-- Every `<Figure>` has meaningful `alt` text.
+- Every `<Figure>`, `<ImageGrid>` image and `<ZoomCanvas>` has meaningful `alt` text.
+- Every `<AsciiDiagram>` has a `description`. Every `<Section>` with `labelledby` matches a heading id.
+- Every `<ZoomCanvas>` has its own `id`.
 - Every `<DataTable>` has a `caption`.
 - Every heading is in order: one `##` for each main section, `###` below it. Don't skip levels.
 - Links say where they go. Avoid "click here".
@@ -235,7 +406,7 @@ The recommended process:
 
 ---
 
-## 13. Checking your work
+## 16. Checking your work
 
 Run these from the project root:
 
@@ -255,7 +426,7 @@ Before you publish:
 
 ---
 
-## 14. Common problems
+## 17. Common problems
 
 | Symptom | Likely cause | Fix |
 | ------- | ------------ | --- |
@@ -267,16 +438,23 @@ Before you publish:
 | `DataTable` throws "child must be a table" | Table isn't directly inside the tags | Keep the table as the only child of `<DataTable>` |
 | Page missing from production | `draft: true` | Set it to `false` |
 | Link goes nowhere | Empty parentheses, or a relative URL to a page that doesn't exist | Use `/#projects` or another real path |
+| Build fails with an AsciiDiagram error about `label` or `description` | One of the two props is empty or only spaces | Fill in both with real text |
+| ASCII drawing loses its spaces or lines up wrong | Drawing is not in a fenced `text` block, or there is no blank line around it | Use the fenced block with a blank line on each side |
+| Build fails with a ZoomCanvas error about `id` | `id` is empty or contains spaces | Use a non-empty id with no spaces, such as `flow-diagram` |
+| Zoom buttons on one `ZoomCanvas` don't work | Two canvases on the page share an `id` | Give each one a unique `id` |
+| Build fails with an ImageGrid error about `alt` | An image has no `alt` | Write `alt`, or use `alt=""` only for decoration |
+| Section has no name for screen readers | `labelledby` doesn't match the heading's id | Use the heading text as a lowercase, hyphenated id (section 8) |
 
 ---
 
-## 15. Open items (decisions not made yet)
+## 18. Open items (decisions not made yet)
 
 - **Nested list numbering (`7a`, `7b`).** Options: letters under the number (`a.`, `b.`) with a one-line CSS rule, or a CSS counter version that builds `7a` from the parent. Neither is set up yet.
-- **Flowchart-as-SVG.** Works with `<Figure>` today. A Mermaid integration isn't set up and would add a dependency.
+- **Flowchart-as-SVG.** Works with `<Figure>` or `<ZoomCanvas>` today. A Mermaid integration isn't set up and would add a dependency.
 - **`DataTable` captions.** Two tables with the same caption on one page share an id. Give captions unique text until this is fixed.
 - **Case study images in `public/images/`.** Home page cards use `public/images/` with URL paths (`/images/file.png`). Case studies use `src/assets/` with imports. Don't mix them.
 - **Accessibility checks pending.** Screen reader checks (NVDA, VoiceOver) on case study components haven't been done yet.
+- **Quote marks.** How screen readers announce the curly quote marks around a cited `<Quote>` hasn't been checked yet.
 
 ---
 

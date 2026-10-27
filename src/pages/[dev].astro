@@ -11,6 +11,12 @@ import StatGrid from "../components/case-study/StatGrid.astro";
 import StatCard from "../components/case-study/StatCard.astro";
 import DataTable from "../components/case-study/DataTable.astro";
 import Figure from "../components/case-study/Figure.astro";
+import ImageGrid from "../components/case-study/ImageGrid.astro";
+import ZoomCanvas from "../components/case-study/ZoomCanvas.astro";
+import flowDiagram from "../assets/work/huana/development-pipeline.svg";
+import AsciiDiagram from "../components/case-study/AsciiDiagram.astro";
+import Quote from "../components/case-study/Quote.astro";
+import Section from "../components/case-study/Section.astro";
 import Snippet from "../components/dev/Snippet.astro";
 import placeholder from "../assets/work/_examples/placeholder.svg";
 import codeTheme from "../styles/code-theme.json";
@@ -20,6 +26,12 @@ import "../styles/prose.css";
 export function getStaticPaths() {
   return import.meta.env.DEV ? [{ params: { dev: "components" } }] : [];
 }
+
+const signUpFlow = [
+  "┌──────────┐    ┌──────────┐    ┌──────────┐",
+  "│ Sign up  │───▶│ Verify   │───▶│ Welcome  │",
+  "└──────────┘    └──────────┘    └──────────┘",
+].join("\n");
 
 const nav = components.map((c) => ({ depth: 2, slug: c.id, text: c.name }));
 ---
@@ -48,6 +60,7 @@ const nav = components.map((c) => ({ depth: 2, slug: c.id, text: c.name }));
         {c.howTo.map((t) => (
           <p>{t}</p>
         ))}
+        {!c.importLine.startsWith("No import") && <Snippet component={c.id} />}
 
         {c.id === "callout" && (
           <>
@@ -68,6 +81,11 @@ const nav = components.map((c) => ({ depth: 2, slug: c.id, text: c.name }));
               <Callout tone="warning">Placeholder text for a warning.</Callout>
             </div>
             <Snippet component="callout" variant="warning" />
+            <h3 id="callout-muted-h">Variant: muted</h3>
+            <div class="example" role="group" aria-labelledby="callout-muted-h">
+              <Callout tone="muted">Placeholder text for a mild aside.</Callout>
+            </div>
+            <Snippet component="callout" variant="muted" />
           </>
         )}
 
@@ -139,6 +157,119 @@ const nav = components.map((c) => ({ depth: 2, slug: c.id, text: c.name }));
           </>
         )}
 
+        {c.id === "quote" && (
+          <>
+            <h3 id="quote-cite-h">Variant: with cite</h3>
+            <div class="example" role="group" aria-labelledby="quote-cite-h">
+              <Quote cite="Placeholder name, placeholder role">Placeholder spoken line.</Quote>
+            </div>
+            <Snippet component="quote" variant="with cite" />
+            <h3 id="quote-statement-h">Variant: statement</h3>
+            <div class="example" role="group" aria-labelledby="quote-statement-h">
+              <Quote>Placeholder highlighted statement.</Quote>
+            </div>
+            <Snippet component="quote" variant="statement" />
+          </>
+        )}
+
+        {c.id === "section" && (
+          <>
+            <h3 id="section-light-h">Variant: light</h3>
+            <div class="example" role="group" aria-labelledby="section-light-h">
+              <Section tone="light" labelledby="section-light-heading">
+                <h4 id="section-light-heading">Placeholder heading</h4>
+                <p>
+                  Placeholder text with a <a href="#section-light-heading">placeholder link</a>.
+                </p>
+                <Callout tone="note">Placeholder text for a note.</Callout>
+                <hr />
+              </Section>
+            </div>
+            <Snippet component="section" variant="light" />
+            <h3 id="section-tint-h">Variant: tint</h3>
+            <div class="example" role="group" aria-labelledby="section-tint-h">
+              <Section tone="tint">
+                <p>Placeholder text on a tint, wrapped in a plain div.</p>
+                <Callout tone="muted">Placeholder text for a mild aside.</Callout>
+              </Section>
+            </div>
+            <Snippet component="section" variant="tint" />
+          </>
+        )}
+
+        {c.id === "imagegrid" && (
+          <>
+            <h3 id="imagegrid-one-h">Variant: one image</h3>
+            <div class="example" role="group" aria-labelledby="imagegrid-one-h">
+              <ImageGrid
+                images={[{ src: placeholder, alt: "Placeholder: what this image shows" }]}
+              />
+            </div>
+            <Snippet component="imagegrid" variant="one image" />
+            <h3 id="imagegrid-three-h">Variant: three images</h3>
+            <div class="example" role="group" aria-labelledby="imagegrid-three-h">
+              <ImageGrid
+                label="Placeholder group name"
+                caption="Placeholder overall caption"
+                images={[
+                  {
+                    src: placeholder,
+                    alt: "Placeholder: first image",
+                    caption: "Placeholder caption",
+                  },
+                  { src: placeholder, alt: "Placeholder: second image" },
+                  { src: placeholder, alt: "Placeholder: third image" },
+                ]}
+              />
+            </div>
+            <Snippet component="imagegrid" variant="three images" />
+            <h3 id="imagegrid-five-h">Variant: five images</h3>
+            <div class="example" role="group" aria-labelledby="imagegrid-five-h">
+              <ImageGrid
+                images={[
+                  { src: placeholder, alt: "Placeholder: first image" },
+                  { src: placeholder, alt: "Placeholder: second image" },
+                  { src: placeholder, alt: "Placeholder: third image" },
+                  { src: placeholder, alt: "Placeholder: fourth image" },
+                  { src: placeholder, alt: "Placeholder: fifth image" },
+                ]}
+              />
+            </div>
+            <Snippet component="imagegrid" variant="five images" />
+          </>
+        )}
+
+        {c.id === "zoomcanvas" && (
+          <>
+            <h3 id="zoomcanvas-wide-h">Variant: wide diagram</h3>
+            <div class="example" role="group" aria-labelledby="zoomcanvas-wide-h">
+              <ZoomCanvas
+                id="flow-diagram"
+                src={flowDiagram}
+                alt="Placeholder: describe the diagram"
+                caption="Placeholder caption"
+                height="16rem"
+              />
+            </div>
+            <Snippet component="zoomcanvas" variant="wide diagram" />
+          </>
+        )}
+
+        {c.id === "asciidiagram" && (
+          <>
+            <h3 id="ascii-flow-h">Variant: sign-up flow</h3>
+            <div class="example" role="group" aria-labelledby="ascii-flow-h">
+              <AsciiDiagram
+                label="Placeholder sign-up flow"
+                description="Placeholder: a three-step sign-up flow. A person signs up, then verifies their email, then sees a welcome page."
+              >
+                <Code code={signUpFlow} lang="text" theme={codeTheme as ThemeRegistration} />
+              </AsciiDiagram>
+            </div>
+            <Snippet component="asciidiagram" variant="sign-up flow" />
+          </>
+        )}
+
         {c.id === "plain-markdown" && (
           <>
             <h3 id="md-table-h">Variant: table</h3>
@@ -170,7 +301,10 @@ const nav = components.map((c) => ({ depth: 2, slug: c.id, text: c.name }));
             <Snippet component="plain-markdown" variant="code" />
           </>
         )}
-        <p class="copy-hint">Click a snippet to select it, then copy with Ctrl+C or Cmd+C.</p>
+        <p class="copy-hint">
+          Triple-click a line to select just that line, or drag across several lines, then copy with
+          Ctrl+C or Cmd+C.
+        </p>
       </section>
     ))}
   </div>

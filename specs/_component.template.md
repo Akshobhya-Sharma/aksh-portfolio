@@ -1,6 +1,6 @@
 # Component: <Name>
 
-Save a filled copy as `specs/<name>.md`.
+Save a filled copy as the next numbered file in `specs/`: `specs/NN <name>.md` (flat, no subfolders).
 
 ## Name
 

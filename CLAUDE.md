@@ -6,46 +6,47 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 
 - Astro 7 (static, zero client JS), `@astrojs/mdx` (case studies are MDX, not plain Markdown), TypeScript strict, plain CSS custom properties, Node 24 (`.nvmrc`), npm
 - Prettier 3 with prettier-plugin-astro (dev only)
-- Deploy: GitHub Pages via `.github/workflows/deploy.yml` on push to main. `site` in astro.config.mjs and `public/CNAME` are staged for uxaksh.ca. No `base` is set, so a github.io/<repo> deploy would 404 assets.
+- Deploy: GitHub Pages via `.github/workflows/deploy.yml`, manual only (`workflow_dispatch`); a push to main does not deploy. `site` in astro.config.mjs and `public/CNAME` are staged for uxaksh.ca. No `base` is set, so a github.io/<repo> deploy would 404 assets.
 
 ## Commands
 
 - Install `npm install` · Dev `npm run dev` · Build `npm run build`
 - Format `npm run format` (writes) · `npm run format:check` (read-only)
 - Lint `npm run lint` · Types `npm run typecheck` · Contrast `npm run contrast`
-- A11y `npm run a11y` (needs a build; Chrome/Edge or CHROME_PATH; axe WCAG 2.2 AA) also audits built /work/* pages at 1280px and 320px; `npm run a11y:dev` audits /components.
+- A11y `npm run a11y` (needs a build; Chrome/Edge or CHROME_PATH; axe WCAG 2.2 AA) audits the homepage and built `/work/*` pages at 1280px and 320px. `npm run a11y:dev` audits `/components` and `/work/huana` on the dev server.
 - Gate `npm run check`: format:check, lint, typecheck, build, contrast, check:registry. No test runner yet.
 
 ## Structure
 
-- `src/data/home.ts`: all homepage content (typed; colours are token names)
+- `src/data/home.ts`: all homepage content (typed; colours are token names). Homepage copy goes here, not in components.
 - `src/components/`: Header, Hero, SkillSet, Toolkit, Projects, CategoryTile, ProjectCard, Footer, Icon
-- `src/content.config.ts` (`work` collection), `src/content/work/*.mdx` (case studies; use `width`, not `layout`, in frontmatter), `src/pages/work/[slug].astro`, `src/layouts/CaseStudy.astro`
-- `src/components/case-study/`: Callout, StatGrid/StatCard, DataTable, Figure (MDX components), SideNav/PageNavList. Registry `src/data/components.ts` drives the dev-only `/components` page (`src/pages/[dev].astro`, not in the build); `npm run check:registry` verifies its import paths. Code theme: `src/styles/code-theme.json` (contrast-checked).
-- Case study workflow: copy `templates/case-study.mdx` (not matched by the glob) to `src/content/work/<slug>.mdx`. Each case study needs at least one `##` heading (side nav is built from them). New component: spec from `specs/_component.template.md` into `specs/components/<name>.md`, build in `src/components/case-study/`, add a registry entry and a live example on `[dev].astro`, then run `check`, `a11y`, `a11y:dev`. Draft entries show in dev only.
-- `src/layouts/BaseLayout.astro`: skip link markup, font preloads, style imports
-- `src/styles/`: `tokens.css` (tokens), `main.css` (focus ring, reduced motion, shell, sections), `fonts.css`
+- `src/content.config.ts` (`work` collection), `src/content/work/*.mdx` (use `width`, not `layout`, in frontmatter), `src/pages/work/[slug].astro`, `src/layouts/CaseStudy.astro`
+- `src/components/case-study/`: Callout, Quote, Section, StatGrid/StatCard, DataTable, Figure, ImageGrid, ZoomCanvas, AsciiDiagram, SideNav/PageNavList. CaseImage is the shared image pipeline (AVIF/WebP, quality 85, widths and sizes) for Figure, ImageGrid and ZoomCanvas.
+- Registry `src/data/components.ts` drives the dev-only `/components` page (`src/pages/[dev].astro`, not in the build). `npm run check:registry` verifies its import paths. Code theme: `src/styles/code-theme.json` (contrast-checked).
+- Case study workflow: copy `templates/case-study.mdx` (not matched by the glob) to `src/content/work/<slug>.mdx`. Each case study needs at least one `##` heading (side nav). Drafts show in dev only.
+- New component: copy `specs/_component.template.md` to the next numbered spec, `specs/NN <name>.md`, build in `src/components/case-study/`, add a registry entry and a live example on `[dev].astro`, then run `check`, `a11y`, `a11y:dev`.
+- `src/layouts/BaseLayout.astro` (skip link, font preloads, style imports). `src/styles/`: `tokens.css`, `main.css`, `prose.css` (case-study prose), `fonts.css`.
 - `public/fonts`, `public/images`, `src/assets/logo.svg`, `eslint.config.js`, `.prettierrc`, `.prettierignore`
-- `specs/`: contracts; `_project.md` is the site brief. Specs stay flat in `specs/`, numbered by the user. Never move them into subfolders (no `specs/done/`). `design/` (PNG) and `docs/` are gitignored. Open design/ only when asked.
+- `specs/`: contracts; `_project.md` is the site brief. Specs stay flat in `specs/`, numbered by the user, never in subfolders (no `specs/done/`). Agents never rename, move or reorganise specs; a new spec, component specs included, is `specs/NN <name>.md` with the next number. `design/` (PNG) is gitignored; open it only when asked. `docs/` holds the cheatsheet (tracked) and the human log (gitignored).
 
 ## Conventions
 
 - Run `npm run format` before committing. `check` fails on unformatted files. specs/, docs/, design/ and case_studies/ are excluded from Prettier.
 - Keep code comments minimal. Comment only where intent is not obvious.
 - Component CSS uses tokens only: no hex, px spacing or font literals.
-- Callout tones use `--color-callout-{note,insight,warning}` and `-bg` from tokens.css. `npm run contrast` checks each tone's label, body and border.
+- Callout tones use `--color-callout-{note,insight,warning}` and `-bg` from tokens.css. `muted` uses neutral-700 on `--color-neutral-tint`, also the Quote and Section tint. `npm run contrast` checks each tone's label, body and border.
+- Case-study interactivity is CSS only: ZoomCanvas uses native radios with `:has()` and scroll; AsciiDiagram takes a fenced `text` block in its slot (raw template literals in MDX lose leading spaces). `hr` in case studies uses neutral-200, like the section borders.
 - Tables: every table goes through `DataTable` (it takes a `caption`). Plain Markdown tables get no caption.
 - `.shell` (max 1440px) sits on the section in Hero, SkillSet, Toolkit and Footer, and on an inner wrapper in Header and Projects. The Toolkit band and those section rules stop at 1440px; the Projects rule is full width.
 - Section separators: `.section` uses `border-bottom` (main.css), not margin or `<hr>`. Footer opts out.
-- Breakpoints: below 1024px stacks two-column sections (main.css). Below 42rem makes Projects groups one column (Projects.astro, rem so it also stacks at 400% zoom).
+- Breakpoints: below 1024px stacks two-column sections (main.css). Below 42rem makes Projects groups and ImageGrid one column (rem, so it also stacks at 400% zoom).
 - Project cards: `.card__link::after` stretches over the card. The h4 and summary are `position: relative; z-index: 1`, so their text is selectable. Clicking the image, padding or empty space opens the link; clicking text does not. Keep this when editing cards.
 - Icons: `Icon.astro` inlines Phosphor SVGs at build time; pick by name in home.ts. Sizes are rem props at call sites, not tokens.
-- Homepage copy and data go in `src/data/home.ts`, not in components.
 - Lists with list-style reset keep `role="list"`; the no-redundant-roles disable there is intentional.
 - Motion: transform, opacity and colour transitions only under `prefers-reduced-motion: no-preference`. main.css has a global reduce override.
 - Text contrast aims AAA (7:1+). Accent colours and white on tile cores are for large text only.
 - Nav: "work" and "connect" links; the logo links home. Nav labels are lowercase. Back to top is `<a href="#top">`.
-- Images: `public/images/`, explicit width and height. Placeholder: `image: placeholder()` in home.ts.
+- Images: `public/images/` for homepage cards (`image: placeholder()` in home.ts), with explicit width and height. Case studies import from `src/assets/`.
 - Hygiene: `.nvmrc` (Node 24), `.editorconfig` (LF, 2 spaces), `.gitattributes` (text=auto; CNAME eol=lf), `.vscode/extensions.json` (Astro, Prettier, ESLint), `.github/dependabot.yml` (npm and actions, monthly, dev deps grouped).
 
 ## Do not
@@ -59,7 +60,7 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 
 - Case studies: hand-written one by one from `templates/case-study.mdx`. `/work/huana` stays `draft: true` as a placeholder. `/work/figwrite` has no file yet. TYIA has no page (out of scope). Homepage links to `/work/huana` and `/work/figwrite` 404 in prod until these exist. Signal Fire card is in the design, not the spec.
 - Toolkit logos: each becomes a clickable brand logo with alt text and a hover tooltip (tap on mobile/tablet) showing a one-line description. Do after layout and copy are final.
-- Real project images and per-project accents (placeholders now).
+- Real project images and per-project accents (homepage cards use placeholders).
 - DataTable: duplicate id when two tables on a page share a caption (DataTable.astro:12-13). `scope="col"` on every th; row-header tables unsupported.
 - `.gitattributes` forces LF. If an old Windows checkout still fails `format:check` on CRLF files, run `git add --renormalize .` once.
 - `npm audit`: 4 high, dev-only, in the lint chain (braces via astro-eslint-parser). No non-breaking fix; accepted. None in prod.

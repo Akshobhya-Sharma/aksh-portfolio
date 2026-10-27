@@ -1,0 +1,77 @@
+---
+import type { ImageMetadata } from "astro";
+import CaseImage from "./CaseImage.astro";
+
+interface GridImage {
+  src: ImageMetadata;
+  alt: string; // empty only for decoration
+  caption?: string;
+}
+interface Props {
+  images: GridImage[];
+  label?: string; // names the list for screen readers
+  caption?: string;
+}
+const { images, label, caption } = Astro.props;
+if (images.length === 0) throw new Error("ImageGrid: at least one image is required");
+if (images.some((image) => typeof image.alt !== "string"))
+  throw new Error("ImageGrid: alt is required on every image (empty only for decoration)");
+// Cells are at most a third of the content column; one image gets the full column.
+const sizes = images.length === 1 ? undefined : "(min-width: 42rem) 30rem, 100vw";
+const layout = Math.min(images.length, 5);
+---
+
+<figure class="grid-figure">
+  <ul class="grid" data-layout={layout} aria-label={label}>
+    {images.map((image) => (
+      <li>
+        <figure class="cell">
+          <CaseImage src={image.src} alt={image.alt} sizes={sizes} />
+          {image.caption && <figcaption>{image.caption}</figcaption>}
+        </figure>
+      </li>
+    ))}
+  </ul>
+  {caption && <figcaption class="grid-caption">{caption}</figcaption>}
+</figure>
+
+<style>
+  .grid-figure,
+  .cell {
+    margin: 0;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-16);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .grid > li {
+    min-width: 0;
+  }
+  .cell :global(img) {
+    width: 100%;
+    height: auto;
+  }
+  figcaption {
+    margin-block-start: var(--space-8);
+    font-size: var(--text-body-2);
+    color: var(--color-neutral-600);
+  }
+  /* 1: full width. 2 and 4: two columns (4 is 2x2). 3: three columns. 5+: as many as fit.
+     Below 42rem (rem, so it also stacks at 400% zoom) every layout is one column. */
+  @media (min-width: 42rem) {
+    .grid[data-layout="2"],
+    .grid[data-layout="4"] {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .grid[data-layout="3"] {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .grid[data-layout="5"] {
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+    }
+  }
+</style>

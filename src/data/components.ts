@@ -33,9 +33,13 @@ export const components: ComponentEntry[] = [
         name: "warning",
         snippet: `<Callout tone="warning">Placeholder text for a warning.</Callout>`,
       },
+      {
+        name: "muted",
+        snippet: `<Callout tone="muted">Placeholder text for a mild aside.</Callout>`,
+      },
     ],
     howTo: [
-      "Use a Callout for a point you want readers to stop and notice. Pick a tone: note for context, insight for something you learned, warning for a risk or limit. Keep it to a few sentences. The tone label shows in text, so it works without colour.",
+      "Use a Callout for a point you want readers to stop and notice. Pick a tone: note for context, insight for something you learned, warning for a risk or limit, muted for a mild aside. Keep it to a few sentences. The tone label shows in text, so it works without colour.",
     ],
   },
   {
@@ -85,6 +89,132 @@ export const components: ComponentEntry[] = [
     howTo: [
       "Use a Figure for any image that needs a caption. Write alt text that says what the image is for, not what it looks like. Use an empty alt only for decoration. Keep the caption to one line where you can.",
       "Add eager only for an image at the top of the page. The example image is an SVG, which is passed through as is. Photos and screenshots (PNG, JPG) are converted to AVIF and WebP.",
+    ],
+  },
+  {
+    id: "quote",
+    name: "Quote",
+    importLine: imp("Quote"),
+    variants: [
+      {
+        name: "with cite",
+        snippet: `<Quote cite="Placeholder name, placeholder role">Placeholder spoken line.</Quote>`,
+      },
+      {
+        name: "statement",
+        snippet: `<Quote>Placeholder highlighted statement.</Quote>`,
+      },
+    ],
+    howTo: [
+      "Use a Quote to highlight a message or a spoken line. Add cite to credit a person. Without cite, it reads as a highlighted statement.",
+    ],
+  },
+  {
+    id: "section",
+    name: "Section",
+    importLine: imp("Section"),
+    variants: [
+      {
+        name: "light",
+        snippet: `<Section tone="light" labelledby="placeholder-heading">
+
+## Placeholder heading
+
+Placeholder text.
+
+</Section>`,
+      },
+      {
+        name: "tint",
+        snippet: `<Section tone="tint">
+
+Placeholder text.
+
+</Section>`,
+      },
+    ],
+    howTo: [
+      "Wrap a section in Section to give it a background and separate it from the rest. Unwrapped sections keep the site background. Pick a tone that keeps text readable.",
+      "Tones: light and tint. Put a blank line between the tags and the content. Add labelledby with a heading id to make it a named region for screen readers. Without it, Section is a plain wrapper.",
+    ],
+  },
+  {
+    id: "imagegrid",
+    name: "ImageGrid",
+    importLine: `${imp("ImageGrid")}
+import placeholder from "../../assets/work/_examples/placeholder.svg";`,
+    variants: [
+      {
+        name: "one image",
+        snippet: `<ImageGrid images={[{ src: placeholder, alt: "Placeholder: what this image shows" }]} />`,
+      },
+      {
+        name: "three images",
+        snippet: `<ImageGrid
+  label="Placeholder group name"
+  caption="Placeholder overall caption"
+  images={[
+    { src: placeholder, alt: "Placeholder: first image", caption: "Placeholder caption" },
+    { src: placeholder, alt: "Placeholder: second image" },
+    { src: placeholder, alt: "Placeholder: third image" },
+  ]}
+/>`,
+      },
+      {
+        name: "five images",
+        snippet: `<ImageGrid
+  images={[
+    { src: placeholder, alt: "Placeholder: first image" },
+    { src: placeholder, alt: "Placeholder: second image" },
+    { src: placeholder, alt: "Placeholder: third image" },
+    { src: placeholder, alt: "Placeholder: fourth image" },
+    { src: placeholder, alt: "Placeholder: fifth image" },
+  ]}
+/>`,
+      },
+    ],
+    howTo: [
+      "Use an ImageGrid to show several mockups together. The layout adjusts to the number of images: 1, 2, 3, 4, or 5 and more. Every image needs alt text. Captions are optional.",
+      "Write alt text for each image that says what it shows for the reader. Do not repeat the caption. Use an empty alt only for decoration.",
+      "Import each image, then list them in reading order in the images prop. label names the list for screen readers and is optional. On a narrow screen the images stack in one column.",
+    ],
+  },
+  {
+    id: "zoomcanvas",
+    name: "ZoomCanvas",
+    importLine: `${imp("ZoomCanvas")}
+import flow from "../../assets/work/huana/development-pipeline.svg";`,
+    variants: [
+      {
+        name: "wide diagram",
+        snippet: `<ZoomCanvas
+  id="flow-diagram"
+  src={flow}
+  alt="Placeholder: describe the diagram"
+  caption="Placeholder caption"
+  height="16rem"
+/>`,
+      },
+    ],
+    howTo: [
+      "Use a ZoomCanvas for a large image readers may need to inspect. Readers pick Fit, 2x or 3x, then scroll to pan. Set height to size the frame. It works without JavaScript.",
+      "id must be unique on the page. height is the frame height, in rem or dvh. The image is centred at Fit.",
+    ],
+  },
+  {
+    id: "asciidiagram",
+    name: "AsciiDiagram",
+    importLine: imp("AsciiDiagram"),
+    variants: [
+      {
+        name: "sign-up flow",
+        snippet:
+          '<AsciiDiagram\n  label="Placeholder sign-up flow"\n  description="Placeholder: a three-step sign-up flow. A person signs up, then verifies their email, then sees a welcome page."\n>\n\n```text\n┌──────────┐    ┌──────────┐    ┌──────────┐\n│ Sign up  │───▶│ Verify   │───▶│ Welcome  │\n└──────────┘    └──────────┘    └──────────┘\n```\n\n</AsciiDiagram>',
+      },
+    ],
+    howTo: [
+      "Use the ASCII diagram for simple flows. A text description is required: it is what screen readers read instead of the drawing. Describe the steps and how they connect.",
+      "Describe the steps and how they connect, in reading order. Start with what the diagram shows. Do not describe the characters. Put the drawing in a fenced text block between the tags, with a blank line around it, so MDX keeps its spaces. The drawing scrolls sideways inside its own box.",
     ],
   },
   {

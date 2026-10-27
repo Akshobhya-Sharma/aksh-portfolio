@@ -19,6 +19,8 @@ import StatGrid from "../../components/case-study/StatGrid.astro";
 import StatCard from "../../components/case-study/StatCard.astro";
 import DataTable from "../../components/case-study/DataTable.astro";
 import Figure from "../../components/case-study/Figure.astro";
+import Quote from "../../components/case-study/Quote.astro";
+import Section from "../../components/case-study/Section.astro";
 import placeholder from "../../assets/work/_examples/placeholder.svg";
 
 {/* Each ## heading becomes an item in the "on this page" nav. Keep them in sentence case. */}
@@ -29,7 +31,7 @@ import placeholder from "../../assets/work/_examples/placeholder.svg";
 
 Write the text here.
 
-{/* Callout: tone is note, insight or warning. */}
+{/* Callout: tone is note, insight, warning or muted (a mild aside). */}
 
 <Callout tone="note">Short point to notice.</Callout>
 
@@ -54,6 +56,20 @@ Write the text here.
 {/* Figure: alt says what the image is for. Use alt="" with decorative only for decoration. */}
 
 <Figure src={placeholder} alt="What this image is for" caption="Caption" />
+
+{/* Quote: add cite to credit a person; without it, it is a highlighted statement. */}
+
+<Quote cite="Name, role">What they said.</Quote>
+
+{/* Section: gives the content a background (tone is light or tint). labelledby is the heading id, optional. Blank lines around the content. */}
+
+<Section tone="light" labelledby="highlighted-part">
+
+### Highlighted part
+
+Text on a background.
+
+</Section>
 
 ```ts
 // Fenced code: add the language after the backticks.

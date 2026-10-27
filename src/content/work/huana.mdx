@@ -3,7 +3,7 @@ title: Huana - your personal consumption tracker
 summary: "A simple tracker to remember all the awesome strains a recreational marijuana consumer smoked around the world (or their city)!"
 category: design-coding
 accent: color-accent-huana
-width: default
+width: wide
 date: 2026-10-25
 draft: true
 cover:
@@ -16,10 +16,18 @@ import StatGrid from "../../components/case-study/StatGrid.astro";
 import StatCard from "../../components/case-study/StatCard.astro";
 import DataTable from "../../components/case-study/DataTable.astro";
 import Figure from "../../components/case-study/Figure.astro";
-import placeholder from "../../assets/work/_examples/placeholder.svg";
+import ZoomCanvas from "../../components/case-study/ZoomCanvas.astro";
+import Quote from "../../components/case-study/Quote.astro";
+import ImageGrid from "../../components/case-study/ImageGrid.astro";
+
+import placeholder from "../../assets/work/\_examples/placeholder.svg";
 import researchPhase from "../../assets/work/huana/research-phase.png";
 import huanaMoodboard from "../../assets/work/huana/huana-moodboard.png";
 import developmentPipeline from "../../assets/work/huana/development-pipeline.svg";
+import firstDesign_1 from "../../assets/work/huana/firstDesigns_Application - 1.png";
+import firstDesign_3 from "../../assets/work/huana/firstDesigns_Application - 3.png";
+import firstDesign_4 from "../../assets/work/huana/firstDesigns_Application - 4.png";
+import firstDesign_5 from "../../assets/work/huana/firstDesigns_Application - 5.png";
 
 ## Overview
 
@@ -44,10 +52,12 @@ I was curious to see how many others have faced this issue and if there can be a
 
 To understand the this issue and see what other consumers do currently, I conducted a 5 person research. This was done over call or online meeting and I synthesized the notes by creating `Empathy Maps`, `User Personas`, `I like, I wish, What if`, and `Feature prioritization matrix`.
 
-<Figure
+<ZoomCanvas
+  id="researchPhase"
   src={researchPhase}
   alt="Research phase showing `Empathy Maps`, `User Personas`, `I like, I wish, What if`, and `Feature prioritization matrix`"
   caption="Figure: All the research I needed to do before I began design work."
+  height="24rem"
 />
 
 ### What research told me
@@ -85,7 +95,16 @@ My first designs were based on the simplest experience I could think of. I did n
 
 At this stage, I was just looking to build the simplest solution. My technical skills were not up to par yet and thus, I could not develop the whole web application on my own. This was pre-LLM revolution, so I didn't even have the support of an AI agent.
 
-(insert grid of mock ups)
+<ImageGrid
+  label="Huana's first design drafts"
+  caption="Huana's first design drafts."
+  images={[
+    { src: firstDesign_1, alt: "Mockup of Huana dashboard showing a user's saved strains." },
+    { src: firstDesign_3, alt: "Mockup of Huana search dropdown." },
+    { src: firstDesign_4, alt: "Mockup of Huana 'add an entry' modal." },
+    { src: firstDesign_5, alt: "Mock up of Huana 'add a custom entry'." },
+  ]}
+/>
 
 ---
 
@@ -121,13 +140,13 @@ I selected the tech stack based on it's ability to do what I needed my applicati
 
 </DataTable>
 
-#### Why use IndexedDB
+#### Why use IndexedDB?
 
 I wanted to protect my users privacy and so, the app data had to be stored on my users browser storage.
 
 Now, it might seem like that will increase the storage my users' browsers use and also there would be data loss if my user switched browser. This is correct and a limitation I planned for. I gave the users an ability to `export` and `import` their data so they can carry it with themselves (the output was a json file), and load it in any browser they logged into Huana with.
 
-<Callout tone="note">
+<Callout tone="muted">
   Privacy wasn't a tagline, it was an architectural line drawn on purpose: identity touches
   `Supabase`, consumption data never leaves the device.
 </Callout>
@@ -142,10 +161,12 @@ For the folks who are looking for a bit more technical write up, I want to expla
 
 The build moved in clear, ordered phases:
 
-<Figure
+<ZoomCanvas
+  id="developmentPipeline"
   src={developmentPipeline}
   alt="A nine step development process starting with scaffold, data layer, auth layer, UI development, UI audit, documentation and deployment."
   caption="A 9 step process to deployment."
+  height="16rem"
 />
 
 ### Timeline

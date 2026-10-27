@@ -2,7 +2,7 @@
 import Icon from "../Icon.astro";
 
 interface Props {
-  tone: "note" | "insight" | "warning";
+  tone: "note" | "insight" | "warning" | "muted";
   title?: string;
 }
 const { tone, title } = Astro.props;
@@ -10,6 +10,7 @@ const meta = {
   note: { label: "Note", icon: "info" },
   insight: { label: "Insight", icon: "lightbulb" },
   warning: { label: "Warning", icon: "warning" },
+  muted: { label: "Aside", icon: "note" },
 } as const;
 ---
 
@@ -44,6 +45,10 @@ const meta = {
   .callout--warning {
     --callout-tone: var(--color-callout-warning);
     --callout-tint: var(--color-callout-warning-bg);
+  }
+  .callout--muted {
+    --callout-tone: var(--color-neutral-700);
+    --callout-tint: var(--color-neutral-tint);
   }
   .callout__label {
     display: flex;
