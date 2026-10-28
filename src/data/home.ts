@@ -183,7 +183,7 @@ export const footer = {
   },
   email: "leoaksh@live.in",
   extraLines: [
-    "Designed by human. Coded by Claude Code.",
+    "Designed by human. Coded by Claude Code. I use LLMs to accelerate development and focus on solving problems.",
     "I do not track anything on this website. It is simply a way for me to document my work so others can see what I do and learn from what I learn.",
   ],
 };

@@ -20,11 +20,170 @@ import DataTable from "../../components/case-study/DataTable.astro";
 import Figure from "../../components/case-study/Figure.astro";
 import Quote from "../../components/case-study/Quote.astro";
 import Section from "../../components/case-study/Section.astro";
+import ImageGrid from "../../components/case-study/ImageGrid.astro";
+import ZoomCanvas from "../../components/case-study/ZoomCanvas.astro";
 
+import placeholder from "../../assets/work/_examples/placeholder.svg";
 import figwriteCommunityCover from "../../assets/work/figwrite/figwriteCommunityCover.png";
+import FigWriteColors from "../../assets/work/figwrite/FigWriteColors.png";
+import FigWriteIconography from "../../assets/work/figwrite/FigWriteIconography.png";
+import FigWriteLogo from "../../assets/work/figwrite/FigWriteLogo.png";
+import FigWriteTypography from "../../assets/work/figwrite/FigWriteTypography.png";
+import FigwriteFlowV2 from "../../assets/work/figwrite/FigwriteFlowV2.png";
 
 ## Overview
 
 FigWrite lets designers export text content from selected Figma frames
 into an .xlsx file, hand it to a content team or translator, and import
 their edits back to the correct text layers.
+
+This project came out of my own personal requirement. At work, we would need to prepare content documents that were shared with the content writers, who would then re-write content where required before getting it translated from our official translation team.
+
+<Quote>
+  I was tired of manually preparing content documents and then updating Figma once verified content
+  was returned to us.
+</Quote>
+
+---
+
+## Research
+
+This was a short phase where I spoke with `content writers`, and other designers. I needed information on how others managed content and if my solution would enable them to manage content in a more efficient way.
+
+---
+
+## Project start
+
+Built originally with a friend, Rajdeep, while I handled design. v1
+matched spreadsheet rows to Figma layers by node ID and layer name which was
+workable, but brittle. Renaming a layer or restructuring a frame could
+silently break the sync.
+
+### Designing Figwrite
+
+I wanted to connect my plugin with the product that it was being made for, i.e. Figma. So my designs took heavy inspiration from Figma and how their designs look.
+
+<ImageGrid
+  label="FigWrite design"
+  caption="Figwrite design package"
+  images={[
+    { src: FigWriteLogo, alt: "Figwrite logo on dark background." },
+    { src: FigWriteColors, alt: "Colour palette used for Figwrite." },
+    { src: FigWriteTypography, alt: "Font styling used by Figwrite." },
+    { src: FigWriteIconography, alt: "Phosphor icons as icon library for Figwrite." },
+  ]}
+/>
+
+### Shipping the MVP and the gap in development
+
+MVP shipped after development work done from Dec 2023 to Jan 2024. The project then went dormant for roughly two
+years. Rajdeep didn't have time to continue developing it, and I didn't
+yet have the engineering depth to take it forward solo. It sat untouched
+until I needed it again and by then, AI coding tools had caught up
+enough that I could pick the problem back up myself.
+
+<DataTable caption="Commit timeline by month">
+
+| Month                | Commit     | Note                                               |
+| -------------------- | ---------- | -------------------------------------------------- |
+| 2023-11              | 1 commit   | initial commit                                     |
+| 2023-12              | 15 commits | MVP build                                          |
+| 2024-01              | 14 commits | MVP cleanup, final polish                          |
+| ~2 year gap, dormant | N/A        | I didn't have the skillset to progress the project |
+| 2026-05              | 8 commits  | solo revival                                       |
+
+</DataTable>
+
+---
+
+## Rebuilding Figwrite
+
+<Callout tone="muted">
+
+- Version: 2
+- "Weekend" release
+- May 2026
+
+</Callout>
+
+Once I started depending on Claude Code to add a few features I needed, I ended up rebuilding the whole tool.
+
+<Quote>
+  Phew! I did not expect a whole redesign of the architecture when I started 'weekend enhancement'
+  with Claude Code as an experiment to see what the LLM could help me with.
+</Quote>
+
+This wasn't a patch. It was a full architectural rebuild, now a
+three-person effort (myself, Raj, and Dragan):
+
+- UUID-based identity replacing layer-name matching which survives
+  renames, restructures, and file sharing.
+- Two independent tabs (Export / Import) replacing one linear flow.
+- Template mode to allow writing into your own existing spreadsheet format,
+  not just a fresh file.
+- Three import safety guards:
+  - skip locked layers,
+  - skip unchangedtext,
+  - skip blank cells,
+- Dropped a CDN dependency (SheetJS) for a bundled MIT-licensed
+  library (ExcelJS) which removed a silent failure point.
+- Full WCAG 2.2 accessibility pass.
+
+<ZoomCanvas
+  id="FigwriteFlowV2"
+  src={FigwriteFlowV2}
+  alt="Flow diagram for Figwrite version 2."
+  caption="Flow diagram for Figwrite version 2."
+  height="24rem"
+/>
+
+### Making the biggest commit
+
+This single biggest commit in the project's history is this rebuild.
+
+**Commit message: `May062026 postv2 fix urgent.`**
+
+This was a fix commit just after releasing version 2 of Figwrite.
+
+<StatGrid>
+  <StatCard value="23" label="Number of files changed" />
+  <StatCard value="3,055" label="Number of insertions" />
+  <StatCard value="240" label="Number of deletions" />
+</StatGrid>
+
+**Commit message: `30 apr26 planning documentation.`**
+
+This was all the planning work that preceded the implimentation of Figwrite version 2.
+
+<StatGrid>
+  <StatCard value="69" label="Number of files changed" />
+  <StatCard value="7,431" label="Number of insertions" />
+</StatGrid>
+
+---
+
+## Learning from using LLMs
+
+I was curious to see if AI can be trusted at scale. I wanted to use the project to understand the limitations of the tool and how to best use it.
+
+After the rebuild, I ran formal review passes against the AI-written
+code
+
+- a code-quality review,
+- an accessibility audit, and
+- a performance/security review.
+
+Each produced a real findings table with
+severities. Each finding was either fixed, or explicitly logged as
+"not fixed, by design" with a stated reason.
+
+<Callout tone="insight" title="Examples">
+
+- A memory-leak-prone event listener pattern, re-assigned on every
+  React render with no cleanup (High severity; fixed)
+- An unguarded type cast that could throw on bad input (Low severity; fixed)
+- A documented decision NOT to fix postMessage('\*') because Figma's
+  own plugin sandboxing makes it unexploitable. This was verified, not
+  assumed.
+
+</Callout>
