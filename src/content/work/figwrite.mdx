@@ -160,6 +160,30 @@ This was all the planning work that preceded the implimentation of Figwrite vers
   <StatCard value="7,431" label="Number of insertions" />
 </StatGrid>
 
+### Export flow designs
+
+<ImageGrid
+  label="Placeholder group name"
+  caption="Placeholder overall caption"
+  images={[
+    { src: placeholder, alt: "Placeholder: first image", caption: "Placeholder caption" },
+    { src: placeholder, alt: "Placeholder: second image" },
+    { src: placeholder, alt: "Placeholder: third image" },
+  ]}
+/>
+
+### Import flow designs
+
+<ImageGrid
+  label="Placeholder group name"
+  caption="Placeholder overall caption"
+  images={[
+    { src: placeholder, alt: "Placeholder: first image", caption: "Placeholder caption" },
+    { src: placeholder, alt: "Placeholder: second image" },
+    { src: placeholder, alt: "Placeholder: third image" },
+  ]}
+/>
+
 ---
 
 ## Learning from using LLMs
@@ -187,3 +211,103 @@ severities. Each finding was either fixed, or explicitly logged as
   assumed.
 
 </Callout>
+
+---
+
+## Post version 2 status
+
+Using LLM recommended solution gave me major bugs that were detected in production.
+
+<Callout tone="warning">
+
+Real production bugs surfaced after release, at scale (3,000+ text nodes).
+
+- UUID collisions from Math.random() — the collision probability
+  becomes real at that volume.
+- When handling large volumes, Figwrite would not export content as seen on the frame (top to bottom, left to right).
+- Silent ID loss on text inside component instances — Figma's API
+  throws when writing plugin data to a read-only node, and the
+  original code silently swallowed that error.
+
+</Callout>
+
+### Fix for identified solutions
+
+While I made some updates from v2.0.0 to v2.1.0, I need to work on the next version, i.e. 2.2.0 with the following fixes:
+
+- switching to Figma's own native node ID instead of generating
+  one with an explicit backward-compatibility path: old export files are detected
+  automatically and still import correctly, with a one-time, non-error
+  banner nudging the user to re-export.
+- Exporting text by using Figma's `x axis` and `y axis` coordinates so that text strings export in true `top to bottom, left to right` order.
+
+<Callout tone="muted">
+  That **v2.2.0 plan** is worth naming directly as a process, not just a fix: phased, one reviewable
+  chunk at a time, an explicit "do not touch" list per release, a hard build-and-lint gate after
+  every phase, and decisions about what's out of scope written down as clearly as what's in scope.
+</Callout>
+
+---
+
+## Current status
+
+<StatCard value="~350" label="Number of users over lifetime" />
+
+Figwrite has a real feedback channel
+(figwrite@protonmail.com), with a live bug report and feature request
+currently outstanding.
+
+Deduplication — handling repeated strings like nav or footer text
+across many frames — is already scoped in detail for v2.3.0, including
+the specific edge cases (component instances, slot containers, global
+components) that make it harder than it sounds. Not yet built.
+
+Have a look at [Figwrite on the Figma community page (link opens in the same tab).](https://www.figma.com/community/plugin/1308867524552341098/figwrite)
+
+---
+
+## What I learned
+
+The risk in AI-paired development isn't getting code that works once;
+it's catching the failure modes that only show up at scale, on inputs
+you didn't think to test, in places the AI didn't know to be careful (a
+component instance is read-only; Math.random() collides eventually).
+
+<Quote>
+  My answer so far has been to review AI output the way you'd review any engineer's pull request
+  with formal passes, severity ratings, explicit accept/reject decisions, backward compatibility
+  taken seriously.
+</Quote>
+
+That process has held for two releases. What I haven't tested yet is
+whether it holds on something genuinely harder. Deduplication touches
+component architecture in ways the current bugs didn't, and I don't yet
+know if the same review process catches problems at that level of
+complexity or if scaling further means rethinking how much I lean on
+AI versus doing the harder architectural calls myself.
+
+**That's the actual open question. Not "should I use AI," but "where
+exactly does my current process stop being enough."**
+
+<DataTable caption="Project summary table">
+
+| Stat title             | Stat info                                                                                 |
+| ---------------------- | ----------------------------------------------------------------------------------------- |
+| Total commits          | 38                                                                                        |
+| Active timeline        | Dec 2023 to Jan 2024 (MVP); ~2 year gap; May 2026 (rebuild)                               |
+| Contributors           | 3 (Aksh, Raj, Dragan)                                                                     |
+| Outstanding feedback   | 1 bug report, 1 feature request (live)                                                    |
+| Major versions shipped | v1.0 -> v2.0 ("Weekend") -> v2.1.1                                                        |
+| Review passes run      | 3 (code quality, accessibility, performance/security); each with a written findings table |
+
+</DataTable>
+
+<Callout tone="note">
+  Prompt/message counts with AI tools are not available for this project which were not tracked at
+  the time. Commit, timeline, and review-table data above is pulled directly from git history and
+  project documentation and is not an estimation.
+</Callout>
+
+---
+
+The end. You can read some of my other work from the [work section on my website](/#projects).
