@@ -104,6 +104,7 @@ export const toolkit = {
   items: <ToolkitItem[]>[
     { name: "Figma" },
     { name: "Claude" },
+    { name: "Claude Code" },
     { name: "Webflow" },
     { name: "Miro" },
     { name: "Excel" },
