@@ -120,7 +120,6 @@ export const projectsSection = {
 
 export const categories = [
   { id: "design-coding", title: "Design and coding", gradient: "tile-blue" },
-  { id: "ux-ui", title: "UX / UI Projects", gradient: "tile-green" },
 ] as const satisfies readonly Category[];
 
 const placeholder = () => ({
@@ -161,16 +160,6 @@ export const projects = [
       width: 640,
       height: 400,
     },
-  },
-  {
-    slug: "tyia",
-    srName: "the TYIA website",
-    title: "TYIA Behavioral Health Services website build",
-    summary:
-      "Transforming Youths into Adults (TYIA) is a non-profit that supports youth aging out of foster care. The organization hired us to create a new, stand-alone website for BHS.",
-    categoryId: "ux-ui",
-    accent: "color-accent-tyia",
-    image: placeholder(),
   },
 ] satisfies Project[];
 

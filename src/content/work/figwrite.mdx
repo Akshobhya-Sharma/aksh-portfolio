@@ -7,7 +7,7 @@ category: design-coding
 accent: color-accent-figwrite
 width: wide
 date: 2026-10-27
-draft: true
+draft: false
 cover:
   src: ../../assets/work/figwrite/figwriteCommunityCover.png
   alt: Cover image for Figwrite community page on Figma plugins.
@@ -30,6 +30,15 @@ import FigWriteIconography from "../../assets/work/figwrite/FigWriteIconography.
 import FigWriteLogo from "../../assets/work/figwrite/FigWriteLogo.png";
 import FigWriteTypography from "../../assets/work/figwrite/FigWriteTypography.png";
 import FigwriteFlowV2 from "../../assets/work/figwrite/FigwriteFlowV2.png";
+import ExportEmptyState from "../../assets/work/figwrite/ExportEmptyState.png";
+import ExportFrameSelected from "../../assets/work/figwrite/ExportFrameSelected.png";
+import ExportRowAndColSelected from "../../assets/work/figwrite/ExportRowAndColSelected.png";
+import ExportSuccessful from "../../assets/work/figwrite/ExportSuccessful.png";
+
+import ImportEmptyState from "../../assets/work/figwrite/ImportEmptyState.png";
+import ImportFrameSelected from "../../assets/work/figwrite/ImportFrameSelected.png";
+import ImportSheetInformation from "../../assets/work/figwrite/ImportSheetInformation.png";
+import ImportSuccessful from "../../assets/work/figwrite/ImportSuccessful.png";
 
 ## Overview
 
@@ -137,6 +146,62 @@ three-person effort (myself, Raj, and Dragan):
   height="24rem"
 />
 
+### Export flow designs
+
+<ImageGrid
+  label="Export flow for Figwrite version 2.0.0"
+  images={[
+    {
+      src: ExportEmptyState,
+      alt: "Default export screen in Figwrite",
+      caption: "Default export screen.",
+    },
+    {
+      src: ExportFrameSelected,
+      alt: "Frame selected screen in Figwrite",
+      caption: "Frame selected screen.",
+    },
+    {
+      src: ExportRowAndColSelected,
+      alt: "Row and column selection screen in Figwrite",
+      caption: "Row and column selection screen.",
+    },
+    {
+      src: ExportSuccessful,
+      alt: "Export successful screen in Figwrite",
+      caption: "Export successful screen.",
+    },
+  ]}
+/>
+
+### Import flow designs
+
+<ImageGrid
+  label="Import flow for Figwrite version 2.0.0"
+  images={[
+    {
+      src: ImportEmptyState,
+      alt: "Default import screen in Figwrite",
+      caption: "Default import screen.",
+    },
+    {
+      src: ImportFrameSelected,
+      alt: "Frame selected for import in Figwrite",
+      caption: "Frame selected for import.",
+    },
+    {
+      src: ImportSheetInformation,
+      alt: "Select row and column for import in Figwrite",
+      caption: "Select row and column for import.",
+    },
+    {
+      src: ImportSuccessful,
+      alt: "Import successful screen in Figwrite",
+      caption: "Import successful screen.",
+    },
+  ]}
+/>
+
 ### Making the biggest commit
 
 This single biggest commit in the project's history is this rebuild.
@@ -159,30 +224,6 @@ This was all the planning work that preceded the implimentation of Figwrite vers
   <StatCard value="69" label="Number of files changed" />
   <StatCard value="7,431" label="Number of insertions" />
 </StatGrid>
-
-### Export flow designs
-
-<ImageGrid
-  label="Placeholder group name"
-  caption="Placeholder overall caption"
-  images={[
-    { src: placeholder, alt: "Placeholder: first image", caption: "Placeholder caption" },
-    { src: placeholder, alt: "Placeholder: second image" },
-    { src: placeholder, alt: "Placeholder: third image" },
-  ]}
-/>
-
-### Import flow designs
-
-<ImageGrid
-  label="Placeholder group name"
-  caption="Placeholder overall caption"
-  images={[
-    { src: placeholder, alt: "Placeholder: first image", caption: "Placeholder caption" },
-    { src: placeholder, alt: "Placeholder: second image" },
-    { src: placeholder, alt: "Placeholder: third image" },
-  ]}
-/>
 
 ---
 
@@ -257,10 +298,10 @@ Figwrite has a real feedback channel
 (figwrite@protonmail.com), with a live bug report and feature request
 currently outstanding.
 
-Deduplication — handling repeated strings like nav or footer text
-across many frames — is already scoped in detail for v2.3.0, including
+Deduplication, i.e. handling repeated strings like nav or footer text
+across many frames is already scoped in detail for v2.3.0, including
 the specific edge cases (component instances, slot containers, global
-components) that make it harder than it sounds. Not yet built.
+components) that make it harder than it sounds. **Not yet built.**
 
 Have a look at [Figwrite on the Figma community page (link opens in the same tab).](https://www.figma.com/community/plugin/1308867524552341098/figwrite)
 
