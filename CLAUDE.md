@@ -1,12 +1,12 @@
 # Project: Aksh portfolio
 
-Static portfolio: homepage and UX case studies. Keyboard and screen-reader first, low memory use. Two case studies are published (`/work/huana`, `/work/figwrite`). uxaksh.ca is being connected to GitHub Pages; not live yet.
+Static portfolio: homepage and UX case studies. Keyboard and screen-reader first, low memory use. Two case studies are published (`/work/huana`, `/work/figwrite`). Live at https://uxaksh.ca (GitHub Pages, NameSilo DNS).
 
 ## Stack
 
 - Astro 7 (static, zero client JS), `@astrojs/mdx` (case studies are MDX, not plain Markdown), TypeScript strict, plain CSS custom properties, Node 24 (`.nvmrc`), npm
 - Prettier 3 with prettier-plugin-astro (dev only)
-- Deploy: GitHub Pages via `.github/workflows/deploy.yml`, manual only (`workflow_dispatch`); a push to main does not deploy. `site` in astro.config.mjs and `public/CNAME` are staged for uxaksh.ca. No `base` is set, so a github.io/<repo> deploy would 404 assets.
+- Deploy: GitHub Pages via `.github/workflows/deploy.yml`, manual only (`workflow_dispatch`); a push to main does not deploy. Actions are pinned to commit SHAs (tag in a trailing comment); only the deploy job has `pages`/`id-token: write`. `site` in astro.config.mjs and `public/CNAME` are set to uxaksh.ca. No `base` is set, so a github.io/<repo> deploy would 404 assets.
 
 ## Commands
 
@@ -68,7 +68,7 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 - `.gitattributes` forces LF. If an old Windows checkout still fails `format:check` on CRLF files, run `git add --renormalize .` once.
 - Human checks pending: NVDA and VoiceOver on case study components, Windows High Contrast, 400% zoom, keyboard walkthrough, phone.
 - Comment-minimising pass at the final stage.
-- Domain and deploy: the user is connecting uxaksh.ca to the repo (domain verified in GitHub Settings > Pages first; add DNS only after, then Enforce HTTPS). Then the deploy workflow: pin actions to SHAs and move `pages`/`id-token: write` to the deploy job.
+- `package.json` `overrides` lets eslint-plugin-jsx-a11y (peer range stops at ESLint 9) use ESLint 10. Remove it once the plugin supports ESLint 10.
 - Case-study copy: MVP is not spelled out on first use in either case study.
 
 ## Reference
