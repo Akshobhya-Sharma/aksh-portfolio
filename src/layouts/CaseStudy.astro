@@ -1,5 +1,5 @@
 ---
-import { Image } from "astro:assets";
+import { getImage } from "astro:assets";
 import type { ImageMetadata, MarkdownHeading } from "astro";
 import BaseLayout from "./BaseLayout.astro";
 import Header from "../components/Header.astro";
@@ -17,6 +17,17 @@ interface Props {
 }
 
 const { title, summary, width, accent, cover, headings } = Astro.props;
+
+// The cover is the only eager image, so it drives page weight. <Picture> takes one quality for all
+// formats; AVIF at 75 is smaller than WebP at 90 and measured closer to the source (PSNR) on both covers.
+const coverWidths = [640, 960, 1280];
+const coverSizes = "(min-width: 1440px) 90rem, 100vw";
+const [coverAvif, coverWebp] = cover
+  ? await Promise.all([
+      getImage({ src: cover.src, format: "avif", quality: 75, widths: coverWidths }),
+      getImage({ src: cover.src, format: "webp", quality: 90, widths: coverWidths }),
+    ])
+  : [];
 ---
 
 <BaseLayout title={`${title} | Aksh`} description={summary}>
@@ -28,17 +39,22 @@ const { title, summary, width, accent, cover, headings } = Astro.props;
     <header class="case-study__intro">
       <h1>{title}</h1>
       <p class="case-study__summary">{summary}</p>
-      {cover && (
-        <Image
-          class="case-study__cover"
-          src={cover.src}
-          alt={cover.alt}
-          quality={85}
-          widths={[640, 960, 1280]}
-          sizes="(min-width: 1440px) 90rem, 100vw"
-          loading="eager"
-          fetchpriority="high"
-        />
+      {cover && coverAvif && coverWebp && (
+        <picture>
+          <source type="image/avif" srcset={coverAvif.srcSet.attribute} sizes={coverSizes} />
+          <img
+            class="case-study__cover"
+            src={coverWebp.src}
+            srcset={coverWebp.srcSet.attribute}
+            sizes={coverSizes}
+            width={coverWebp.attributes.width}
+            height={coverWebp.attributes.height}
+            alt={cover.alt}
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
+          />
+        </picture>
       )}
     </header>
     <div class="case-study__body">
@@ -92,6 +108,10 @@ const { title, summary, width, accent, cover, headings } = Astro.props;
   .case-study__content > :global(:is(h2, h3, h4)) {
     margin-block-start: var(--space-40);
     scroll-margin-top: var(--sticky-offset);
+  }
+  /* Figure, ImageGrid and ZoomCanvas render a figure; give it more room under a heading */
+  .case-study__content > :global(:is(h2, h3, h4) + figure) {
+    margin-block-start: var(--space-24);
   }
   .case-study__content :global(p),
   .case-study__content :global(li) {

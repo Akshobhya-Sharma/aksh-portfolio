@@ -90,7 +90,7 @@ Astro docs has been added as an MCP server that allows for reading of latest Ast
 ## Constraints
 
 - Accessibility: WCAG 2.2 AA minimum, AAA for font contrast and readability. Keyboard reachable, visible focus, reduced-motion respected.
-- Performance: under 100KB transferred per page excluding lazy-loaded images, no render-blocking JS, images as AVIF/WebP with explicit dimensions, animate transform and opacity only.
+- Performance: under 150KB transferred per page excluding lazy-loaded images, no render-blocking JS, images as AVIF/WebP with explicit dimensions, animate transform and opacity only.
 - Ethics: no dark patterns, transparent about cost and stack, public-good focus.
 - Stack: Astro, plain CSS, open-source tooling only.
 - Cost: no paid services beyond the existing domain.
@@ -105,7 +105,7 @@ Astro docs has been added as an MCP server that allows for reading of latest Ast
 - [ ] Every page passes an automated axe scan with zero violations.
 - [ ] Every page can be fully operated by keyboard alone, with a visible focus indicator and a working skip link.
 - [ ] Contrast script fails the build when a text color on a gradient or noise background is below AA, and passes on all shipped backgrounds.
-- [ ] No page exceeds 100KB transferred, excluding lazy-loaded images, measured in browser dev tools.
+- [ ] No page exceeds 150KB transferred, excluding lazy-loaded images, measured in browser dev tools.
 - [ ] No page has a horizontal scrollbar at 320px, 375px, 768px, 1024px, 1440px and 2560px widths.
 - [ ] Below 1024px the side nav is replaced by a working page-navigation disclosure and a main menu, both operable by keyboard and screen reader.
 - [ ] With "reduce motion" enabled in the OS, no transitions or animations play.

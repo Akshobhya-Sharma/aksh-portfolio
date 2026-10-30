@@ -22,10 +22,9 @@ export const accentTokens = [
   "color-accent-home",
   "color-accent-huana",
   "color-accent-figwrite",
-  "color-accent-tyia",
 ] as const;
 export type AccentToken = (typeof accentTokens)[number];
-export const categoryIds = ["design-coding", "ux-ui"] as const; // also the `work` collection category enum
+export const categoryIds = ["design-coding"] as const; // also the `work` collection category enum
 
 export interface Category {
   id: (typeof categoryIds)[number];
@@ -104,6 +103,7 @@ export const toolkit = {
   items: <ToolkitItem[]>[
     { name: "Figma" },
     { name: "Claude" },
+    { name: "Claude Code" },
     { name: "Webflow" },
     { name: "Miro" },
     { name: "Excel" },
@@ -120,16 +120,7 @@ export const projectsSection = {
 
 export const categories = [
   { id: "design-coding", title: "Design and coding", gradient: "tile-blue" },
-  { id: "ux-ui", title: "UX / UI Projects", gradient: "tile-green" },
 ] as const satisfies readonly Category[];
-
-const placeholder = () => ({
-  // TODO: replace `placeholder()` on each project with its real { src, alt, width, height }.
-  src: "/images/placeholder.svg",
-  alt: "", // decorative: the card title already names the project
-  width: 640,
-  height: 400,
-});
 
 export const projects = [
   {
@@ -162,16 +153,6 @@ export const projects = [
       height: 400,
     },
   },
-  {
-    slug: "tyia",
-    srName: "the TYIA website",
-    title: "TYIA Behavioral Health Services website build",
-    summary:
-      "Transforming Youths into Adults (TYIA) is a non-profit that supports youth aging out of foster care. The organization hired us to create a new, stand-alone website for BHS.",
-    categoryId: "ux-ui",
-    accent: "color-accent-tyia",
-    image: placeholder(),
-  },
 ] satisfies Project[];
 
 export const footer = {
@@ -181,9 +162,15 @@ export const footer = {
     strong: "open for small projects",
     after: ".",
   },
+  linkedin: {
+    before: " You can have a look at ",
+    label: "my LinkedIn profile",
+    href: "https://www.linkedin.com/in/akshobhya-s/",
+    after: ".",
+  },
   email: "leoaksh@live.in",
   extraLines: [
-    "Designed by human. Coded by Claude Code.",
+    "Designed by human. Coded by Claude Code. I use LLMs to accelerate development and focus on solving problems.",
     "I do not track anything on this website. It is simply a way for me to document my work so others can see what I do and learn from what I learn.",
   ],
 };

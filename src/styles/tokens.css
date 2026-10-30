@@ -28,7 +28,6 @@
   --color-accent-home: #a64b1a; /* 5.57:1 on bg */
   --color-accent-huana: #0c6b4a; /* PLACEHOLDER per-project slot */
   --color-accent-figwrite: #495b55; /* PLACEHOLDER per-project slot */
-  --color-accent-tyia: #1565c0; /* PLACEHOLDER per-project slot */
   --color-focus: var(--color-link); /* focus ring — 10.6:1 on bg */
 
   /* Tile gradients. White text must stay >= 4.5:1 at the lightest point (core). */

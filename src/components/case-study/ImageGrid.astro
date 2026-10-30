@@ -60,7 +60,8 @@ const layout = Math.min(images.length, 5);
     font-size: var(--text-body-2);
     color: var(--color-neutral-600);
   }
-  /* 1: full width. 2 and 4: two columns (4 is 2x2). 3: three columns. 5+: as many as fit.
+  /* 1: full width. 2 and 4: two columns (4 is 2x2). 3: three columns. 5+: up to three
+     columns, fewer when a cell would drop below 12rem.
      Below 42rem (rem, so it also stacks at 400% zoom) every layout is one column. */
   @media (min-width: 42rem) {
     .grid[data-layout="2"],
@@ -71,7 +72,11 @@ const layout = Math.min(images.length, 5);
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     .grid[data-layout="5"] {
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 12rem), 1fr));
+      /* The min track is at least a third of the row, so a fourth column never fits */
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(max(min(100%, 12rem), (100% - 2 * var(--space-16)) / 3), 1fr)
+      );
     }
   }
 </style>
