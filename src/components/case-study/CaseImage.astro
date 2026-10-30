@@ -1,6 +1,6 @@
 ---
 // Shared image pipeline for Figure, ImageGrid and ZoomCanvas, so none of them can drift into a blurry variant.
-// Sharp's default AVIF quality is 50, which smears text in screenshots; quality 85 keeps it crisp.
+// Sharp's default AVIF quality is 50, which smears text in screenshots; quality 90 keeps it crisp.
 import { Image, Picture } from "astro:assets";
 import type { ImageMetadata } from "astro";
 
@@ -37,7 +37,7 @@ const fetchpriority = eager ? "high" : undefined;
     src={src}
     alt={alt}
     formats={["avif", "webp"]}
-    quality={85}
+    quality={90}
     widths={widths}
     sizes={sizes}
     loading={loading}

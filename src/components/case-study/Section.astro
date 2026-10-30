@@ -30,6 +30,9 @@ const Tag = labelledby ? "section" : "div"; // a section landmark needs an acces
   .band > :global(:is(h2, h3, h4)) {
     margin-block-start: var(--space-24);
   }
+  .band > :global(:is(h2, h3, h4) + figure) {
+    margin-block-start: var(--space-24);
+  }
   .band > :global(:first-child) {
     margin-block-start: 0;
   }

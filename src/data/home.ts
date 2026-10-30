@@ -22,10 +22,9 @@ export const accentTokens = [
   "color-accent-home",
   "color-accent-huana",
   "color-accent-figwrite",
-  "color-accent-tyia",
 ] as const;
 export type AccentToken = (typeof accentTokens)[number];
-export const categoryIds = ["design-coding", "ux-ui"] as const; // also the `work` collection category enum
+export const categoryIds = ["design-coding"] as const; // also the `work` collection category enum
 
 export interface Category {
   id: (typeof categoryIds)[number];
@@ -123,14 +122,6 @@ export const categories = [
   { id: "design-coding", title: "Design and coding", gradient: "tile-blue" },
 ] as const satisfies readonly Category[];
 
-const placeholder = () => ({
-  // TODO: replace `placeholder()` on each project with its real { src, alt, width, height }.
-  src: "/images/placeholder.svg",
-  alt: "", // decorative: the card title already names the project
-  width: 640,
-  height: 400,
-});
-
 export const projects = [
   {
     slug: "huana",
@@ -169,6 +160,12 @@ export const footer = {
   availability: {
     before: "I am currently employed, however, I am ",
     strong: "open for small projects",
+    after: ".",
+  },
+  linkedin: {
+    before: " You can have a look at ",
+    label: "my LinkedIn profile",
+    href: "https://www.linkedin.com/in/akshobhya-s/",
     after: ".",
   },
   email: "leoaksh@live.in",

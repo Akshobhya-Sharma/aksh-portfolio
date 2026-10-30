@@ -1,0 +1,38 @@
+---
+// Links to other sites open in a new tab, announced to screen readers and marked with an icon.
+// Same-site, hash and mailto links render as a plain <a>. MDX case studies map `a` to this component.
+import type { HTMLAttributes } from "astro/types";
+import Icon from "./Icon.astro";
+
+type Props = HTMLAttributes<"a">;
+const { href, class: className, ...rest } = Astro.props;
+const url = String(href ?? "");
+const external = /^https?:\/\//.test(url) && !(Astro.site && url.startsWith(Astro.site.origin));
+---
+
+{external ? (
+  <a
+    href={url}
+    target="_blank"
+    rel="noopener noreferrer"
+    class:list={["external", className]}
+    {...rest}
+  >
+    <slot />
+    <span class="sr-only"> (opens in a new tab)</span>
+    <Icon name="arrow-square-out" size="1rem" />
+  </a>
+) : (
+  <a href={url} class={className} {...rest}>
+    <slot />
+  </a>
+)}
+
+<style>
+  /* Global svg is display: block; keep the icon on the text line */
+  .external :global(svg) {
+    display: inline;
+    margin-inline-start: var(--space-4);
+    vertical-align: text-bottom;
+  }
+</style>

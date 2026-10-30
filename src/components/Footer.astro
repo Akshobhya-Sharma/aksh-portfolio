@@ -1,6 +1,7 @@
 ---
 import { footer } from "../data/home";
 import Icon from "./Icon.astro";
+import Link from "./Link.astro";
 ---
 
 <footer>
@@ -12,6 +13,9 @@ import Icon from "./Icon.astro";
       {footer.availability.before}
       <strong>{footer.availability.strong}</strong>
       {footer.availability.after}
+      {footer.linkedin.before}
+      <Link href={footer.linkedin.href}>{footer.linkedin.label}</Link>
+      {footer.linkedin.after}
     </p>
     <p class="email">
       <a href={`mailto:${footer.email}`}>{footer.email}</a>

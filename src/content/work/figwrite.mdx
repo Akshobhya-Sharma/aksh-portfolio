@@ -1,6 +1,4 @@
 ---
-# Copy this file to src/content/work/<slug>.mdx. The slug becomes the URL /work/<slug>
-# and must match the project's slug in src/data/home.ts.
 title: Figwrite
 summary: A Figma plugin that bridges Figma text layers and Excel spreadsheets. Export text strings from Figma into an Excel, allow your content writers and translators to work on the excel sheet and then sync those changes back into your design.
 category: design-coding
@@ -10,21 +8,17 @@ date: 2026-10-27
 draft: false
 cover:
   src: ../../assets/work/figwrite/figwriteCommunityCover.png
-  alt: Cover image for Figwrite community page on Figma plugins.
+  alt: "Figwrite's Figma community cover: 'Update text in your designs with Excel', what it does (import content from Excel to Figma, export content from Figma to Excel), who it is for (designers, content writers, developers), and the plugin's Export and Import tabs."
 ---
 
 import Callout from "../../components/case-study/Callout.astro";
 import StatGrid from "../../components/case-study/StatGrid.astro";
 import StatCard from "../../components/case-study/StatCard.astro";
 import DataTable from "../../components/case-study/DataTable.astro";
-import Figure from "../../components/case-study/Figure.astro";
 import Quote from "../../components/case-study/Quote.astro";
-import Section from "../../components/case-study/Section.astro";
 import ImageGrid from "../../components/case-study/ImageGrid.astro";
 import ZoomCanvas from "../../components/case-study/ZoomCanvas.astro";
 
-import placeholder from "../../assets/work/_examples/placeholder.svg";
-import figwriteCommunityCover from "../../assets/work/figwrite/figwriteCommunityCover.png";
 import FigWriteColors from "../../assets/work/figwrite/FigWriteColors.png";
 import FigWriteIconography from "../../assets/work/figwrite/FigWriteIconography.png";
 import FigWriteLogo from "../../assets/work/figwrite/FigWriteLogo.png";
@@ -76,10 +70,22 @@ I wanted to connect my plugin with the product that it was being made for, i.e. 
   label="FigWrite design"
   caption="Figwrite design package"
   images={[
-    { src: FigWriteLogo, alt: "Figwrite logo on dark background." },
-    { src: FigWriteColors, alt: "Colour palette used for Figwrite." },
-    { src: FigWriteTypography, alt: "Font styling used by Figwrite." },
-    { src: FigWriteIconography, alt: "Phosphor icons as icon library for Figwrite." },
+    {
+      src: FigWriteLogo,
+      alt: "Figwrite logo in four versions: dark green on a light square and a light circle, pale green on a dark square and a dark circle.",
+    },
+    {
+      src: FigWriteColors,
+      alt: "Figwrite colour palette. Major: primary #1C2321 (near black) and surface #F9F9F9. Minor: secondary text (primary at 80%), secondary surface #F0F4EF and dividers (primary at 32%). Alerts: error red, warning orange, success green and info blue, each with a pale background tint.",
+    },
+    {
+      src: FigWriteTypography,
+      alt: "Figwrite typography in Inter: body regular and bold at 16px, button in capitals at 16px, caption bold and regular at 14px, tiny text at 11px.",
+    },
+    {
+      src: FigWriteIconography,
+      alt: "Phosphor, the free icon library chosen for Figwrite, with sample icons: search, mail, Twitter, Facebook, arrows, external link, leaf and tree.",
+    },
   ]}
 />
 
@@ -119,29 +125,29 @@ Once I started depending on Claude Code to add a few features I needed, I ended 
 
 <Quote>
   Phew! I did not expect a whole redesign of the architecture when I started 'weekend enhancement'
-  with Claude Code as an experiment to see what the LLM could help me with.
+  with Claude Code as an experiment to see what the large language model (LLM) could help me with.
 </Quote>
 
 This wasn't a patch. It was a full architectural rebuild, now a
 three-person effort (myself, Raj, and Dragan):
 
-- UUID-based identity replacing layer-name matching which survives
+- Universally unique identifier (UUID) based identity replacing layer-name matching which survives
   renames, restructures, and file sharing.
 - Two independent tabs (Export / Import) replacing one linear flow.
 - Template mode to allow writing into your own existing spreadsheet format,
   not just a fresh file.
 - Three import safety guards:
   - skip locked layers,
-  - skip unchangedtext,
+  - skip unchanged text,
   - skip blank cells,
-- Dropped a CDN dependency (SheetJS) for a bundled MIT-licensed
+- Dropped a content delivery network (CDN) dependency (SheetJS) for a bundled Massachusetts Institute of Technology (MIT) licensed
   library (ExcelJS) which removed a silent failure point.
 - Full WCAG 2.2 accessibility pass.
 
 <ZoomCanvas
   id="FigwriteFlowV2"
   src={FigwriteFlowV2}
-  alt="Flow diagram for Figwrite version 2."
+  alt="Figwrite version 2 flow. After opening Figwrite, the user picks Export or Import. Export: select frames, then either let Figwrite generate an Excel document or upload a template and choose a sheet, choose a column and starting row, Figwrite reserves column A for each layer's unique ID, then export. Import: select frames, upload the Excel document, choose a sheet, column and starting row, then import. Each step shows an error banner if frames or key details are missing, or if an upload, export or import fails."
   caption="Flow diagram for Figwrite version 2."
   height="24rem"
 />
@@ -153,22 +159,22 @@ three-person effort (myself, Raj, and Dragan):
   images={[
     {
       src: ExportEmptyState,
-      alt: "Default export screen in Figwrite",
+      alt: "Export tab with no frames selected: instructions to select frames on the canvas, an empty frame list and a Continue button.",
       caption: "Default export screen.",
     },
     {
       src: ExportFrameSelected,
-      alt: "Frame selected screen in Figwrite",
+      alt: "Export tab listing five selected frames, each with a green tick, a 'Show 2 more' link and a Continue button.",
       caption: "Frame selected screen.",
     },
     {
       src: ExportRowAndColSelected,
-      alt: "Row and column selection screen in Figwrite",
+      alt: "Export settings: an uploaded Excel file with Change and Remove links, a sheet dropdown, a note that column A is reserved for the unique layer ID, column and starting row fields, and an Export to Excel button.",
       caption: "Row and column selection screen.",
     },
     {
       src: ExportSuccessful,
-      alt: "Export successful screen in Figwrite",
+      alt: "Export summary listing the document, sheet, column and starting row, and counts of text layers exported, resynced and skipped, with a Reset button.",
       caption: "Export successful screen.",
     },
   ]}
@@ -181,22 +187,22 @@ three-person effort (myself, Raj, and Dragan):
   images={[
     {
       src: ImportEmptyState,
-      alt: "Default import screen in Figwrite",
+      alt: "Import tab with no frames selected: instructions noting the Excel document needs Figwrite's unique IDs in column A, an empty frame list and a Continue button.",
       caption: "Default import screen.",
     },
     {
       src: ImportFrameSelected,
-      alt: "Frame selected for import in Figwrite",
+      alt: "Import tab listing five selected frames, each with a green tick, a 'Show 2 more' link and a Continue button.",
       caption: "Frame selected for import.",
     },
     {
       src: ImportSheetInformation,
-      alt: "Select row and column for import in Figwrite",
+      alt: "Import settings: an uploaded Excel file with a Change link, a sheet dropdown, a note that column A must hold Figwrite's unique layer IDs, column and starting row fields, and an Import button.",
       caption: "Select row and column for import.",
     },
     {
       src: ImportSuccessful,
-      alt: "Import successful screen in Figwrite",
+      alt: "Import summary listing the document, sheet, column and starting row, and counts of layers updated, skipped and unmatched, with a Reset button.",
       caption: "Import successful screen.",
     },
   ]}
@@ -218,7 +224,7 @@ This was a fix commit just after releasing version 2 of Figwrite.
 
 **Commit message: `30 apr26 planning documentation.`**
 
-This was all the planning work that preceded the implimentation of Figwrite version 2.
+This was all the planning work that preceded the implementation of Figwrite version 2.
 
 <StatGrid>
   <StatCard value="69" label="Number of files changed" />
@@ -231,8 +237,7 @@ This was all the planning work that preceded the implimentation of Figwrite vers
 
 I was curious to see if AI can be trusted at scale. I wanted to use the project to understand the limitations of the tool and how to best use it.
 
-After the rebuild, I ran formal review passes against the AI-written
-code
+After the rebuild, I ran formal review passes against the AI-written code:
 
 - a code-quality review,
 - an accessibility audit, and
@@ -274,7 +279,7 @@ Real production bugs surfaced after release, at scale (3,000+ text nodes).
 
 ### Fix for identified solutions
 
-While I made some updates from v2.0.0 to v2.1.0, I need to work on the next version, i.e. 2.2.0 with the following fixes:
+While I made some updates from v2.0.0 to v2.1.1, I need to work on the next version, i.e. 2.2.0 with the following fixes:
 
 - switching to Figma's own native node ID instead of generating
   one with an explicit backward-compatibility path: old export files are detected
@@ -292,10 +297,12 @@ While I made some updates from v2.0.0 to v2.1.0, I need to work on the next vers
 
 ## Current status
 
-<StatCard value="~350" label="Number of users over lifetime" />
+<StatGrid>
+  <StatCard value="~350" label="Number of users over lifetime" />
+</StatGrid>
 
 Figwrite has a real feedback channel
-(figwrite@protonmail.com), with a live bug report and feature request
+([figwrite@protonmail.com](mailto:figwrite@protonmail.com)), with a live bug report and feature request
 currently outstanding.
 
 Deduplication, i.e. handling repeated strings like nav or footer text
@@ -303,7 +310,7 @@ across many frames is already scoped in detail for v2.3.0, including
 the specific edge cases (component instances, slot containers, global
 components) that make it harder than it sounds. **Not yet built.**
 
-Have a look at [Figwrite on the Figma community page (link opens in the same tab).](https://www.figma.com/community/plugin/1308867524552341098/figwrite)
+Have a look at [Figwrite on the Figma community page](https://www.figma.com/community/plugin/1308867524552341098/figwrite).
 
 ---
 
