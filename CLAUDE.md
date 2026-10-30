@@ -61,6 +61,10 @@ Static portfolio: homepage and UX case studies. Keyboard and screen-reader first
 
 ## Next up
 
+Project paused after launch (2026-10-29). Resume from this list, top first.
+
+- Launch gaps: no 404 page (`src/pages/404.astro`), no `robots.txt`, no sitemap, no Open Graph or canonical tags. `public/open-graph-image.png` (1200x630) exists but is untracked and not referenced; wire it into BaseLayout with og/twitter meta and absolute URLs from `site`.
+- Live checks: Lighthouse on https://uxaksh.ca, and confirm Enforce HTTPS is on in GitHub Settings > Pages.
 - Case studies: Huana and Figwrite are published (`draft: false`). New ones are hand-written from `templates/case-study.mdx`; add the card, accent token (`accentTokens`) and category (`categoryIds`) in home.ts with it. Signal Fire card is in the design, not the spec.
 - Toolkit logos: each becomes a clickable brand logo with alt text and a hover tooltip (tap on mobile/tablet) showing a one-line description. Do after layout and copy are final.
 - Homepage card images are raw PNGs in `public/images/` (about 272KB and 222KB, lazy), not optimised. Move them through `astro:assets`. `placeholder.svg` stays for future cards. Accent tokens in tokens.css still carry "PLACEHOLDER" comments.
